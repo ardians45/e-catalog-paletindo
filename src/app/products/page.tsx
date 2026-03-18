@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Search, Filter, ArrowRight, Package, Box, ShieldCheck, ChevronRight, ChevronLeft } from "lucide-react";
@@ -41,6 +41,18 @@ const PRODUCT_CATEGORIES = Object.entries(CATEGORY_MAP).map(([id, info]) => ({
 const ITEMS_PER_PAGE = 12;
 
 export default function ProductsPage() {
+  return (
+    <Suspense fallback={
+      <div className="w-full bg-[#f8f9fa] min-h-screen flex items-center justify-center">
+        <div className="animate-pulse text-zinc-400">Memuat katalog...</div>
+      </div>
+    }>
+      <ProductsContent />
+    </Suspense>
+  );
+}
+
+function ProductsContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "all";
   
