@@ -111,7 +111,7 @@ export default function Footer() {
               <li className="flex gap-3">
                 <MapPin className="h-5 w-5 text-[#D4A373] shrink-0" />
                 <a href="https://maps.app.goo.gl/U49BaoBxpcoPw7hV8" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-white transition-colors">
-                  Jl. Raya Ps. Kemis No.11, Kutajaya, Kec. Ps. Kemis<br/>Kabupaten Tangerang, Banten 15560
+                  Jelupang, Serpong Utara<br/>South Tangerang City, Banten 15323
                 </a>
               </li>
               <li className="flex gap-3">
@@ -145,14 +145,14 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-zinc-500">
-            &copy; {new Date().getFullYear()} PT Paletindo Prakarsa Unggul. All rights reserved.
+            &copy; {new Date().getFullYear()} PT Paletindo Prakarsa Unggul. Hak cipta dilindungi.
           </p>
           <div className="flex gap-4">
             <Link href="/privacy" className="text-xs text-zinc-500 hover:text-white transition-colors">
-              Privacy Policy
+              Kebijakan Privasi
             </Link>
             <Link href="/terms" className="text-xs text-zinc-500 hover:text-white transition-colors">
-              Terms of Service
+              Syarat & Ketentuan
             </Link>
           </div>
         </div>

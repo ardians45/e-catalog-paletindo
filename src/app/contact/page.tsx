@@ -30,9 +30,9 @@ export default function ContactPage() {
                 <div>
                   <h4 className="text-[11px] uppercase tracking-widest font-bold text-[#D4A373] mb-2">Pusat Operasional</h4>
                   <a href="https://maps.app.goo.gl/U49BaoBxpcoPw7hV8" target="_blank" rel="noopener noreferrer" className="font-light text-lg text-zinc-300 leading-relaxed hover:text-[#D4A373] transition-colors block">
-                    Jl. Raya Ps. Kemis No.11, Kutajaya<br/>
-                    Kec. Ps. Kemis, Kab. Tangerang<br/>
-                    Banten 15560
+                    Jelupang, Serpong Utara<br/>
+                    South Tangerang City<br/>
+                    Banten 15323
                   </a>
                 </div>
               </div>
@@ -88,7 +88,7 @@ export default function ContactPage() {
             
             {/* Interactive Full Screen Map */}
             <iframe 
-              src="https://maps.google.com/maps?q=PT.%20Paletindo%20Prakarsa%20Unggul,%20Jl.%20Raya%20Ps.%20Kemis%20No.11&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+              src="https://maps.google.com/maps?q=Jelupang,%20Serpong%20Utara,%20South%20Tangerang%20City,%20Banten%2015323&t=&z=15&ie=UTF8&iwloc=&output=embed" 
               className="absolute inset-0 w-full h-full border-0 grayscale opacity-80"
               allowFullScreen={true} 
               loading="lazy" 

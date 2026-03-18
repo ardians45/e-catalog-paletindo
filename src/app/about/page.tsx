@@ -123,7 +123,7 @@ export default function AboutPage() {
       <section id="testimonials" className="py-24 bg-zinc-900 overflow-hidden border-t border-white/5 relative">
         {/* Background typographic noise */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] font-bold text-white/[0.02] whitespace-nowrap select-none pointer-events-none tracking-tighter mix-blend-overlay">
-          TRUSTED PARTNER
+          MITRA TERPERCAYA
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-16">
@@ -132,13 +132,19 @@ export default function AboutPage() {
               Dipercaya Oleh <br />
               <span className="text-[#D4A373]">Pabrik & Distibutor Besar.</span>
             </h2>
-            <div className="flex -space-x-4">
-              {[1,2,3,4].map((i) => (
-                <div key={i} className="w-12 h-12 rounded-full bg-zinc-800 border-2 border-zinc-900 flex items-center justify-center font-bold text-white text-xs">
-                  User
+            <div className="flex -space-x-3">
+              {[
+                { initial: "T", color: "from-blue-500 to-blue-700" },
+                { initial: "A", color: "from-emerald-500 to-emerald-700" },
+                { initial: "H", color: "from-purple-500 to-purple-700" },
+                { initial: "T", color: "from-rose-500 to-rose-700" },
+                { initial: "M", color: "from-amber-500 to-amber-700" },
+              ].map((user, i) => (
+                <div key={i} className={`w-12 h-12 rounded-full bg-gradient-to-br ${user.color} border-2 border-zinc-900 flex items-center justify-center font-bold text-white text-sm shadow-lg`}>
+                  {user.initial}
                 </div>
               ))}
-              <div className="w-12 h-12 rounded-full bg-[#D4A373] border-2 border-zinc-900 flex items-center justify-center font-bold text-zinc-900 text-xs">
+              <div className="w-12 h-12 rounded-full bg-[#D4A373] border-2 border-zinc-900 flex items-center justify-center font-bold text-zinc-900 text-[10px] shadow-lg">
                 +1K
               </div>
             </div>
@@ -215,7 +221,7 @@ export default function AboutPage() {
                    <div>
                      <h4 className="text-lg font-bold text-white mb-2">Pusat / Kantor Representatif</h4>
                      <p className="text-zinc-400 font-light leading-relaxed">
-                       Jl. Raya Ps. Kemis No.11, Kutajaya<br />Kec. Ps. Kemis, Kab. Tangerang, Banten 15560
+                       Jelupang, Serpong Utara<br />South Tangerang City, Banten 15323
                      </p>
                    </div>
                  </div>
@@ -242,7 +248,7 @@ export default function AboutPage() {
                {/* Embed Google maps using an iframe. 
                    We use Tangerang as the generic location. */}
                <iframe 
-                 src="https://maps.google.com/maps?q=PT.%20Paletindo%20Prakarsa%20Unggul,%20Jl.%20Raya%20Ps.%20Kemis%20No.11&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                 src="https://maps.google.com/maps?q=Jelupang,%20Serpong%20Utara,%20South%20Tangerang%20City,%20Banten%2015323&t=&z=15&ie=UTF8&iwloc=&output=embed" 
                  className="absolute inset-0 w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-700"
                  allowFullScreen={true} 
                  loading="lazy" 
@@ -257,7 +263,7 @@ export default function AboutPage() {
                  <div className="mx-auto w-10 h-10 bg-zinc-900 rounded-full flex items-center justify-center mb-2">
                     <span className="text-[#D4A373] font-bold">PT</span>
                  </div>
-                 <p className="font-bold text-zinc-900 text-sm">Headquarters</p>
+                 <p className="font-bold text-zinc-900 text-sm">Pusat Operasional</p>
                </div>
             </div>
 

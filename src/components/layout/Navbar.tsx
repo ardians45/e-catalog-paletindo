@@ -1,13 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X, ShoppingCart, Search } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
     { name: "Beranda", href: "/" },
@@ -17,7 +29,16 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/80 backdrop-blur-md">
+    <header 
+      className={cn(
+        "fixed top-0 z-50 w-full transition-all duration-500",
+        isScrolled 
+          ? "border-b border-zinc-200 bg-white/80 backdrop-blur-md py-4" 
+          : isHome 
+            ? "bg-transparent border-transparent py-6" 
+            : "border-b border-zinc-200 bg-white/80 backdrop-blur-md py-4"
+      )}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
@@ -30,7 +51,10 @@ export default function Navbar() {
                 className="object-contain mix-blend-multiply"
                 priority
               />
-              <span className="text-xl font-bold tracking-tight text-zinc-900 hidden sm:block">
+              <span className={cn(
+                "text-xl font-bold tracking-tight hidden sm:block transition-colors",
+                !isScrolled && isHome ? "text-white" : "text-zinc-900"
+              )}>
                 PT Paletindo Prakarsa Unggul
               </span>
             </Link>
@@ -42,7 +66,10 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-sm font-medium text-zinc-500 hover:text-[#D4A373] transition-colors"
+                className={cn(
+                  "text-sm font-medium transition-colors hover:text-[#D4A373]",
+                  !isScrolled && isHome ? "text-zinc-300" : "text-zinc-500"
+                )}
               >
                 {link.name}
               </Link>
@@ -51,14 +78,20 @@ export default function Navbar() {
 
           <div className="flex items-center gap-4">
             <button
-              className="p-2 text-zinc-500 hover:text-[#D4A373] transition-colors rounded-full hover:bg-zinc-50"
+              className={cn(
+                "p-2 transition-colors rounded-full hover:bg-white/10",
+                !isScrolled && isHome ? "text-white" : "text-zinc-500"
+              )}
               aria-label="Search"
             >
               <Search className="h-5 w-5" />
             </button>
             <Link
               href="/rfq"
-              className="relative p-2 text-zinc-500 hover:text-[#D4A373] transition-colors rounded-full hover:bg-zinc-50"
+              className={cn(
+                "relative p-2 transition-colors rounded-full hover:bg-white/10",
+                !isScrolled && isHome ? "text-white" : "text-zinc-500"
+              )}
               aria-label="Keranjang RFQ"
             >
               <ShoppingCart className="h-5 w-5" />
@@ -67,12 +100,21 @@ export default function Navbar() {
               </span>
             </Link>
 
-            <Link
-              href="/rfq"
-              className="hidden md:flex items-center justify-center rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white shadow hover:bg-zinc-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 transition-all"
-            >
-              Minta Penawaran
-            </Link>
+            {(!isScrolled && isHome) ? (
+              <Link
+                href="/rfq"
+                className="hidden md:flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-bold text-zinc-950 shadow-2xl hover:bg-[#D4A373] transition-all"
+              >
+                Minta Penawaran
+              </Link>
+            ) : (
+              <Link
+                href="/rfq"
+                className="hidden md:flex items-center justify-center rounded-full bg-zinc-900 px-6 py-3 text-sm font-bold text-white shadow hover:bg-zinc-800 transition-all"
+              >
+                Minta Penawaran
+              </Link>
+            )}
 
             {/* Mobile menu button */}
             <button
