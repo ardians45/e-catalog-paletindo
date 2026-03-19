@@ -5,38 +5,21 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Search, Filter, ArrowRight, Package, Box, ShieldCheck, ChevronRight, ChevronLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { supabase, type Product, isSupabaseConfigured } from "@/lib/supabase";
 
-import productsData from "../../../dummy_data.json";
+// Fallback to dummy data if Supabase is not configured
+import productsDataFallback from "../../../dummy_data.json";
 
-// Helper to slugify names for IDs
 const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-const REAL_PRODUCTS = productsData.map((p, i) => ({
-  id: slugify(p.name) + '-' + i,
-  name: p.name,
-  category: p.categories[0] === "Palet Plastik" ? "palet" : 
-            (p.categories[0] === "Box Food Grade" ? "food-grade" : "container"),
-  material: p.material || "HDPE",
-  dimension: p.dimensions.length_outer > 0 ? `${p.dimensions.length_outer} x ${p.dimensions.width_outer} x ${p.dimensions.height_outer} cm` : "Hubungi Sales",
-  dynamicLoad: "Hubungi Sales",
-  staticLoad: "Hubungi Sales",
-  image: p.image || "/images/products/placeholder.png",
-  rawCategory: p.categories[0] || "Lainnya"
-}));
-
-const CATEGORY_MAP = {
+const CATEGORY_MAP: Record<string, { name: string; icon: typeof Box }> = {
   all: { name: "Semua Produk", icon: Box },
-  palet: { name: "Palet Plastik", icon: Package },
-  "food-grade": { name: "Box Food Grade", icon: ShieldCheck },
-  container: { name: "Container Industri", icon: Box },
+  "Palet Plastik": { name: "Palet Plastik", icon: Package },
+  "Box Food Grade": { name: "Box Food Grade", icon: ShieldCheck },
+  "Container Industri": { name: "Container Industri", icon: Box },
+  "Safety Equipment": { name: "Safety Equipment", icon: ShieldCheck },
+  "Lainnya": { name: "Lainnya", icon: Box },
 };
-
-const PRODUCT_CATEGORIES = Object.entries(CATEGORY_MAP).map(([id, info]) => ({
-  id,
-  name: info.name,
-  icon: info.icon,
-  count: id === "all" ? REAL_PRODUCTS.length : REAL_PRODUCTS.filter(p => p.category === id).length
-}));
 
 const ITEMS_PER_PAGE = 12;
 
@@ -56,29 +39,86 @@ function ProductsContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "all";
   
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const productsGridRef = useRef<HTMLDivElement>(null);
+
+  // Fetch products from Supabase or fallback to dummy data
+  useEffect(() => {
+    async function fetchProducts() {
+      if (isSupabaseConfigured()) {
+        try {
+          const { data, error } = await supabase
+            .from("products")
+            .select("*")
+            .order("created_at", { ascending: false });
+
+          if (!error && data && data.length > 0) {
+            setProducts(data as Product[]);
+            setIsLoading(false);
+            return;
+          }
+        } catch (err) {
+          console.error("Supabase fetch error:", err);
+        }
+      }
+
+      // Fallback to dummy data
+      const fallbackProducts: Product[] = productsDataFallback.map((p, i) => ({
+        id: `fallback-${i}`,
+        name: p.name,
+        slug: slugify(p.name) + '-' + i,
+        description: p.description || null,
+        material: p.material || "Plastik PP/HDPE",
+        color: p.color || "Sesuai Gambar",
+        weight: 0,
+        is_featured: false,
+        length_outer: p.dimensions?.length_outer || 0,
+        width_outer: p.dimensions?.width_outer || 0,
+        height_outer: p.dimensions?.height_outer || 0,
+        category: p.categories?.[0] || "Container Industri",
+        applications: p.applications || [],
+        image_url: p.image || null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }));
+      setProducts(fallbackProducts);
+      setIsLoading(false);
+    }
+
+    fetchProducts();
+  }, []);
 
   // Update category if URL changes
   useEffect(() => {
     const cat = searchParams.get("category");
     if (cat) {
       setActiveCategory(cat);
-      setCurrentPage(1); // Reset to first page when category changes
+      setCurrentPage(1);
     }
   }, [searchParams]);
 
-  // Reset page when search or category changes manually
+  // Reset page when search or category changes
   useEffect(() => {
     setCurrentPage(1);
   }, [activeCategory, searchQuery]);
 
-  const filteredProducts = REAL_PRODUCTS.filter((p) => {
+  // Get unique categories from products
+  const categories = ["all", ...Array.from(new Set(products.map(p => p.category)))];
+
+  const PRODUCT_CATEGORIES = categories.map(id => ({
+    id,
+    name: CATEGORY_MAP[id]?.name || id,
+    icon: CATEGORY_MAP[id]?.icon || Box,
+    count: id === "all" ? products.length : products.filter(p => p.category === id).length,
+  }));
+
+  const filteredProducts = products.filter((p) => {
     const matchesCategory = activeCategory === "all" || p.category === activeCategory;
-    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                         p.dimension.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -90,16 +130,14 @@ function ProductsContent() {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    // Smooth scroll to top of product grid
     if (productsGridRef.current) {
       const offset = productsGridRef.current.offsetTop - 100;
       window.scrollTo({ top: offset, behavior: 'smooth' });
     }
   };
 
-  // Pagination group helper (e.g. 1, 2, 3, ..., 10)
   const getPageNumbers = () => {
-    const pages = [];
+    const pages: (number | string)[] = [];
     if (totalPages <= 5) {
       for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
@@ -113,6 +151,17 @@ function ProductsContent() {
     }
     return pages;
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-full bg-[#f8f9fa] min-h-screen flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-zinc-300 border-t-[#D4A373] rounded-full animate-spin"></div>
+          <p className="text-zinc-400 text-sm">Memuat katalog...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-[#f8f9fa] min-h-screen">
@@ -208,22 +257,12 @@ function ProductsContent() {
               <p className="text-zinc-500 font-light">
                 Menampilkan <span className="font-bold text-zinc-900">{filteredProducts.length}</span> produk
               </p>
-              
-              <div className="flex gap-2 text-sm text-zinc-500 font-light items-center">
-                Urutkan: 
-                <select className="bg-transparent border-none cursor-pointer focus:ring-0 outline-none font-medium text-zinc-900">
-                  <option>Terbaru</option>
-                  <option>Nama (A-Z)</option>
-                  <option>Dimensi Terbesar</option>
-                </select>
-              </div>
             </div>
 
-            {/* Products Grid */}
             <div className="flex-1" ref={productsGridRef}>
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-xl font-bold text-zinc-900">
-                  {activeCategory === "all" ? "Semua Produk" : CATEGORY_MAP[activeCategory as keyof typeof CATEGORY_MAP].name}
+                  {activeCategory === "all" ? "Semua Produk" : (CATEGORY_MAP[activeCategory]?.name || activeCategory)}
                   <span className="ml-3 text-zinc-400 font-light text-sm italic">Menampilkan {paginatedProducts.length} dari {filteredProducts.length} hasil</span>
                 </h2>
               </div>
@@ -240,14 +279,14 @@ function ProductsContent() {
                   {paginatedProducts.map((product) => (
                     <Link 
                       key={product.id} 
-                      href={`/products/${product.id}`}
+                      href={`/products/${product.slug}`}
                       className="group flex flex-col bg-white rounded-3xl border border-zinc-200/60 overflow-hidden hover:border-[#D4A373]/30 hover:shadow-2xl hover:shadow-zinc-200/50 transition-all duration-300 transform hover:-translate-y-1"
                     >
                       {/* Image Container */}
                       <div className="aspect-[4/3] bg-zinc-50 relative overflow-hidden flex flex-col items-center justify-center border-b border-zinc-100 p-0">
-                        {product.image ? (
+                        {product.image_url ? (
                           <img 
-                            src={product.image} 
+                            src={product.image_url} 
                             alt={product.name}
                             loading="lazy"
                             className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700 ease-out p-4"
@@ -258,7 +297,6 @@ function ProductsContent() {
                           </div>
                         )}
                         
-                        {/* Tags */}
                         <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
                            <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-[10px] font-bold text-zinc-900 rounded-full shadow-sm border border-zinc-200/50 uppercase tracking-wider">
                              {product.material}
@@ -275,7 +313,11 @@ function ProductsContent() {
                         <div className="space-y-2 mb-6 flex-1">
                           <div className="flex justify-between items-center text-xs border-b border-zinc-100 pb-2">
                             <span className="text-zinc-500 font-light">Dimensi</span>
-                            <span className="font-medium text-zinc-800">{product.dimension}</span>
+                            <span className="font-medium text-zinc-800">
+                              {product.length_outer > 0 
+                                ? `${product.length_outer} x ${product.width_outer} x ${product.height_outer} cm` 
+                                : "Hubungi Sales"}
+                            </span>
                           </div>
                         </div>
                         
@@ -300,7 +342,7 @@ function ProductsContent() {
                 </div>
               )}
 
-              {/* Pagination UI - Styled as per user request */}
+              {/* Pagination */}
               {totalPages > 1 && (
                 <div className="mt-20 flex items-center justify-center gap-2 sm:gap-4">
                   <button 

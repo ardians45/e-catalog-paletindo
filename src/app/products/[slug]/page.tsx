@@ -1,54 +1,134 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect, useState } from "react";
 import Link from "next/link";
-import { ChevronRight, ArrowLeft, Download, ShoppingCart, MessageCircle, FileText, CheckCircle2, ShieldCheck, Box, Zap, Award, Info } from "lucide-react";
+import { ChevronRight, ArrowLeft, Download, ShoppingCart, MessageCircle, FileText, CheckCircle2, ShieldCheck, Box, Zap, Award, Info, Package } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRFQ } from "@/components/providers/RFQProvider";
-import productsData from "../../../../dummy_data.json";
+import { supabase, type Product, isSupabaseConfigured } from "@/lib/supabase";
 
-// Helper to slugify names for IDs
+// Fallback import
+import productsDataFallback from "../../../../dummy_data.json";
+
 const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { addItem } = useRFQ();
   const { slug } = use(params);
-  // Find product by slug/id
-  const productIndex = parseInt(slug.split('-').pop() || "0");
-  const rawProduct = productsData[productIndex];
+  const [product, setProduct] = useState<{
+    id: string;
+    name: string;
+    slug: string;
+    category: string;
+    description: string;
+    images: string[];
+    specs: {
+      dimension: string;
+      material: string;
+      color: string;
+      applications: string;
+    };
+    features: string[];
+  } | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (!rawProduct) {
+  useEffect(() => {
+    async function fetchProduct() {
+      // Try Supabase first
+      if (isSupabaseConfigured()) {
+        try {
+          const { data, error } = await supabase
+            .from("products")
+            .select("*")
+            .eq("slug", slug)
+            .single();
+
+          if (!error && data) {
+            const p = data as Product;
+            setProduct({
+              id: p.id,
+              name: p.name,
+              slug: p.slug,
+              category: p.category,
+              description: (p.description || "Produk industri berkualitas tinggi dari PT Paletindo.").replace(/<[^>]+>/g, ' ').trim(),
+              images: [p.image_url || "/images/products/placeholder.png"],
+              specs: {
+                dimension: p.length_outer > 0 ? `${p.length_outer} x ${p.width_outer} x ${p.height_outer} cm` : "Hubungi Sales",
+                material: p.material || "Plastik PP/HDPE",
+                color: p.color || "Sesuai Gambar",
+                applications: p.applications?.join(", ") || "Industri, Pergudangan",
+              },
+              features: [
+                "Material berkualitas tinggi",
+                "Standar industri nasional",
+                "Tahan banting dan awet",
+                "Mudah dibersihkan",
+                "Cocok untuk logistik & gudang"
+              ],
+            });
+            setIsLoading(false);
+            return;
+          }
+        } catch (err) {
+          console.error("Supabase fetch error:", err);
+        }
+      }
+
+      // Fallback: try matching from dummy data by index (old slug format: name-INDEX)
+      const productIndex = parseInt(slug.split('-').pop() || "-1");
+      const rawProduct = productsDataFallback[productIndex];
+
+      if (rawProduct) {
+        setProduct({
+          id: slug,
+          name: rawProduct.name,
+          slug: slug,
+          category: rawProduct.categories?.[0] || "Produk Industri",
+          description: (rawProduct.description || "").replace(/<[^>]+>/g, ' ').trim(),
+          images: [rawProduct.image || "/images/products/placeholder.png"],
+          specs: {
+            dimension: `${rawProduct.dimensions?.length_outer || 0} x ${rawProduct.dimensions?.width_outer || 0} x ${rawProduct.dimensions?.height_outer || 0} mm`,
+            material: rawProduct.material || "Plastik PP/HDPE",
+            color: rawProduct.color || "Sesuai Gambar",
+            applications: rawProduct.applications?.join(", ") || "Industri",
+          },
+          features: [
+            "Material berkualitas tinggi",
+            "Standar industri nasional",
+            "Tahan banting dan awet",
+            "Mudah dibersihkan",
+            "Cocok untuk logistik & gudang"
+          ],
+        });
+      }
+      setIsLoading(false);
+    }
+
+    fetchProduct();
+  }, [slug]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#fcfcfd]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-zinc-300 border-t-[#D4A373] rounded-full animate-spin"></div>
+          <p className="text-zinc-400 text-sm">Memuat produk...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
+          <Package className="w-16 h-16 text-zinc-200 mx-auto mb-4" />
           <h1 className="text-2xl font-bold mb-4">Produk tidak ditemukan</h1>
           <Link href="/products" className="text-[#D4A373] hover:underline">Kembali ke Katalog</Link>
         </div>
       </div>
     );
   }
-
-  const product = {
-    id: slug,
-    name: rawProduct.name,
-    slug: slug,
-    category: rawProduct.categories[0] || "Produk Industri",
-    description: rawProduct.description.replace(/<[^>]+>/g, ' ').trim(),
-    images: [rawProduct.image || "/images/products/placeholder.png"],
-    specs: {
-      dimension: `${rawProduct.dimensions.length_outer} x ${rawProduct.dimensions.width_outer} x ${rawProduct.dimensions.height_outer} mm`,
-      material: rawProduct.material || "Plastik PP/HDPE",
-      color: rawProduct.color || "Sesuai Gambar",
-      applications: rawProduct.applications.join(", "),
-    },
-    features: [
-      "Material berkualitas tinggi",
-      "Standar industri nasional",
-      "Tahan banting dan awet",
-      "Mudah dibersihkan",
-      "Cocok untuk logistik & gudang"
-    ]
-  };
 
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
@@ -82,7 +162,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
         </motion.nav>
 
         <div className="flex flex-col lg:flex-row gap-16 xl:gap-24 mb-32 items-start">
-          {/* Left: Dramatic Image Presentation */}
+          {/* Left: Image */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -99,7 +179,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                 className="w-full h-full object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.12)]"
               />
               
-              {/* Product Badge */}
               <div className="absolute top-10 left-10 z-20">
                 <div className="bg-zinc-900 text-white px-4 py-2 rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 shadow-2xl">
                   <Award className="w-3 h-3 text-[#D4A373]" />
@@ -108,7 +187,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
               </div>
             </div>
 
-            {/* Thumbnails Strip */}
             <div className="flex gap-4 mt-8 px-2">
               {product.images.map((img, i) => (
                 <motion.button 
@@ -123,7 +201,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
             </div>
           </motion.div>
 
-          {/* Right: Refined Info Section */}
+          {/* Right: Info */}
           <div className="w-full lg:w-[45%] lg:sticky lg:top-32">
             <motion.div 
               variants={staggerContainer}
@@ -170,7 +248,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                 </div>
               </motion.div>
 
-              {/* Dynamic Actions */}
+              {/* Actions */}
               <motion.div variants={fadeInUp} className="flex flex-col gap-4">
                 <button 
                   onClick={() => {
@@ -205,7 +283,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
 
-        {/* Detailed Specs Transformation */}
+        {/* Detailed Specs */}
         <div className="pt-24 border-t border-zinc-100">
           <div className="flex flex-col lg:flex-row gap-20">
             <div className="w-full lg:w-1/3">
@@ -245,7 +323,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                   </motion.div>
                 ))}
                 
-                {/* Featured Tech Highlight */}
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
