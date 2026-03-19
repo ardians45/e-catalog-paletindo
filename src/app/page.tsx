@@ -118,22 +118,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Centered Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="absolute bottom-16 left-1/2 -translate-x-1/2 z-30"
-        >
-          <Link 
-            href="/rfq"
-            className="relative overflow-hidden group w-72 h-20 bg-white rounded-full flex items-center justify-center font-bold text-zinc-950 text-base transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-white/20 border border-white/10"
-          >
-            <span className="relative z-10">Minta Penawaran</span>
-            <div className="absolute inset-0 bg-[#D4A373] translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-          </Link>
-        </motion.div>
+        
       </section>
 
       {/* 2. Premium Category Showcase */}
@@ -177,7 +162,7 @@ export default function Home() {
                 num: "01", 
                 title: "Palet Industri", 
                 desc: "Palet plastik high-density untuk beban berat. Anti korosi, tahan cuci, siap ekspor.", 
-                stat: "120+", 
+                stat: "15+", 
                 statLabel: "Varian Tersedia",
                 href: "/products?category=palet"
               },
@@ -185,7 +170,7 @@ export default function Home() {
                 num: "02", 
                 title: "Kontainer & Box", 
                 desc: "Food grade hingga heavy-duty. Tersedia solid, berlubang, dan lipat untuk efisiensi ruang.", 
-                stat: "200+", 
+                stat: "150+", 
                 statLabel: "Model Produk",
                 href: "/products?category=container"
               },
@@ -270,7 +255,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-7xl font-black text-white tracking-tighter mb-16 max-w-5xl leading-[0.95]"
           >
-            Rasakan kualitas yang <i className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4A373] to-amber-200">tak tertandingi</i> atau dapatkan konsultasi industri lengkap.
+            Rasakan kualitas yang <i className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4A373] to-amber-200">tak tertandingi  </i> atau dapatkan konsultasi industri lengkap.
           </motion.h2>
 
           <motion.div 

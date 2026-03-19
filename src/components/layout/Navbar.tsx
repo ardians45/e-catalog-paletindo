@@ -46,7 +46,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
               <Image
-                src="/logo.jpeg"
+                src="/logo.png"
                 alt="Logo PT Paletindo Prakarsa Unggul"
                 width={40}
                 height={40}
@@ -79,15 +79,6 @@ export default function Navbar() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <button
-              className={cn(
-                "p-2 transition-colors rounded-full hover:bg-white/10",
-                !isScrolled && isHome ? "text-white" : "text-zinc-500"
-              )}
-              aria-label="Search"
-            >
-              <Search className="h-5 w-5" />
-            </button>
             <Link
               href="/rfq"
               className={cn(

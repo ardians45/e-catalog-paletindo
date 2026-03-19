@@ -151,8 +151,8 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Custom CSS for Marquee (Requires added styles in globals.css, but we'll inline a complex layout here) */}
-        <div className="flex space-x-6 pb-8 overflow-x-auto snap-x snap-mandatory px-4 md:px-8 hide-scrollbar">
+        {/* 3. Social Proof & Marquee Testimonials */}
+        <div className="flex space-x-6 pb-12 overflow-x-auto snap-x snap-mandatory px-6 md:px-12 hide-scrollbar touch-pan-x overscroll-x-contain cursor-grab active:cursor-grabbing select-none relative z-20">
           {/* We use horizontal scroll with snap for a premium horizontal feel */}
           {[
             {
