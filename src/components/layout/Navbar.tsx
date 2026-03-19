@@ -6,8 +6,10 @@ import { Menu, X, ShoppingCart, Search } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { useRFQ } from "@/components/providers/RFQProvider";
 
 export default function Navbar() {
+  const { items } = useRFQ();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
@@ -95,9 +97,11 @@ export default function Navbar() {
               aria-label="Keranjang RFQ"
             >
               <ShoppingCart className="h-5 w-5" />
-              <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-[#D4A373] text-[10px] font-bold text-white shadow-sm">
-                0
-              </span>
+              {items.length > 0 && (
+                <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-[#D4A373] text-[10px] font-bold text-white shadow-sm">
+                  {items.length}
+                </span>
+              )}
             </Link>
 
             {(!isScrolled && isHome) ? (

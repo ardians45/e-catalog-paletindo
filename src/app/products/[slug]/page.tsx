@@ -4,12 +4,14 @@ import { use } from "react";
 import Link from "next/link";
 import { ChevronRight, ArrowLeft, Download, ShoppingCart, MessageCircle, FileText, CheckCircle2, ShieldCheck, Box, Zap, Award, Info } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRFQ } from "@/components/providers/RFQProvider";
 import productsData from "../../../../dummy_data.json";
 
 // Helper to slugify names for IDs
 const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { addItem } = useRFQ();
   const { slug } = use(params);
   // Find product by slug/id
   const productIndex = parseInt(slug.split('-').pop() || "0");
@@ -170,14 +172,23 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
 
               {/* Dynamic Actions */}
               <motion.div variants={fadeInUp} className="flex flex-col gap-4">
-                <Link 
-                  href="/contact"
+                <button 
+                  onClick={() => {
+                    addItem({
+                      id: product.id,
+                      name: product.name,
+                      material: product.specs.material,
+                      qty: 1,
+                      image: product.images[0],
+                      category: product.category
+                    });
+                  }}
                   className="group relative flex items-center justify-center gap-4 bg-zinc-900 text-white py-6 rounded-3xl font-bold text-lg overflow-hidden transition-all hover:bg-zinc-800"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                   <ShoppingCart className="w-5 h-5 text-[#D4A373]" />
                   Request Quotation (RFQ)
-                </Link>
+                </button>
                 
                 <div className="grid grid-cols-2 gap-3">
                   <a href={`https://wa.me/6287877662097?text=Halo PT Paletindo, saya tertarik dengan produk ${product.name}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-white text-zinc-900 border border-zinc-200 py-4 rounded-2xl font-bold hover:bg-zinc-50 transition-all text-sm">
