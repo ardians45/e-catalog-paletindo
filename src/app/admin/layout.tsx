@@ -176,20 +176,20 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen relative">
+      <div className="flex-1 flex flex-col min-h-screen min-w-0 relative">
         {/* Top Header Bar */}
-        <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-8 py-5">
+        <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-4 sm:px-8 py-4 sm:py-5">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 sm:gap-6">
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="lg:hidden w-10 h-10 border border-zinc-200 rounded-xl flex items-center justify-center text-zinc-600 hover:text-zinc-900 transition-colors bg-white shadow-sm"
+                className="lg:hidden w-10 h-10 border border-zinc-200 rounded-xl flex items-center justify-center text-zinc-600 hover:text-zinc-900 transition-colors bg-white shadow-sm shrink-0"
               >
                 <Menu className="w-5 h-5" />
               </button>
 
-              {/* Breadcrumb */}
-              <nav className="hidden sm:flex items-center gap-2 text-sm">
+              {/* Breadcrumb - Hidden on very small screens */}
+              <nav className="hidden md:flex items-center gap-2 text-sm">
                 <Link href="/admin" className="text-zinc-400 hover:text-zinc-900 transition-colors font-medium">Dashboard</Link>
                 {breadcrumbs.filter(b => b.label !== "Admin").map((crumb, i) => (
                   <span key={crumb.href} className="flex items-center gap-2">
@@ -209,15 +209,20 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
                   </span>
                 ))}
               </nav>
+
+              {/* Mobile Title (visible only on mobile) */}
+              <div className="md:hidden">
+                <h1 className="text-zinc-900 font-bold text-sm tracking-tight">Paletindo CMS</h1>
+              </div>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <Link
                 href="/"
                 target="_blank"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900 text-white text-xs font-bold rounded-xl hover:bg-zinc-800 transition-all shadow-lg shadow-zinc-950/10"
+                className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-zinc-900 text-white text-[10px] sm:text-xs font-bold rounded-xl hover:bg-zinc-800 transition-all shadow-lg shadow-zinc-950/10"
               >
-                Visit Site
+                <span className="hidden xs:inline">Visit Site</span>
                 <ExternalLink className="w-3 h-3 text-[#D4A373]" />
               </Link>
             </div>
@@ -225,7 +230,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 px-8 py-8 lg:px-12 lg:py-10 max-w-[1400px]">
+        <main className="flex-1 w-full px-4 sm:px-8 py-6 sm:py-8 lg:px-12 lg:py-10 max-w-[1400px] mx-auto">
           {children}
         </main>
       </div>
