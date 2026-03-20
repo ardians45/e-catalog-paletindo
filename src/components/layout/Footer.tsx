@@ -12,7 +12,7 @@ export default function Footer() {
             <div className="flex items-center gap-2">
               <div className="bg-white p-1 rounded-md">
                 <Image
-                  src="/logo.jpeg"
+                  src="/logo.png"
                   alt="Logo PT Paletindo Prakarsa Unggul"
                   width={32}
                   height={32}

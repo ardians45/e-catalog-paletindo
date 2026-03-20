@@ -82,6 +82,16 @@ export default function NewProductPage() {
         imageUrl = await uploadImage("product-images", imageFile, path);
       }
 
+      // If this product is featured, unfeature all others
+      if (form.is_featured) {
+        const { error: unfeatureError } = await supabase
+          .from("products")
+          .update({ is_featured: false })
+          .eq("is_featured", true); // Target only currently featured ones
+        
+        if (unfeatureError) console.error("Error unfeaturing other products:", unfeatureError);
+      }
+
       // Insert product
       const { error: insertError } = await supabase.from("products").insert({
         ...form,

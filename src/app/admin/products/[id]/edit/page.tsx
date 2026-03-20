@@ -112,6 +112,17 @@ export default function EditProductPage({
         imageUrl = await uploadImage("product-images", imageFile, path);
       }
 
+      // If this product is featured, unfeature all others
+      if (form.is_featured) {
+        const { error: unfeatureError } = await supabase
+          .from("products")
+          .update({ is_featured: false })
+          .neq("id", id) // Don't unfeature self
+          .eq("is_featured", true);
+        
+        if (unfeatureError) console.error("Error unfeaturing other products:", unfeatureError);
+      }
+
       const { error: updateError } = await supabase
         .from("products")
         .update({
