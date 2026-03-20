@@ -34,41 +34,46 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-zinc-50 flex items-center justify-center p-6 relative overflow-hidden font-sans selection:bg-[#D4A373]/30">
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#D4A373]/5 rounded-full blur-[150px]"></div>
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-zinc-800/30 rounded-full blur-[100px]"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#D4A373]/5 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-[#D4A373]/5 rounded-full blur-[100px]"></div>
       </div>
 
-      <div className="w-full max-w-md relative z-10">
+      <div className="w-full max-w-[440px] relative z-10 transition-all duration-700 animate-in fade-in slide-in-from-bottom-8">
         {/* Logo & Header */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-zinc-900 border border-zinc-800 rounded-2xl mb-6 shadow-2xl">
-            <Box className="w-8 h-8 text-[#D4A373]" />
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-white border border-zinc-200 rounded-[2rem] mb-8 shadow-xl shadow-zinc-200/50 group hover:scale-105 transition-transform duration-500">
+            <div className="w-12 h-12 bg-zinc-950 rounded-[1.2rem] flex items-center justify-center">
+              <Box className="w-6 h-6 text-[#D4A373]" />
+            </div>
           </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight mb-2">
+          <h1 className="text-4xl font-extrabold text-zinc-900 tracking-tight mb-3">
             Admin Panel
           </h1>
-          <p className="text-zinc-500 text-sm">
-            PT Paletindo Prakarsa Unggul — CMS Dashboard
+          <p className="text-zinc-500 text-sm font-medium tracking-wide">
+            PT Paletindo Prakarsa Unggul — CMS Control Center
           </p>
         </div>
 
         {/* Login Form Card */}
-        <div className="bg-zinc-900/80 backdrop-blur-xl border border-zinc-800/50 rounded-3xl p-8 shadow-2xl">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="bg-white border border-zinc-200/60 rounded-[2.5rem] p-10 shadow-2xl shadow-zinc-200/50 relative overflow-hidden group">
+          {/* Subtle line at top */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-[#D4A373]/10"></div>
+          
+          <form onSubmit={handleSubmit} className="space-y-7 relative z-10">
             {/* Email Field */}
-            <div>
+            <div className="space-y-2.5">
               <label
                 htmlFor="email"
-                className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2"
+                className="block text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] ml-1"
               >
-                Email
+                Identification
               </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Mail className="w-4 h-4 text-zinc-500" />
+              <div className="relative group/input">
+                <div className="absolute inset-y-0 left-0 pl-4.5 flex items-center pointer-events-none">
+                  <Mail className="w-4.5 h-4.5 text-zinc-400 group-focus-within/input:text-[#D4A373] transition-colors" />
                 </div>
                 <input
                   id="email"
@@ -77,22 +82,22 @@ export default function AdminLoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="admin@paletindo.com"
                   required
-                  className="block w-full pl-11 pr-4 py-3.5 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 focus:border-[#D4A373]/50 transition-all text-sm"
+                  className="block w-full pl-12 pr-4 py-4 bg-zinc-50/50 border border-zinc-200 rounded-2xl text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-[#D4A373]/5 focus:border-[#D4A373]/20 transition-all text-sm font-medium"
                 />
               </div>
             </div>
 
             {/* Password Field */}
-            <div>
+            <div className="space-y-2.5">
               <label
                 htmlFor="password"
-                className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2"
+                className="block text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] ml-1"
               >
-                Password
+                Security Key
               </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Lock className="w-4 h-4 text-zinc-500" />
+              <div className="relative group/input">
+                <div className="absolute inset-y-0 left-0 pl-4.5 flex items-center pointer-events-none">
+                  <Lock className="w-4.5 h-4.5 text-zinc-400 group-focus-within/input:text-[#D4A373] transition-colors" />
                 </div>
                 <input
                   id="password"
@@ -101,17 +106,17 @@ export default function AdminLoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="block w-full pl-11 pr-12 py-3.5 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 focus:border-[#D4A373]/50 transition-all text-sm"
+                  className="block w-full pl-12 pr-12 py-4 bg-zinc-50/50 border border-zinc-200 rounded-2xl text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-[#D4A373]/5 focus:border-[#D4A373]/20 transition-all text-sm font-medium"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-zinc-500 hover:text-zinc-300 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-4.5 flex items-center text-zinc-400 hover:text-zinc-600 transition-colors"
                 >
                   {showPassword ? (
-                    <EyeOff className="w-4 h-4" />
+                    <EyeOff className="w-4.5 h-4.5" />
                   ) : (
-                    <Eye className="w-4 h-4" />
+                    <Eye className="w-4.5 h-4.5" />
                   )}
                 </button>
               </div>
@@ -119,7 +124,8 @@ export default function AdminLoginPage() {
 
             {/* Error Message */}
             {error && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-xl">
+              <div className="bg-red-50 border border-red-100 text-red-600 text-[13px] font-medium px-5 py-3.5 rounded-2xl flex items-center gap-2 animate-in fade-in zoom-in duration-300">
+                <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
                 {error}
               </div>
             )}
@@ -128,24 +134,27 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={isLoading || authLoading}
-              className="group w-full flex items-center justify-center gap-3 bg-[#D4A373] hover:bg-[#C19263] text-zinc-900 font-bold py-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm uppercase tracking-wider shadow-lg shadow-[#D4A373]/20"
+              className="group w-full flex items-center justify-center gap-3 bg-zinc-900 hover:bg-zinc-800 text-white font-bold py-4.5 rounded-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm uppercase tracking-widest shadow-xl shadow-zinc-900/10 active:scale-[0.98]"
             >
               {isLoading ? (
-                <div className="w-5 h-5 border-2 border-zinc-900/30 border-t-zinc-900 rounded-full animate-spin"></div>
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
               ) : (
-                <>
-                  Masuk ke Dashboard
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </>
+                <div className="flex items-center gap-2.5">
+                  <span className="text-[#D4A373]">Masuk</span> Ke Dashboard
+                  <ArrowRight className="w-4 h-4 text-[#D4A373] group-hover:translate-x-1.5 transition-transform" />
+                </div>
               )}
             </button>
           </form>
         </div>
 
         {/* Footer */}
-        <p className="text-center text-zinc-600 text-xs mt-8">
-          &copy; {new Date().getFullYear()} PT Paletindo Prakarsa Unggul. Panel ini hanya untuk admin.
-        </p>
+        <div className="flex flex-col items-center gap-6 mt-12">
+          <div className="w-px h-12 bg-zinc-200"></div>
+          <p className="text-zinc-400 text-[10px] font-bold uppercase tracking-[0.2em]">
+            &copy; {new Date().getFullYear()} PT Paletindo Prakarsa Unggul
+          </p>
+        </div>
       </div>
     </div>
   );
