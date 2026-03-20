@@ -21,18 +21,38 @@ export default function AboutPage() {
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <div className="max-w-4xl">
-            <h2 className="text-[#D4A373] font-medium tracking-widest uppercase text-sm mb-6 flex items-center gap-4">
-              <span className="w-12 h-[1px] bg-[#D4A373]"></span>
-              Profil Perusahaan
-            </h2>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-[0.9] mb-8">
-              Pondasi<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4A373] to-[#C19263]">Terkuat</span> Logistik Anda.
-            </h1>
-            <p className="text-xl md:text-2xl text-zinc-400 font-light max-w-2xl leading-relaxed border-l-2 border-[#D4A373] pl-6 ml-2">
-              Lebih dari sekadar suplier, kami adalah mitra tepercaya bagi pelaku usaha dan manufaktur untuk kebutuhan palet plastik dan box container industri.
-            </p>
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
+            <div className="max-w-4xl lg:w-2/3">
+              <h2 className="text-[#D4A373] font-medium tracking-widest uppercase text-sm mb-6 flex items-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200">
+                <span className="w-12 h-[1px] bg-[#D4A373]"></span>
+                Profil Perusahaan
+              </h2>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-[0.9] mb-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+                Pondasi<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4A373] to-[#C19263]">Terkuat</span> Logistik Anda.
+              </h1>
+              <p className="text-xl md:text-2xl text-zinc-400 font-light max-w-2xl leading-relaxed border-l-2 border-[#D4A373] pl-6 ml-2 animate-in fade-in transition-all duration-1000 delay-500">
+                Lebih dari sekadar suplier, kami adalah mitra tepercaya bagi pelaku usaha dan manufaktur untuk kebutuhan palet plastik dan box container industri.
+              </p>
+            </div>
+
+            {/* Premium Logo Integration - Right Side */}
+            <div className="lg:w-1/3 flex justify-center lg:justify-end animate-in fade-in zoom-in duration-1000 delay-700">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-[#D4A373]/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                <div className="relative inline-flex items-center justify-center p-8 md:p-12 bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] shadow-[0_32px_64px_-15px_rgba(0,0,0,0.5)] group-hover:bg-white/10 transition-all duration-700">
+                  <div className="relative w-32 h-32 md:w-48 md:h-48 lg:w-56 lg:h-56">
+                    <Image 
+                      src="/logo.png" 
+                      alt="PT Paletindo Logo" 
+                      fill
+                      className="object-contain p-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-1000 ease-out"
+                      priority
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
