@@ -8,6 +8,10 @@ import {
   Save,
   X,
   Image as ImageIcon,
+  ChevronRight,
+  Info,
+  Package,
+  Sparkles,
 } from "lucide-react";
 import { supabase, uploadImage, type Product } from "@/lib/supabase";
 
@@ -112,15 +116,12 @@ export default function EditProductPage({
         imageUrl = await uploadImage("product-images", imageFile, path);
       }
 
-      // If this product is featured, unfeature all others
       if (form.is_featured) {
-        const { error: unfeatureError } = await supabase
+        await supabase
           .from("products")
           .update({ is_featured: false })
-          .neq("id", id) // Don't unfeature self
+          .neq("id", id)
           .eq("is_featured", true);
-        
-        if (unfeatureError) console.error("Error unfeaturing other products:", unfeatureError);
       }
 
       const { error: updateError } = await supabase
@@ -154,309 +155,281 @@ export default function EditProductPage({
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-2 border-zinc-700 border-t-[#D4A373] rounded-full animate-spin"></div>
+      <div className="min-h-screen flex items-center justify-center bg-zinc-50">
+        <div className="w-10 h-10 border-2 border-zinc-200 border-t-[#D4A373] rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-10 pb-32">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <Link
-          href="/admin/products"
-          className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800/50 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-600 transition-all"
-        >
-          <ArrowLeft className="w-4 h-4" />
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">
-            Edit Produk
-          </h1>
-          <p className="text-zinc-500 text-sm mt-0.5 truncate max-w-md">
-            {form.name}
-          </p>
-        </div>
-      </div>
-
-      {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Image Upload */}
-        <div className="bg-zinc-900 border border-zinc-800/50 rounded-2xl p-6">
-          <label className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">
-            Gambar Produk
-          </label>
-          <div
-            onClick={() => fileInputRef.current?.click()}
-            className="relative border-2 border-dashed border-zinc-700 rounded-xl p-8 text-center cursor-pointer hover:border-[#D4A373]/50 transition-colors group"
-          >
-            {imagePreview ? (
-              <div className="relative">
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="max-h-64 mx-auto object-contain rounded-lg"
-                />
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setImagePreview(null);
-                    setImageFile(null);
-                    setForm((prev) => ({ ...prev, image_url: null }));
-                  }}
-                  className="absolute top-2 right-2 w-8 h-8 bg-zinc-900 rounded-full flex items-center justify-center text-zinc-400 hover:text-red-400"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-14 h-14 rounded-2xl bg-zinc-800 flex items-center justify-center">
-                  <ImageIcon className="w-6 h-6 text-zinc-500" />
-                </div>
-                <p className="text-zinc-300 font-medium text-sm">
-                  Klik untuk upload gambar baru
-                </p>
-              </div>
-            )}
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="hidden"
-            />
-          </div>
-        </div>
-
-        {/* Basic Info */}
-        <div className="bg-zinc-900 border border-zinc-800/50 rounded-2xl p-6 space-y-5">
-          <h3 className="text-white font-bold text-sm mb-4">Informasi Dasar</h3>
-
-          <div>
-            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">
-              Nama Produk *
-            </label>
-            <input
-              type="text"
-              value={form.name}
-              onChange={(e) =>
-                setForm((prev) => ({ ...prev, name: e.target.value }))
-              }
-              required
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 text-sm"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">
-              Slug (URL)
-            </label>
-            <input
-              type="text"
-              value={form.slug}
-              onChange={(e) =>
-                setForm((prev) => ({ ...prev, slug: e.target.value }))
-              }
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 text-sm font-mono"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">
-              Deskripsi
-            </label>
-            <textarea
-              value={form.description}
-              onChange={(e) =>
-                setForm((prev) => ({ ...prev, description: e.target.value }))
-              }
-              rows={4}
-              className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 text-sm resize-none"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">
-                Kategori *
-              </label>
-              <select
-                value={form.category}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, category: e.target.value }))
-                }
-                className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 text-sm appearance-none"
-              >
-                {CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">
-                Material
-              </label>
-              <input
-                type="text"
-                value={form.material}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, material: e.target.value }))
-                }
-                className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 text-sm"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">
-                Warna
-              </label>
-              <input
-                type="text"
-                value={form.color}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, color: e.target.value }))
-                }
-                className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">
-                Berat (gram)
-              </label>
-              <input
-                type="number"
-                value={form.weight}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    weight: parseFloat(e.target.value) || 0,
-                  }))
-                }
-                className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 text-sm"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Dimensions */}
-        <div className="bg-zinc-900 border border-zinc-800/50 rounded-2xl p-6 space-y-5">
-          <h3 className="text-white font-bold text-sm mb-4">Dimensi (cm)</h3>
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <label className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">
-                Panjang
-              </label>
-              <input
-                type="number"
-                step="0.1"
-                value={form.length_outer}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    length_outer: parseFloat(e.target.value) || 0,
-                  }))
-                }
-                className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">
-                Lebar
-              </label>
-              <input
-                type="number"
-                step="0.1"
-                value={form.width_outer}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    width_outer: parseFloat(e.target.value) || 0,
-                  }))
-                }
-                className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2">
-                Tinggi
-              </label>
-              <input
-                type="number"
-                step="0.1"
-                value={form.height_outer}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    height_outer: parseFloat(e.target.value) || 0,
-                  }))
-                }
-                className="w-full px-4 py-3 bg-zinc-800/50 border border-zinc-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 text-sm"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Featured Toggle */}
-        <div className="bg-zinc-900 border border-zinc-800/50 rounded-2xl p-6">
-          <label className="flex items-center gap-3 cursor-pointer">
-            <div
-              className={`w-11 h-6 rounded-full transition-colors relative ${
-                form.is_featured ? "bg-[#D4A373]" : "bg-zinc-700"
-              }`}
-              onClick={() =>
-                setForm((prev) => ({
-                  ...prev,
-                  is_featured: !prev.is_featured,
-                }))
-              }
-            >
-              <div
-                className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-transform ${
-                  form.is_featured ? "translate-x-[22px]" : "translate-x-0.5"
-                }`}
-              />
-            </div>
-            <div>
-              <p className="text-white font-medium text-sm">Produk Unggulan</p>
-              <p className="text-zinc-500 text-xs">
-                Tampilkan produk ini di halaman utama
-              </p>
-            </div>
-          </label>
-        </div>
-
-        {/* Error */}
-        {error && (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-xl">
-            {error}
-          </div>
-        )}
-
-        {/* Actions */}
-        <div className="flex items-center gap-3 pt-4">
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="inline-flex items-center gap-2 bg-[#D4A373] hover:bg-[#C19263] text-zinc-900 font-bold px-8 py-3.5 rounded-xl transition-all disabled:opacity-50 text-sm shadow-lg shadow-[#D4A373]/20"
-          >
-            {isSubmitting ? (
-              <div className="w-4 h-4 border-2 border-zinc-900/30 border-t-zinc-900 rounded-full animate-spin"></div>
-            ) : (
-              <Save className="w-4 h-4" />
-            )}
-            Simpan Perubahan
-          </button>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div className="flex items-center gap-5">
           <Link
             href="/admin/products"
-            className="px-6 py-3.5 text-zinc-400 hover:text-white transition-colors text-sm font-medium"
+            className="w-12 h-12 rounded-2xl bg-white border border-zinc-200 flex items-center justify-center text-zinc-400 hover:text-zinc-900 hover:border-zinc-900 transition-all shadow-sm active:scale-90"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Link>
+          <div>
+            <div className="flex items-center gap-2 text-[#D4A373] font-bold text-[10px] uppercase tracking-[0.2em] mb-1">
+              Editor & Revision
+            </div>
+            <h1 className="text-3xl font-black text-zinc-900 tracking-tight">
+              Edit Produk
+            </h1>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <Link
+            href="/admin/products"
+            className="px-6 py-3 text-zinc-500 hover:text-zinc-900 font-bold text-sm transition-colors"
           >
             Batal
           </Link>
+          <button
+            onClick={(e) => handleSubmit(e as any)}
+            disabled={isSubmitting}
+            className="inline-flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white font-bold px-8 py-4 rounded-2xl transition-all text-sm shadow-xl shadow-zinc-950/10 active:scale-95"
+          >
+            {isSubmitting ? (
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            ) : (
+              <Save className="w-4 h-4 text-[#D4A373]" />
+            )}
+            Simpan Perubahan
+          </button>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        {/* Main Content */}
+        <div className="lg:col-span-2 space-y-8">
+          {/* Basic Info */}
+          <section className="bg-white border border-zinc-200 rounded-[2.5rem] p-10 space-y-8 shadow-sm">
+            <div className="flex items-center gap-3 border-b border-zinc-50 pb-6">
+              <div className="w-10 h-10 rounded-xl bg-zinc-50 flex items-center justify-center">
+                <Info className="w-5 h-5 text-zinc-400" />
+              </div>
+              <h3 className="text-xl font-bold text-zinc-900 tracking-tight">Informasi Dasar</h3>
+            </div>
+
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">
+                  Nama Produk <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
+                  required
+                  className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 focus:outline-none focus:border-[#D4A373]/30 transition-all text-sm font-semibold"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">
+                  URL Slug
+                </label>
+                <input
+                  type="text"
+                  value={form.slug}
+                  onChange={(e) => setForm((prev) => ({ ...prev, slug: e.target.value }))}
+                  className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-400 focus:outline-none transition-all text-sm font-mono"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">
+                  Deskripsi
+                </label>
+                <textarea
+                  value={form.description}
+                  onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
+                  rows={6}
+                  className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 focus:outline-none focus:border-[#D4A373]/30 transition-all text-sm font-medium resize-none leading-relaxed"
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Specs */}
+          <section className="bg-white border border-zinc-200 rounded-[2.5rem] p-10 space-y-8 shadow-sm">
+            <div className="flex items-center gap-3 border-b border-zinc-50 pb-6">
+              <div className="w-10 h-10 rounded-xl bg-zinc-50 flex items-center justify-center">
+                <Package className="w-5 h-5 text-zinc-400" />
+              </div>
+              <h3 className="text-xl font-bold text-zinc-900 tracking-tight">Teknis & Dimensi</h3>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">Kategori</label>
+                <select
+                  value={form.category}
+                  onChange={(e) => setForm((prev) => ({ ...prev, category: e.target.value }))}
+                  className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 text-sm font-semibold focus:outline-none focus:border-[#D4A373]/30 appearance-none transition-all"
+                >
+                  {CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">Material</label>
+                <input
+                  type="text"
+                  value={form.material}
+                  onChange={(e) => setForm((prev) => ({ ...prev, material: e.target.value }))}
+                  className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 text-sm font-semibold focus:outline-none focus:border-[#D4A373]/30 transition-all"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">Warna</label>
+                <input
+                  type="text"
+                  value={form.color}
+                  onChange={(e) => setForm((prev) => ({ ...prev, color: e.target.value }))}
+                  className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 text-sm font-semibold focus:outline-none focus:border-[#D4A373]/30 transition-all"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">Berat (g)</label>
+                <input
+                  type="number"
+                  value={form.weight}
+                  onChange={(e) => setForm((prev) => ({ ...prev, weight: parseFloat(e.target.value) || 0 }))}
+                  className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 text-sm font-semibold focus:outline-none focus:border-[#D4A373]/30 transition-all"
+                />
+              </div>
+            </div>
+
+            <div className="pt-4 space-y-4">
+              <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">Dimensi Luar (cm)</label>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="bg-zinc-50 border border-zinc-100 rounded-2xl p-4 text-center">
+                  <span className="text-[9px] font-bold text-zinc-400 uppercase block mb-1">P</span>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={form.length_outer}
+                    onChange={(e) => setForm((prev) => ({ ...prev, length_outer: parseFloat(e.target.value) || 0 }))}
+                    className="w-full bg-transparent text-center text-zinc-900 font-bold focus:outline-none"
+                  />
+                </div>
+                <div className="bg-zinc-50 border border-zinc-100 rounded-2xl p-4 text-center">
+                  <span className="text-[9px] font-bold text-zinc-400 uppercase block mb-1">L</span>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={form.width_outer}
+                    onChange={(e) => setForm((prev) => ({ ...prev, width_outer: parseFloat(e.target.value) || 0 }))}
+                    className="w-full bg-transparent text-center text-zinc-900 font-bold focus:outline-none"
+                  />
+                </div>
+                <div className="bg-zinc-50 border border-zinc-100 rounded-2xl p-4 text-center">
+                  <span className="text-[9px] font-bold text-zinc-400 uppercase block mb-1">T</span>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={form.height_outer}
+                    onChange={(e) => setForm((prev) => ({ ...prev, height_outer: parseFloat(e.target.value) || 0 }))}
+                    className="w-full bg-transparent text-center text-zinc-900 font-bold focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* Sidebar */}
+        <div className="space-y-8">
+          <section className="bg-white border border-zinc-200 rounded-[2.5rem] p-8 shadow-sm space-y-6">
+            <h3 className="text-lg font-bold text-zinc-900 tracking-tight">Main Visual</h3>
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              className="relative aspect-square border-2 border-dashed border-zinc-100 rounded-[2rem] flex flex-col items-center justify-center cursor-pointer hover:bg-zinc-50 transition-all group overflow-hidden"
+            >
+              {imagePreview ? (
+                <>
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="w-full h-full object-contain p-6 transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-zinc-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setImagePreview(null);
+                        setImageFile(null);
+                        setForm((prev) => ({ ...prev, image_url: null }));
+                      }}
+                      className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-red-500 shadow-xl"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="flex flex-col items-center gap-4 text-center p-8">
+                  <div className="w-16 h-16 rounded-2xl bg-zinc-50 flex items-center justify-center group-hover:bg-white group-hover:shadow-lg transition-all">
+                    <ImageIcon className="w-8 h-8 text-zinc-300 group-hover:text-[#D4A373]" />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-zinc-900 font-bold text-sm">Change Image</p>
+                    <p className="text-zinc-400 text-xs font-medium">Click to pick new file</p>
+                  </div>
+                </div>
+              )}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+            </div>
+          </section>
+
+          <section className="bg-white border border-zinc-200 rounded-[2.5rem] p-8 shadow-sm space-y-6">
+            <h3 className="text-lg font-bold text-zinc-900 tracking-tight">Publikasi</h3>
+            
+            <label className="flex items-start gap-4 p-4 rounded-3xl hover:bg-zinc-50 transition-colors cursor-pointer group">
+              <div
+                className={`w-12 h-7 rounded-full transition-all relative shrink-0 mt-1 ${
+                  form.is_featured ? "bg-[#D4A373]" : "bg-zinc-200"
+                }`}
+                onClick={() => setForm((prev) => ({ ...prev, is_featured: !prev.is_featured }))}
+              >
+                <div
+                  className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-lg transition-all ${
+                    form.is_featured ? "translate-x-6" : "translate-x-1"
+                  }`}
+                />
+              </div>
+              <div>
+                <p className="text-zinc-900 font-bold text-sm flex items-center gap-2">
+                  Featured Item
+                  <Sparkles className={`w-3.5 h-3.5 ${form.is_featured ? "text-[#D4A373] fill-current" : "text-zinc-300"}`} />
+                </p>
+                <p className="text-zinc-500 text-[11px] font-medium leading-relaxed mt-1">
+                  Tampilkan di billboard beranda website.
+                </p>
+              </div>
+            </label>
+
+            {error && (
+              <div className="bg-red-50 border border-red-100 text-red-600 text-[11px] font-bold px-4 py-3 rounded-2xl flex items-start gap-2">
+                <X className="w-3.5 h-3.5 shrink-0" />
+                {error}
+              </div>
+            )}
+          </section>
         </div>
       </form>
     </div>

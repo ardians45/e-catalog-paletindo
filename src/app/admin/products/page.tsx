@@ -10,6 +10,9 @@ import {
   Package,
   ChevronLeft,
   ChevronRight,
+  Filter,
+  MoreVertical,
+  Star,
 } from "lucide-react";
 import { supabase, type Product } from "@/lib/supabase";
 
@@ -68,165 +71,212 @@ export default function AdminProductsPage() {
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 max-w-7xl pb-20">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-[#D4A373] font-bold text-[10px] uppercase tracking-[0.2em]">
+            <Package className="w-3.5 h-3.5" />
+            Inventory Manager
+          </div>
+          <h1 className="text-4xl font-extrabold text-zinc-900 tracking-tight">
             Produk
           </h1>
-          <p className="text-zinc-500 text-sm mt-1">
-            Kelola semua produk di katalog digital.
+          <p className="text-zinc-500 text-sm font-medium">
+            Kelola katalog produk digital Anda dengan presisi.
           </p>
         </div>
         <Link
           href="/admin/products/new"
-          className="inline-flex items-center gap-2 bg-[#D4A373] hover:bg-[#C19263] text-zinc-900 font-bold px-5 py-3 rounded-xl transition-all text-sm shadow-lg shadow-[#D4A373]/20"
+          className="inline-flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white font-bold px-8 py-4 rounded-2xl transition-all text-sm shadow-xl shadow-zinc-900/10 active:scale-95"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4.5 h-4.5 text-[#D4A373]" />
           Tambah Produk
         </Link>
       </div>
 
-      {/* Search Bar */}
-      <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-        <input
-          type="text"
-          placeholder="Cari produk..."
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setCurrentPage(1);
-          }}
-          className="w-full pl-11 pr-4 py-3 bg-zinc-900 border border-zinc-800/50 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 text-sm"
-        />
+      {/* Control Bar */}
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="relative flex-1 group">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-zinc-400 group-focus-within:text-[#D4A373] transition-colors" />
+          <input
+            type="text"
+            placeholder="Search catalog by name..."
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="w-full pl-12 pr-4 py-4 bg-white border border-zinc-200 rounded-2xl text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-[#D4A373]/5 transition-all text-sm font-medium"
+          />
+        </div>
+        <button className="px-6 py-4 bg-white border border-zinc-200 rounded-2xl text-zinc-600 font-bold text-sm flex items-center justify-center gap-2 hover:bg-zinc-50 transition-all">
+          <Filter className="w-4 h-4" />
+          Filters
+        </button>
       </div>
 
-      {/* Products Table */}
-      <div className="bg-zinc-900 border border-zinc-800/50 rounded-2xl overflow-hidden">
+      {/* Table Container */}
+      <div className="bg-white border border-zinc-200 rounded-[2rem] overflow-hidden shadow-sm shadow-zinc-200/50">
         {isLoading ? (
-          <div className="p-12 text-center">
-            <div className="w-8 h-8 border-2 border-zinc-700 border-t-[#D4A373] rounded-full animate-spin mx-auto mb-3"></div>
-            <p className="text-zinc-500 text-sm">Memuat produk...</p>
+          <div className="p-24 text-center">
+            <div className="w-10 h-10 border-2 border-zinc-100 border-t-[#D4A373] rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-zinc-400 font-bold text-sm tracking-tight">Syncing Data...</p>
           </div>
         ) : products.length === 0 ? (
-          <div className="p-12 text-center">
-            <Package className="w-12 h-12 text-zinc-700 mx-auto mb-3" />
-            <p className="text-zinc-400 font-medium">
-              {search ? "Tidak ada produk yang cocok" : "Belum ada produk"}
-            </p>
-            <p className="text-zinc-600 text-sm mt-1">
-              {search
-                ? "Coba kata kunci lain"
-                : "Klik tombol \"Tambah Produk\" untuk menambahkan."}
-            </p>
+          <div className="p-24 text-center space-y-4">
+            <div className="w-20 h-20 bg-zinc-50 rounded-full flex items-center justify-center mx-auto">
+              <Package className="w-10 h-10 text-zinc-200" />
+            </div>
+            <div>
+              <p className="text-zinc-900 font-bold text-lg tracking-tight">
+                {search ? "Empty Result" : "No Content Yet"}
+              </p>
+              <p className="text-zinc-500 text-sm font-medium mt-1">
+                {search
+                  ? "We couldn't find any products matching your search."
+                  : "Start populating your catalog by adding your first product."}
+              </p>
+            </div>
+            {!search && (
+              <Link
+                href="/admin/products/new"
+                className="inline-block text-[#D4A373] font-bold text-sm hover:underline underline-offset-4"
+              >
+                Add Product Manually
+              </Link>
+            )}
           </div>
         ) : (
-          <>
-            {/* Table Header */}
-            <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-3 text-[10px] font-bold text-zinc-500 uppercase tracking-widest border-b border-zinc-800/50">
-              <div className="col-span-1">Gambar</div>
-              <div className="col-span-4">Nama Produk</div>
-              <div className="col-span-2">Kategori</div>
-              <div className="col-span-2">Dimensi</div>
-              <div className="col-span-1">Material</div>
-              <div className="col-span-2 text-right">Aksi</div>
-            </div>
-
-            {/* Table Rows */}
-            {products.map((product) => (
-              <div
-                key={product.id}
-                className="grid grid-cols-1 md:grid-cols-12 gap-4 px-6 py-4 border-b border-zinc-800/30 last:border-b-0 hover:bg-zinc-800/20 transition-colors items-center"
-              >
-                {/* Image */}
-                <div className="col-span-1">
-                  <div className="w-12 h-12 rounded-lg bg-zinc-800 border border-zinc-700/50 overflow-hidden flex items-center justify-center">
-                    {product.image_url ? (
-                      <img
-                        src={product.image_url}
-                        alt={product.name}
-                        className="w-full h-full object-contain p-1"
-                      />
-                    ) : (
-                      <Package className="w-5 h-5 text-zinc-600" />
-                    )}
-                  </div>
-                </div>
-
-                {/* Name */}
-                <div className="col-span-4">
-                  <p className="text-white font-medium text-sm line-clamp-1">
-                    {product.name}
-                  </p>
-                  <p className="text-zinc-600 text-xs mt-0.5 truncate">
-                    {product.slug}
-                  </p>
-                </div>
-
-                {/* Category */}
-                <div className="col-span-2">
-                  <span className="px-2.5 py-1 bg-zinc-800 text-zinc-300 text-[10px] font-bold uppercase tracking-wider rounded-full">
-                    {product.category}
-                  </span>
-                </div>
-
-                {/* Dimension */}
-                <div className="col-span-2 text-zinc-400 text-xs">
-                  {product.length_outer > 0
-                    ? `${product.length_outer} × ${product.width_outer} × ${product.height_outer}`
-                    : "—"}
-                </div>
-
-                {/* Material */}
-                <div className="col-span-1 text-zinc-400 text-xs truncate">
-                  {product.material}
-                </div>
-
-                {/* Actions */}
-                <div className="col-span-2 flex items-center justify-end gap-2">
-                  <Link
-                    href={`/admin/products/${product.id}/edit`}
-                    className="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700/50 flex items-center justify-center text-zinc-400 hover:text-[#D4A373] hover:border-[#D4A373]/30 transition-all"
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-zinc-100 bg-zinc-50/50">
+                  <th className="px-8 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Visual</th>
+                  <th className="px-8 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">ID & Name</th>
+                  <th className="px-8 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Category</th>
+                  <th className="px-8 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Spec</th>
+                  <th className="px-8 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Status</th>
+                  <th className="px-8 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-right">Settings</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-50">
+                {products.map((product) => (
+                  <tr
+                    key={product.id}
+                    className="group hover:bg-zinc-50/80 transition-all duration-200"
                   >
-                    <Pencil className="w-3.5 h-3.5" />
-                  </Link>
-                  <button
-                    onClick={() => setDeleteId(product.id)}
-                    className="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700/50 flex items-center justify-center text-zinc-400 hover:text-red-400 hover:border-red-500/30 transition-all"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </>
+                    {/* Visual */}
+                    <td className="px-8 py-6">
+                      <div className="w-16 h-16 rounded-2xl bg-zinc-50 border border-zinc-100 overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                        {product.image_url ? (
+                          <img
+                            src={product.image_url}
+                            alt={product.name}
+                            className="w-full h-full object-contain p-2"
+                          />
+                        ) : (
+                          <Package className="w-6 h-6 text-zinc-200" />
+                        )}
+                      </div>
+                    </td>
+
+                    {/* ID & Name */}
+                    <td className="px-8 py-6">
+                      <div>
+                        <p className="text-zinc-900 font-extrabold text-base tracking-tight mb-1">
+                          {product.name}
+                        </p>
+                        <p className="text-zinc-400 text-xs font-mono font-medium">
+                          REF-{product.slug.toUpperCase()}
+                        </p>
+                      </div>
+                    </td>
+
+                    {/* Category */}
+                    <td className="px-8 py-6">
+                      <span className="inline-flex items-center px-3 py-1 bg-zinc-100/80 text-zinc-600 text-[10px] font-bold uppercase tracking-widest rounded-full">
+                        {product.category}
+                      </span>
+                    </td>
+
+                    {/* Spec */}
+                    <td className="px-8 py-6">
+                      <div className="space-y-1">
+                        <p className="text-zinc-500 text-xs font-bold leading-none">
+                          {product.material}
+                        </p>
+                        <p className="text-zinc-400 text-[10px] font-medium uppercase tracking-tighter">
+                          {product.length_outer > 0
+                            ? `${product.length_outer}×${product.width_outer}×${product.height_outer}cm`
+                            : "Size Unspecified"}
+                        </p>
+                      </div>
+                    </td>
+
+                    {/* Status Tags (is_featured example) */}
+                    <td className="px-8 py-6">
+                      {product.is_featured ? (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#D4A373]/10 text-[#B8860B] text-[10px] font-black uppercase tracking-[0.1em] rounded-lg border border-[#D4A373]/20">
+                          <Star className="w-3 h-3 fill-current" />
+                          Featured
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center px-3 py-1.5 bg-zinc-50 text-zinc-400 text-[10px] font-bold uppercase tracking-widest rounded-lg border border-zinc-100">
+                          Active
+                        </span>
+                      )}
+                    </td>
+
+                    {/* Actions */}
+                    <td className="px-8 py-6 text-right">
+                      <div className="flex items-center justify-end gap-3 translate-x-2 group-hover:translate-x-0 transition-transform">
+                        <Link
+                          href={`/admin/products/${product.id}/edit`}
+                          className="w-10 h-10 rounded-xl bg-white border border-zinc-200 flex items-center justify-center text-zinc-400 hover:text-zinc-900 hover:border-zinc-900 hover:shadow-lg hover:shadow-zinc-950/10 transition-all"
+                          title="Edit"
+                        >
+                          <Pencil className="w-4 h-4" />
+                        </Link>
+                        <button
+                          onClick={() => setDeleteId(product.id)}
+                          className="w-10 h-10 rounded-xl bg-white border border-zinc-200 flex items-center justify-center text-zinc-400 hover:text-red-500 hover:border-red-500 hover:shadow-lg hover:shadow-red-500/10 transition-all"
+                          title="Delete"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between">
-          <p className="text-zinc-500 text-xs">
-            Halaman {currentPage} dari {totalPages} ({totalCount} produk)
+        <div className="flex items-center justify-between pt-6 px-4">
+          <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest">
+            Showing <span className="text-zinc-900">{products.length}</span> of <span className="text-zinc-900">{totalCount}</span> units
           </p>
           <div className="flex gap-2">
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="w-9 h-9 rounded-lg border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="w-12 h-12 rounded-2xl border border-zinc-200 bg-white flex items-center justify-center text-zinc-400 hover:text-zinc-900 hover:border-zinc-900 disabled:opacity-30 transition-all shadow-sm active:scale-90"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={() =>
                 setCurrentPage((p) => Math.min(totalPages, p + 1))
               }
               disabled={currentPage === totalPages}
-              className="w-9 h-9 rounded-lg border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="w-12 h-12 rounded-2xl border border-zinc-200 bg-white flex items-center justify-center text-zinc-400 hover:text-zinc-900 hover:border-zinc-900 disabled:opacity-30 transition-all shadow-sm active:scale-90"
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-5 h-5" />
             </button>
           </div>
         </div>
@@ -234,27 +284,31 @@ export default function AdminProductsPage() {
 
       {/* Delete Confirmation Modal */}
       {deleteId && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-            <h3 className="text-white font-bold text-lg mb-2">
-              Hapus Produk?
-            </h3>
-            <p className="text-zinc-400 text-sm mb-6">
-              Tindakan ini tidak bisa dibatalkan. Produk akan dihapus permanen
-              dari katalog.
-            </p>
-            <div className="flex gap-3">
-              <button
-                onClick={() => setDeleteId(null)}
-                className="flex-1 py-2.5 bg-zinc-800 text-zinc-300 rounded-xl hover:bg-zinc-700 transition-colors text-sm font-medium"
-              >
-                Batal
-              </button>
+        <div className="fixed inset-0 bg-zinc-950/20 backdrop-blur-xl z-[100] flex items-center justify-center p-6">
+          <div className="bg-white border border-zinc-200 rounded-[2.5rem] p-12 max-w-md w-full shadow-2xl space-y-8 animate-in fade-in zoom-in duration-300">
+            <div className="w-20 h-20 bg-red-50 rounded-3xl flex items-center justify-center mx-auto">
+              <Trash2 className="w-10 h-10 text-red-500" />
+            </div>
+            <div className="text-center space-y-2">
+              <h3 className="text-2xl font-black text-zinc-900 tracking-tight">
+                Hapus Unit?
+              </h3>
+              <p className="text-zinc-500 text-sm font-medium leading-relaxed">
+                Unit yang dipilih akan dihapus secara permanen dari sistem. Tindakan ini tidak dapat dibatalkan.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3">
               <button
                 onClick={() => handleDelete(deleteId)}
-                className="flex-1 py-2.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl hover:bg-red-500/20 transition-colors text-sm font-medium"
+                className="w-full py-4 bg-red-600 text-white rounded-2xl hover:bg-red-700 transition-all text-sm font-bold shadow-xl shadow-red-600/20"
               >
-                Hapus
+                Hapus Permanen
+              </button>
+              <button
+                onClick={() => setDeleteId(null)}
+                className="w-full py-4 bg-zinc-100 text-zinc-600 rounded-2xl hover:bg-zinc-200 transition-all text-sm font-bold"
+              >
+                Batalkan
               </button>
             </div>
           </div>

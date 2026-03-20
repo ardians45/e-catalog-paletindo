@@ -2,7 +2,16 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Package, FileText, TrendingUp, Plus, ArrowUpRight } from "lucide-react";
+import { 
+  Package, 
+  FileText, 
+  TrendingUp, 
+  Plus, 
+  ArrowUpRight, 
+  ArrowRight,
+  Zap,
+  LayoutGrid
+} from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function AdminDashboard() {
@@ -53,135 +62,160 @@ export default function AdminDashboard() {
 
   const statCards = [
     {
-      title: "Total Produk",
+      title: "Katalog Produk",
       value: stats.totalProducts,
+      description: "Total SKU Terdaftar",
       icon: Package,
-      color: "from-blue-500/20 to-blue-600/10",
-      iconColor: "text-blue-400",
+      color: "bg-blue-50 text-blue-600",
       href: "/admin/products",
     },
     {
-      title: "Total Artikel",
+      title: "Konten Artikel",
       value: stats.totalArticles,
+      description: "Berita & Tips",
       icon: FileText,
-      color: "from-emerald-500/20 to-emerald-600/10",
-      iconColor: "text-emerald-400",
+      color: "bg-emerald-50 text-emerald-600",
       href: "/admin/articles",
     },
     {
-      title: "Artikel Published",
+      title: "Live Articles",
       value: stats.publishedArticles,
+      description: "Sudah Terpublikasi",
       icon: TrendingUp,
-      color: "from-[#D4A373]/20 to-[#D4A373]/10",
-      iconColor: "text-[#D4A373]",
+      color: "bg-[#D4A373]/10 text-[#B8860B]",
       href: "/admin/articles",
     },
     {
-      title: "Artikel Draft",
+      title: "Draft Mode",
       value: stats.draftArticles,
-      icon: FileText,
-      color: "from-zinc-500/20 to-zinc-600/10",
-      iconColor: "text-zinc-400",
+      description: "Dalam Antrean",
+      icon: Zap,
+      color: "bg-zinc-100 text-zinc-600",
       href: "/admin/articles",
     },
   ];
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">
-            Dashboard
-          </h1>
-          <p className="text-zinc-500 text-sm mt-1">
-            Kelola produk dan konten website PT Paletindo.
-          </p>
+    <div className="space-y-12 max-w-7xl">
+      {/* Welcome Header */}
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2 text-[#D4A373] font-bold text-[10px] uppercase tracking-[0.2em]">
+          <LayoutGrid className="w-3.5 h-3.5" />
+          Dashboard Overview
         </div>
+        <h1 className="text-4xl font-extrabold text-zinc-900 tracking-tight">
+          Selamat Datang, Admin.
+        </h1>
+        <p className="text-zinc-500 text-base max-w-2xl font-medium">
+          Pantau status produk dan kelola konten artikel Anda dalam satu tampilan minimalis yang efisien.
+        </p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
         {statCards.map((card) => (
           <Link
             key={card.title}
             href={card.href}
-            className="group bg-zinc-900 border border-zinc-800/50 rounded-2xl p-6 hover:border-zinc-700 transition-all"
+            className="group relative bg-white border border-zinc-200 rounded-[2rem] p-8 hover:border-[#D4A373]/50 hover:shadow-2xl hover:shadow-[#D4A373]/5 transition-all duration-300 overflow-hidden"
           >
-            <div className="flex items-start justify-between mb-4">
-              <div
-                className={`w-12 h-12 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center`}
-              >
-                <card.icon className={`w-5 h-5 ${card.iconColor}`} />
-              </div>
-              <ArrowUpRight className="w-4 h-4 text-zinc-700 group-hover:text-zinc-400 transition-colors" />
+            <div className={`w-14 h-14 rounded-2xl ${card.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500`}>
+              <card.icon className="w-6 h-6" />
             </div>
-            <div>
-              {isLoading ? (
-                <div className="h-8 w-16 bg-zinc-800 rounded animate-pulse mb-1"></div>
-              ) : (
-                <p className="text-3xl font-bold text-white mb-1">
-                  {card.value}
-                </p>
-              )}
-              <p className="text-xs text-zinc-500 uppercase tracking-wider font-medium">
+            
+            <div className="space-y-1">
+              <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest">
                 {card.title}
               </p>
+              {isLoading ? (
+                <div className="h-10 w-20 bg-zinc-100 rounded-lg animate-pulse"></div>
+              ) : (
+                <h3 className="text-4xl font-black text-zinc-900 tracking-tight">
+                  {card.value}
+                </h3>
+              )}
+              <p className="text-sm text-zinc-500 font-medium">
+                {card.description}
+              </p>
+            </div>
+
+            <div className="absolute top-8 right-8 w-10 h-10 rounded-full border border-zinc-100 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:bg-zinc-950 group-hover:text-white transition-all duration-300">
+              <ArrowUpRight className="w-4 h-4" />
             </div>
           </Link>
         ))}
       </div>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Link
-          href="/admin/products/new"
-          className="group flex items-center gap-4 bg-zinc-900 border border-zinc-800/50 rounded-2xl p-6 hover:border-[#D4A373]/30 hover:bg-zinc-900/80 transition-all"
-        >
-          <div className="w-12 h-12 rounded-xl bg-[#D4A373]/10 border border-[#D4A373]/20 flex items-center justify-center group-hover:bg-[#D4A373]/20 transition-colors">
-            <Plus className="w-5 h-5 text-[#D4A373]" />
-          </div>
-          <div>
-            <h3 className="text-white font-bold text-sm">Tambah Produk Baru</h3>
-            <p className="text-zinc-500 text-xs mt-0.5">
-              Tambahkan produk ke katalog digital
-            </p>
-          </div>
-          <ArrowUpRight className="w-4 h-4 text-zinc-700 ml-auto group-hover:text-[#D4A373] transition-colors" />
-        </Link>
-
-        <Link
-          href="/admin/articles/new"
-          className="group flex items-center gap-4 bg-zinc-900 border border-zinc-800/50 rounded-2xl p-6 hover:border-emerald-500/30 hover:bg-zinc-900/80 transition-all"
-        >
-          <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
-            <Plus className="w-5 h-5 text-emerald-400" />
-          </div>
-          <div>
-            <h3 className="text-white font-bold text-sm">Tulis Artikel Baru</h3>
-            <p className="text-zinc-500 text-xs mt-0.5">
-              Publikasikan berita atau tips industri
-            </p>
-          </div>
-          <ArrowUpRight className="w-4 h-4 text-zinc-700 ml-auto group-hover:text-emerald-400 transition-colors" />
-        </Link>
-      </div>
-
-      {/* Info Banner */}
-      <div className="bg-zinc-900 border border-zinc-800/50 rounded-2xl p-6">
-        <div className="flex items-start gap-4">
-          <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center shrink-0">
-            <TrendingUp className="w-5 h-5 text-blue-400" />
-          </div>
-          <div>
-            <h3 className="text-white font-bold text-sm mb-1">
-              Selamat datang di Admin CMS
+      {/* Quick Actions & Info */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-6">
+          <div className="flex items-center justify-between px-2">
+            <h3 className="text-xl font-bold text-zinc-900 tracking-tight flex items-center gap-2">
+              Aksi Cepat
             </h3>
-            <p className="text-zinc-500 text-sm leading-relaxed">
-              Dari sini Anda bisa mengelola seluruh konten website PT Paletindo.
-              Gunakan sidebar untuk navigasi ke halaman Produk dan Artikel.
-              Semua perubahan akan langsung terlihat di website publik.
-            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Link
+              href="/admin/products/new"
+              className="group flex flex-col justify-between bg-white border border-zinc-200 rounded-[2.5rem] p-8 hover:border-[#D4A373]/30 transition-all duration-300 h-64 shadow-sm"
+            >
+              <div className="w-12 h-12 rounded-xl bg-[#D4A373]/10 border border-[#D4A373]/20 flex items-center justify-center mb-4 group-hover:bg-[#D4A373]/20 transition-colors">
+                <Plus className="w-6 h-6 text-[#D4A373]" />
+              </div>
+              <div>
+                <h4 className="text-2xl font-bold text-zinc-900 tracking-tight mb-2">Tambah Produk</h4>
+                <p className="text-zinc-500 text-sm font-medium leading-relaxed">
+                  Perluas katalog digital Anda dengan unit atau spesifikasi terbaru.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 text-[#D4A373] font-bold text-xs uppercase tracking-widest mt-4">
+                Luncurkan Produk <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </div>
+            </Link>
+
+            <Link
+              href="/admin/articles/new"
+              className="group flex flex-col justify-between bg-white border border-zinc-200 rounded-[2rem] p-8 hover:border-emerald-500/30 transition-all duration-300 h-64"
+            >
+              <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center mb-4">
+                <Plus className="w-6 h-6 text-emerald-600" />
+              </div>
+              <div>
+                <h4 className="text-2xl font-bold text-zinc-900 tracking-tight mb-2">Tulis Artikel</h4>
+                <p className="text-zinc-500 text-sm font-medium leading-relaxed">
+                  Bagikan informasi terbaru atau edukasi industri kepada pelanggan.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 text-emerald-600 font-bold text-xs uppercase tracking-widest mt-4">
+                Buat Konten <ArrowRight className="w-4 h-4" />
+              </div>
+            </Link>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <h3 className="text-xl font-bold text-zinc-900 tracking-tight px-2">Status Sistem</h3>
+          <div className="bg-white border border-zinc-200 rounded-[2rem] p-8 space-y-6">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                <span className="text-sm font-bold text-zinc-900">Database Connected</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <span className="text-sm font-bold text-zinc-900">Storage Online</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-[#D4A373]"></div>
+                <span className="text-sm font-bold text-zinc-900">Vercel Edge Ready</span>
+              </div>
+            </div>
+            
+            <div className="pt-6 border-t border-zinc-100">
+              <p className="text-sm text-zinc-500 font-medium leading-relaxed">
+                Platform administrasi ini dioptimalkan untuk kecepatan dan kemudahan pengelolaan data katalog PT Paletindo.
+              </p>
+            </div>
           </div>
         </div>
       </div>

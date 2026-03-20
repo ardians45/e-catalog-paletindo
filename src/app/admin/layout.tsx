@@ -12,6 +12,7 @@ import {
   X,
   ChevronRight,
   Box,
+  ExternalLink,
 } from "lucide-react";
 import { AuthProvider, useAuth } from "@/components/providers/AuthProvider";
 
@@ -54,10 +55,10 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div className="min-h-screen bg-zinc-50 flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-2 border-zinc-800 border-t-[#D4A373] rounded-full animate-spin"></div>
-          <p className="text-zinc-500 text-sm">Memuat dashboard...</p>
+          <div className="w-10 h-10 border-2 border-zinc-200 border-t-[#D4A373] rounded-full animate-spin"></div>
+          <p className="text-zinc-500 text-sm font-medium">Memuat...</p>
         </div>
       </div>
     );
@@ -81,40 +82,40 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   }));
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex">
+    <div className="min-h-screen bg-zinc-50 flex font-sans selection:bg-[#D4A373]/30">
       {/* Mobile Overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-zinc-950/20 backdrop-blur-sm z-40 lg:hidden transition-all duration-300"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:sticky top-0 left-0 h-screen w-72 bg-zinc-900 border-r border-zinc-800/50 z-50 flex flex-col transition-transform duration-300 lg:translate-x-0 ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed lg:sticky top-0 left-0 h-screen w-72 bg-white border-r border-zinc-200 z-50 flex flex-col transition-all duration-300 ease-in-out lg:translate-x-0 ${
+          sidebarOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
         }`}
       >
         {/* Sidebar Header */}
-        <div className="p-6 border-b border-zinc-800/50">
+        <div className="p-8">
           <div className="flex items-center justify-between">
-            <Link href="/admin" className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-zinc-800 border border-zinc-700 rounded-xl flex items-center justify-center">
+            <Link href="/admin" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 bg-zinc-950 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform">
                 <Box className="w-5 h-5 text-[#D4A373]" />
               </div>
               <div>
-                <h2 className="text-white font-bold text-sm leading-none">
+                <h2 className="text-zinc-900 font-bold text-base leading-none tracking-tight">
                   Paletindo
                 </h2>
-                <p className="text-zinc-500 text-[10px] uppercase tracking-widest mt-1">
-                  Admin CMS
+                <p className="text-zinc-400 text-[10px] uppercase font-bold tracking-[0.15em] mt-1.5 grayscale group-hover:grayscale-0 transition-all">
+                  CMS Control
                 </p>
               </div>
             </Link>
             <button
               onClick={() => setSidebarOpen(false)}
-              className="lg:hidden text-zinc-500 hover:text-white transition-colors"
+              className="lg:hidden w-8 h-8 flex items-center justify-center text-zinc-400 hover:text-zinc-900 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -122,7 +123,10 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 px-4 space-y-1.5 overflow-y-auto">
+          <div className="px-4 py-2">
+            <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Main Menu</p>
+          </div>
           {NAV_ITEMS.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -131,13 +135,15 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all ${
+                className={`flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold text-sm transition-all duration-200 ${
                   isActive
-                    ? "bg-[#D4A373]/10 text-[#D4A373] border border-[#D4A373]/20"
-                    : "text-zinc-400 hover:text-white hover:bg-zinc-800/50"
+                    ? "bg-[#D4A373]/10 text-[#B8860B] shadow-sm shadow-[#D4A373]/5"
+                    : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50"
                 }`}
               >
-                <item.icon className="w-5 h-5" />
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isActive ? "bg-white text-[#D4A373]" : "text-zinc-400 group-hover:text-zinc-900"}`}>
+                  <item.icon className="w-4.5 h-4.5" />
+                </div>
                 {item.label}
               </Link>
             );
@@ -145,58 +151,57 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
         </nav>
 
         {/* User Info & Sign Out */}
-        <div className="p-4 border-t border-zinc-800/50">
-          <div className="flex items-center gap-3 px-4 py-3 mb-2">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#D4A373] to-[#C19263] flex items-center justify-center text-zinc-900 font-bold text-sm shrink-0">
+        <div className="p-6 border-t border-zinc-100">
+          <div className="bg-zinc-50 rounded-2xl p-4 mb-4 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-zinc-900 flex items-center justify-center text-[#D4A373] font-bold text-sm shrink-0">
               {profile?.full_name?.charAt(0)?.toUpperCase() || "A"}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">
+              <p className="text-sm font-bold text-zinc-900 truncate">
                 {profile?.full_name || user?.email || "Admin"}
               </p>
-              <p className="text-[10px] text-[#D4A373] uppercase tracking-widest font-bold">
+              <p className="text-[10px] text-zinc-500 font-medium uppercase tracking-wider">
                 Administrator
               </p>
             </div>
           </div>
           <button
             onClick={handleSignOut}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-500 hover:text-red-400 hover:bg-red-500/5 transition-all text-sm font-medium"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-zinc-500 hover:text-red-500 hover:bg-red-50 transition-all text-sm font-bold"
           >
             <LogOut className="w-4 h-4" />
-            Keluar
+            Sign Out
           </button>
         </div>
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col min-h-screen relative">
         {/* Top Header Bar */}
-        <header className="sticky top-0 z-30 bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-800/50 px-6 py-4">
+        <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-zinc-200 px-8 py-5">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="lg:hidden text-zinc-400 hover:text-white transition-colors"
+                className="lg:hidden w-10 h-10 border border-zinc-200 rounded-xl flex items-center justify-center text-zinc-600 hover:text-zinc-900 transition-colors bg-white shadow-sm"
               >
                 <Menu className="w-5 h-5" />
               </button>
 
               {/* Breadcrumb */}
-              <nav className="flex items-center gap-1.5 text-sm">
-                {breadcrumbs.map((crumb, i) => (
-                  <span key={crumb.href} className="flex items-center gap-1.5">
-                    {i > 0 && (
-                      <ChevronRight className="w-3.5 h-3.5 text-zinc-700" />
-                    )}
+              <nav className="hidden sm:flex items-center gap-2 text-sm">
+                <Link href="/admin" className="text-zinc-400 hover:text-zinc-900 transition-colors font-medium">Dashboard</Link>
+                {breadcrumbs.filter(b => b.label !== "Admin").map((crumb, i) => (
+                  <span key={crumb.href} className="flex items-center gap-2">
+                    <ChevronRight className="w-4 h-4 text-zinc-300" />
                     {crumb.isLast ? (
-                      <span className="text-white font-medium">
+                      <span className="text-zinc-900 font-bold tracking-tight">
                         {crumb.label}
                       </span>
                     ) : (
                       <Link
                         href={crumb.href}
-                        className="text-zinc-500 hover:text-zinc-300 transition-colors"
+                        className="text-zinc-400 hover:text-zinc-900 transition-colors font-medium"
                       >
                         {crumb.label}
                       </Link>
@@ -206,18 +211,23 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
               </nav>
             </div>
 
-            <Link
-              href="/"
-              target="_blank"
-              className="text-xs text-zinc-500 hover:text-[#D4A373] transition-colors font-medium"
-            >
-              Lihat Website →
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/"
+                target="_blank"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900 text-white text-xs font-bold rounded-xl hover:bg-zinc-800 transition-all shadow-lg shadow-zinc-950/10"
+              >
+                Visit Site
+                <ExternalLink className="w-3 h-3 text-[#D4A373]" />
+              </Link>
+            </div>
           </div>
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-6 lg:p-8">{children}</main>
+        <main className="flex-1 px-8 py-8 lg:px-12 lg:py-10 max-w-[1400px]">
+          {children}
+        </main>
       </div>
     </div>
   );
