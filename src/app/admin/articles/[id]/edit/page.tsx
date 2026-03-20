@@ -75,7 +75,7 @@ export default function EditArticlePage({
       setForm({
         title: article.title,
         slug: article.slug,
-        content: article.content,
+        content: article.content || "",
         excerpt: article.excerpt || "",
         category: article.category,
         author: article.author,
