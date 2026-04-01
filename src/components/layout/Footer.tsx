@@ -23,17 +23,17 @@ export default function Footer() {
                 PT Paletindo Prakarsa Unggul
               </span>
             </div>
-            <p className="text-sm text-zinc-500 max-w-xs mt-6 leading-relaxed">
+            <p className="text-sm text-zinc-400 max-w-xs mt-6 leading-relaxed">
               Spesialis Palet Plastik, Container Plastik Industrial, Container Distribusi, Container Lipat, Container Jumbo, Crat Plastik, Crat Botol, Crat Galon, Crat Buah, Lunch Box, Crat Gelas, Crat Piring, Spare Part Case, Shopping Crates, Container Unggas, Safety Helmet, Tempat Sampah Plastik Jumbo, Tatakan Plastik, Tool Box, Utility Box Etc.
             </p>
             <div className="flex gap-4 pt-2">
-              <a href="#" className="text-zinc-400 hover:text-white transition-colors">
+              <a href="#" className="text-zinc-400 hover:text-white transition-colors" aria-label="Facebook">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-zinc-400 hover:text-white transition-colors">
+              <a href="#" className="text-zinc-400 hover:text-white transition-colors" aria-label="Instagram">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-zinc-400 hover:text-white transition-colors">
+              <a href="#" className="text-zinc-400 hover:text-white transition-colors" aria-label="LinkedIn">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
@@ -118,13 +118,13 @@ export default function Footer() {
                 <Phone className="h-5 w-5 text-[#D4A373] shrink-0" />
                 <div className="flex flex-col space-y-2 text-sm">
                   <div>
-                    <span className="text-zinc-500 text-xs block mb-0.5">Telp / Fax</span>
-                    <a href="tel:0215374295" className="hover:text-white transition-colors">(021) 5374295</a>
+                    <span className="text-zinc-400 text-xs block mb-0.5">Telp / Fax</span>
+                    <a href="tel:0215374295" className="hover:text-white transition-colors inline-flex items-center min-h-[48px]">(021) 5374295</a>
                   </div>
                   <div>
-                    <span className="text-zinc-500 text-xs block mb-0.5">Fast Respon HP</span>
-                    <a href="tel:+6287877662097" className="hover:text-white transition-colors block">087-877-66-2097</a>
-                    <a href="tel:+6281288197597" className="hover:text-white transition-colors block">0812-8819-7597</a>
+                    <span className="text-zinc-400 text-xs block mb-0.5">Fast Respon HP</span>
+                    <a href="tel:+6287877662097" className="hover:text-white transition-colors block py-2 min-h-[48px] inline-flex items-center">087-877-66-2097</a>
+                    <a href="tel:+6281288197597" className="hover:text-white transition-colors block py-2 min-h-[48px] inline-flex items-center">0812-8819-7597</a>
                   </div>
                 </div>
               </li>
@@ -144,14 +144,14 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-zinc-400">
             &copy; {new Date().getFullYear()} PT Paletindo Prakarsa Unggul. Hak cipta dilindungi.
           </p>
           <div className="flex gap-4">
-            <Link href="/privacy" className="text-xs text-zinc-500 hover:text-white transition-colors">
+            <Link href="/privacy" className="text-xs text-zinc-400 hover:text-white transition-colors">
               Kebijakan Privasi
             </Link>
-            <Link href="/terms" className="text-xs text-zinc-500 hover:text-white transition-colors">
+            <Link href="/terms" className="text-xs text-zinc-400 hover:text-white transition-colors">
               Syarat & Ketentuan
             </Link>
           </div>

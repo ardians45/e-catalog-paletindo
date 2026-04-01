@@ -116,6 +116,7 @@ export default function Navbar() {
               type="button"
               className="md:hidden p-2 text-zinc-600 rounded-md hover:bg-zinc-100 hover:text-zinc-900"
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
             >
               {isOpen ? (
                 <X className="h-6 w-6" aria-hidden="true" />
