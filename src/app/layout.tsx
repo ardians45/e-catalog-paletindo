@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "PT Paletindo Prakarsa Unggul - Suplier Palet & Container",
   description: "B2B E-Catalog untuk Palet Plastik, Container Industrial, dan Custom Packaging.",
+  verification: {
+    google: "JKGzBIgPZIL0-JDnVrFfHhlupAZwI_Gqkt355ECK718",
+  },
 };
 
 export default function RootLayout({
