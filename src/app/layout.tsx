@@ -6,6 +6,7 @@ import LayoutWrapper from "@/components/layout/LayoutWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://paletindo.vercel.app"),
   title: "PT Paletindo Prakarsa Unggul - Suplier Palet & Container",
   description: "B2B E-Catalog untuk Palet Plastik, Container Industrial, dan Custom Packaging.",
   verification: {

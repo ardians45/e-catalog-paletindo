@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/compare',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date(),
+    lastModified: new Date().toISOString(),
     changeFrequency: 'weekly' as const,
     priority: route === '' ? 1 : 0.8,
   }))
@@ -25,12 +25,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let productRoutes: MetadataRoute.Sitemap = []
   try {
     const products = await getProducts()
-    productRoutes = products.map((product) => ({
-      url: `${baseUrl}/products/${product.slug}`,
-      lastModified: new Date(product.updated_at),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    }))
+    if (products && products.length > 0) {
+      productRoutes = products.map((product) => ({
+        url: `${baseUrl}/products/${product.slug}`,
+        lastModified: product.updated_at ? new Date(product.updated_at).toISOString() : new Date().toISOString(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.6,
+      }))
+    }
   } catch (error) {
     console.error('Error fetching products for sitemap:', error)
   }
@@ -39,12 +41,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let articleRoutes: MetadataRoute.Sitemap = []
   try {
     const articles = await getArticles('published')
-    articleRoutes = articles.map((article) => ({
-      url: `${baseUrl}/blog/${article.slug}`,
-      lastModified: new Date(article.updated_at),
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    }))
+    if (articles && articles.length > 0) {
+      articleRoutes = articles.map((article) => ({
+        url: `${baseUrl}/blog/${article.slug}`,
+        lastModified: article.updated_at ? new Date(article.updated_at).toISOString() : new Date().toISOString(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.5,
+      }))
+    }
   } catch (error) {
     console.error('Error fetching articles for sitemap:', error)
   }
