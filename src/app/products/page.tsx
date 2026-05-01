@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Search, Filter, ArrowRight, Package, Box, ShieldCheck, ChevronRight, ChevronLeft } from "lucide-react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase, type Product, isSupabaseConfigured } from "@/lib/supabase";
 
@@ -285,11 +286,12 @@ function ProductsContent() {
                       {/* Image Container */}
                       <div className="aspect-[4/3] bg-zinc-50 relative overflow-hidden flex flex-col items-center justify-center border-b border-zinc-100 p-0">
                         {product.image_url ? (
-                          <img 
+                          <Image 
                             src={product.image_url} 
                             alt={product.name}
-                            loading="lazy"
-                            className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700 ease-out p-4"
+                            fill
+                            className="object-contain transform group-hover:scale-110 transition-transform duration-700 ease-out p-4"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
                         ) : (
                           <div className="w-3/4 h-3/4 bg-white rounded-2xl shadow-sm border border-zinc-200/50 flex items-center justify-center relative z-0">

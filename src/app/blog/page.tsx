@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Calendar, User, Search, FileText } from "lucide-react";
+import Image from "next/image";
 import { supabase, type Article, isSupabaseConfigured } from "@/lib/supabase";
 
 const MOCK_POSTS = [
@@ -182,8 +183,13 @@ export default function BlogPage() {
                           {post.category}
                         </span>
                       </div>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={post.img} alt={post.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
+                      <Image 
+                        src={post.img} 
+                        alt={post.title} 
+                        fill
+                        className="object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" 
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
                     </div>
                     
                     {/* Content */}

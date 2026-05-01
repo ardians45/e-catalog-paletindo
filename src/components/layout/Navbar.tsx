@@ -52,6 +52,7 @@ export default function Navbar() {
                 height={40}
                 className="object-contain mix-blend-multiply"
                 priority
+                sizes="40px"
               />
               <span className={cn(
                 "text-xl font-bold tracking-tight hidden sm:block transition-colors",

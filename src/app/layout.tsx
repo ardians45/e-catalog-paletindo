@@ -21,6 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className="scroll-smooth" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://tqqlnlscdhrwyaqkbiaq.supabase.co" />
+        <link rel="dns-prefetch" href="https://tqqlnlscdhrwyaqkbiaq.supabase.co" />
+      </head>
       <body className={`${inter.className} min-h-screen flex flex-col antialiased bg-zinc-50 text-zinc-900`} suppressHydrationWarning>
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>
