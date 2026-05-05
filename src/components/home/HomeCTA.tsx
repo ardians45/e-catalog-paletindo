@@ -29,7 +29,7 @@ export default function HomeCTA() {
           transition={{ duration: 0.8 }}
           className="text-4xl md:text-7xl font-black text-white tracking-tighter mb-16 max-w-5xl leading-[0.95]"
         >
-          Rasakan kualitas yang <i className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4A373] to-amber-200">tak tertandingi  </i> atau dapatkan konsultasi industri lengkap.
+          Solusi <i className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4A373] to-amber-200">Palet Plastik Tangerang Selatan  </i> terbaik untuk industri Anda.
         </motion.h2>
 
         <motion.div 

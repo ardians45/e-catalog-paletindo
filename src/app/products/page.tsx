@@ -180,9 +180,9 @@ function ProductsContent() {
                 Katalog Digital
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
-                Eksplorasi Lini <br/>
+                Jual <span className="text-[#D4A373]">Palet Plastik</span> <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-[#D4A373]">
-                  Produk Industri.
+                  Tangerang Selatan.
                 </span>
               </h1>
             </div>

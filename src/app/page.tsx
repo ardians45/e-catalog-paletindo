@@ -57,12 +57,12 @@ export default async function Home() {
             {/* Ultra-Large Typography - Renders instantly on Server */}
             <div className="relative mb-2 text-center lg:text-left">
               <div className="absolute -top-16 lg:-top-24 left-0 text-[10vw] font-black text-white/[0.03] whitespace-nowrap pointer-events-none select-none tracking-tighter z-0">
-                PT PALETINDO
+                PALET PLASTIK TANGERANG SELATAN
               </div>
               
               <h1 className="text-6xl md:text-7xl lg:text-[9rem] font-black text-white leading-[0.9] tracking-tighter">
-                PONDASI<br />
-                <span className="text-white border-[#D4A373] border-b-2 lg:border-b-4 lg:pb-2">KUAT.</span>
+                PALET<br />
+                <span className="text-white border-[#D4A373] border-b-2 lg:border-b-4 lg:pb-2">UNGGUL.</span>
               </h1>
               
               <div className="lg:absolute lg:top-0 lg:right-[-100%] mt-12 lg:mt-0 max-w-xs z-30">
@@ -84,7 +84,7 @@ export default async function Home() {
             <div className="mt-4 md:mt-6 lg:mt-8">
               <div className="text-center lg:text-left max-w-sm">
                 <p className="text-zinc-400 text-lg font-light leading-tight">
-                  Peralatan Logistik Kelas Atas. Diuji oleh raksasa industri. Dikirim langsung ke lokasi Anda.
+                  Pusat <span className="text-[#D4A373] font-medium">Palet Plastik Tangerang Selatan</span>. Peralatan Logistik Kelas Atas. Diuji oleh raksasa industri. Dikirim langsung ke lokasi Anda.
                 </p>
                 <Link href="/products" className="group mt-4 inline-flex items-center gap-2 text-[#D4A373] font-bold text-sm tracking-widest uppercase transition-all hover:gap-4">
                   Jelajahi Katalog <ArrowRight className="w-4 h-4" />

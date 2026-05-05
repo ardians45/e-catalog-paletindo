@@ -2,8 +2,8 @@ import Image from "next/image";
 import { ShieldCheck, Target, TrendingUp, Handshake, MapPin, Quote, Star } from "lucide-react";
 
 export const metadata = {
-  title: "Tentang Kami - PT Paletindo Prakarsa Unggul",
-  description: "Profil Perusahaan PT Paletindo Prakarsa Unggul, mitra tepercaya kebutuhan palet plastik industri dan container logistik.",
+  title: "Palet Plastik Tangerang Selatan - Tentang Kami PT Paletindo",
+  description: "Cari Palet Plastik Tangerang Selatan? PT Paletindo Prakarsa Unggul adalah mitra tepercaya kebutuhan palet plastik industri dan container logistik di Tangerang Selatan.",
 };
 
 export default function AboutPage() {
@@ -76,8 +76,8 @@ export default function AboutPage() {
                 
                 <div className="grid grid-cols-2 gap-8 pt-8 border-t border-zinc-200">
                   <div>
-                    <h4 className="text-5xl font-bold text-zinc-900 mb-2">Pusat</h4>
-                    <p className="text-sm text-zinc-400 font-bold uppercase tracking-wider">Palet B2B</p>
+                    <h4 className="text-2xl font-bold text-zinc-900 mb-2">Palet Plastik Tangerang Selatan</h4>
+                    <p className="text-sm text-zinc-400 font-bold uppercase tracking-wider">Distributor Utama</p>
                   </div>
                   <div>
                     <h4 className="text-5xl font-bold text-zinc-900 mb-2">100<span className="text-[#D4A373]">%</span></h4>
@@ -241,7 +241,7 @@ export default function AboutPage() {
                    <div>
                      <h4 className="text-lg font-bold text-white mb-2">Pusat / Kantor Representatif</h4>
                      <p className="text-zinc-400 font-light leading-relaxed">
-                       Jelupang, Serpong Utara<br />South Tangerang City, Banten 15323
+                       Jelupang, Serpong Utara<br />Tangerang Selatan, Banten 15323
                      </p>
                    </div>
                  </div>

@@ -24,7 +24,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-zinc-400 max-w-xs mt-6 leading-relaxed">
-              Spesialis Palet Plastik, Container Plastik Industrial, Container Distribusi, Container Lipat, Container Jumbo, Crat Plastik, Crat Botol, Crat Galon, Crat Buah, Lunch Box, Crat Gelas, Crat Piring, Spare Part Case, Shopping Crates, Container Unggas, Safety Helmet, Tempat Sampah Plastik Jumbo, Tatakan Plastik, Tool Box, Utility Box Etc.
+              Spesialis <span className="text-white font-medium">Palet Plastik Tangerang Selatan</span>, Container Plastik Industrial, Container Distribusi, Container Lipat, Container Jumbo, Crat Plastik, Crat Botol, Crat Galon, Crat Buah, Lunch Box, Crat Gelas, Crat Piring, Spare Part Case, Shopping Crates, Container Unggas, Safety Helmet, Tempat Sampah Plastik Jumbo, Tatakan Plastik, Tool Box, Utility Box Etc.
             </p>
             <div className="flex gap-4 pt-2">
               <a href="#" className="text-zinc-400 hover:text-white transition-colors" aria-label="Facebook">
@@ -111,7 +111,7 @@ export default function Footer() {
               <li className="flex gap-3">
                 <MapPin className="h-5 w-5 text-[#D4A373] shrink-0" />
                 <a href="https://maps.app.goo.gl/U49BaoBxpcoPw7hV8" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-white transition-colors">
-                  Jelupang, Serpong Utara<br/>South Tangerang City, Banten 15323
+                  Jelupang, Serpong Utara<br/>Tangerang Selatan, Banten 15323
                 </a>
               </li>
               <li className="flex gap-3">
