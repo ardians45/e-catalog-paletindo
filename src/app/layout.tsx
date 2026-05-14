@@ -6,13 +6,16 @@ import LayoutWrapper from "@/components/layout/LayoutWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://paletindo.vercel.app"),
+  metadataBase: new URL("https://www.paletindo.id"),
   title: "Palet Plastik Tangerang Selatan - PT Paletindo Prakarsa Unggul",
   description: "Jual Palet Plastik Tangerang Selatan berkualitas tinggi. PT Paletindo Prakarsa Unggul menyediakan Palet Plastik, Container Industrial, dan Custom Packaging terbaik.",
   keywords: ["Palet Plastik Tangerang Selatan", "Jual Palet Plastik", "Palet Plastik Murah", "Palet Plastik Industri", "Paletindo", "Palet Plastik Banten"],
   verification: {
     google: "JKGzBIgPZIL0-JDnVrFfHhlupAZwI_Gqkt355ECK718",
   },
+  alternates: {
+    canonical: "https://www.paletindo.id",
+  }
 };
 
 export default function RootLayout({
@@ -32,9 +35,9 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               "name": "PT Paletindo Prakarsa Unggul - Palet Plastik Tangerang Selatan",
-              "image": "https://paletindo.vercel.app/logo.png",
-              "@id": "https://paletindo.vercel.app",
-              "url": "https://paletindo.vercel.app",
+              "image": "https://www.paletindo.id/logo.png",
+              "@id": "https://www.paletindo.id",
+              "url": "https://www.paletindo.id",
               "telephone": "+62215374295",
               "address": {
                 "@type": "PostalAddress",

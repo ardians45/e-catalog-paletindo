@@ -47,7 +47,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
               <Image
                 src="/logo.png"
-                alt="Logo PT Paletindo Prakarsa Unggul"
+                alt="Logo PT Paletindo Prakarsa Unggul - Pusat Palet Plastik Tangerang Selatan"
                 width={40}
                 height={40}
                 className="object-contain mix-blend-multiply"

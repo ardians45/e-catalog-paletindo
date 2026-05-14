@@ -64,6 +64,8 @@ export default async function Home() {
                 PALET<br />
                 <span className="text-white border-[#D4A373] border-b-2 lg:border-b-4 lg:pb-2">UNGGUL.</span>
               </h1>
+              <span className="sr-only">Palet Plastik Tangerang Selatan - PT Paletindo Prakarsa Unggul</span>
+              <span className="sr-only">Palet Plastik Tangerang Selatan - PT Paletindo Prakarsa Unggul</span>
               
               <div className="lg:absolute lg:top-0 lg:right-[-100%] mt-12 lg:mt-0 max-w-xs z-30">
                 <div className="bg-zinc-900/40 backdrop-blur-2xl border border-white/10 p-6 rounded-3xl shadow-2xl">

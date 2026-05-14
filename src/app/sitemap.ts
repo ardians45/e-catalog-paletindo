@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { getProducts, getArticles } from '@/lib/supabase'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://paletindo.vercel.app'
+  const baseUrl = 'https://www.paletindo.id'
 
   // Static routes
   const staticRoutes = [

@@ -3,6 +3,9 @@ import { Mail, MapPin, Phone, Instagram, Facebook, Globe, Clock, MessageSquare }
 export const metadata = {
   title: "Hubungi Kami - PT Paletindo Prakarsa Unggul",
   description: "Dapatkan penawaran harga terbaik untuk supply palet plastik industri. Kami melayani pengiriman logistik sekala nasional.",
+  alternates: {
+    canonical: "https://www.paletindo.id/contact",
+  }
 };
 
 export default function ContactPage() {

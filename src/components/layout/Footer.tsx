@@ -13,7 +13,7 @@ export default function Footer() {
               <div className="bg-white p-1 rounded-md">
                 <Image
                   src="/logo.png"
-                  alt="Logo PT Paletindo Prakarsa Unggul"
+                  alt="Logo PT Paletindo Prakarsa Unggul - Jual Palet Plastik Tangerang Selatan"
                   width={32}
                   height={32}
                   className="object-contain mix-blend-multiply"

@@ -4,6 +4,9 @@ import { ShieldCheck, Target, TrendingUp, Handshake, MapPin, Quote, Star } from 
 export const metadata = {
   title: "Palet Plastik Tangerang Selatan - Tentang Kami PT Paletindo",
   description: "Cari Palet Plastik Tangerang Selatan? PT Paletindo Prakarsa Unggul adalah mitra tepercaya kebutuhan palet plastik industri dan container logistik di Tangerang Selatan.",
+  alternates: {
+    canonical: "https://www.paletindo.id/about",
+  }
 };
 
 export default function AboutPage() {
