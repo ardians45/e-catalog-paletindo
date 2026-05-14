@@ -1,9 +1,8 @@
 import { MetadataRoute } from 'next'
 import { getProducts, getArticles } from '@/lib/supabase'
 
-export const runtime = 'edge'
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+
   const baseUrl = 'https://www.paletindo.id'
 
   // Static routes

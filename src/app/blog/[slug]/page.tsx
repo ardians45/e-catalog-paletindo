@@ -7,6 +7,27 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateStaticParams() {
+  if (!isSupabaseConfigured()) {
+    return [];
+  }
+
+  try {
+    const { data: articles } = await supabase
+      .from("articles")
+      .select("slug")
+      .eq("status", "published");
+
+    return (articles || []).map((article) => ({
+      slug: article.slug,
+    }));
+  } catch (err) {
+    console.error("Error generating static params for articles:", err);
+    return [];
+  }
+}
+
+
 async function getArticleData(slug: string) {
   if (!isSupabaseConfigured()) return null;
 

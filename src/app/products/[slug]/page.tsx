@@ -8,6 +8,26 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateStaticParams() {
+  if (!isSupabaseConfigured()) {
+    return [];
+  }
+
+  try {
+    const { data: products } = await supabase
+      .from("products")
+      .select("slug");
+
+    return (products || []).map((product) => ({
+      slug: product.slug,
+    }));
+  } catch (err) {
+    console.error("Error generating static params for products:", err);
+    return [];
+  }
+}
+
+
 async function getProduct(slug: string) {
   // Try Supabase first
   if (isSupabaseConfigured()) {
