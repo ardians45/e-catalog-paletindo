@@ -17,18 +17,8 @@ import {
   Info,
   Sparkles,
 } from "lucide-react";
-import { supabase, uploadImage, type Article, isSupabaseConfigured } from "@/lib/supabase";
+import { supabase, uploadImage, type Article } from "@/lib/supabase";
 
-export async function generateStaticParams() {
-  if (!isSupabaseConfigured()) return [];
-  try {
-    const { data } = await supabase.from("articles").select("id");
-    return (data || []).map((a) => ({ id: a.id }));
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
-}
 
 const ARTICLE_CATEGORIES = [
   "Tips Operasional",

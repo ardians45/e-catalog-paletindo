@@ -13,18 +13,8 @@ import {
   Package,
   Sparkles,
 } from "lucide-react";
-import { supabase, uploadImage, type Product, isSupabaseConfigured } from "@/lib/supabase";
+import { supabase, uploadImage, type Product } from "@/lib/supabase";
 
-export async function generateStaticParams() {
-  if (!isSupabaseConfigured()) return [];
-  try {
-    const { data } = await supabase.from("products").select("id");
-    return (data || []).map((p) => ({ id: p.id }));
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
-}
 
 const CATEGORIES = [
   "Container Industri",
