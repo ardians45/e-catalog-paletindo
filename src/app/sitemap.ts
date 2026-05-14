@@ -1,6 +1,9 @@
 import { MetadataRoute } from 'next'
 import { getProducts, getArticles } from '@/lib/supabase'
 
+export const dynamic = 'force-static'
+
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const baseUrl = 'https://www.paletindo.id'
