@@ -88,13 +88,13 @@ export default function ComparePage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.paletindo.id"
+                "item": "https://paletindo.id"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Perbandingan Produk",
-                "item": "https://www.paletindo.id/compare"
+                "item": "https://paletindo.id/compare"
               }
             ]
           })

@@ -5,7 +5,7 @@ import { MapPin, ShieldCheck, Truck, MessageCircle, Box, Star, ChevronRight } fr
 export const metadata: Metadata = {
   title: "Palet Plastik BSD City - Supplier & Distributor Terpercaya | Paletindo",
   description: "Cari palet plastik BSD City? PT Paletindo Prakarsa Unggul sedia pallet baru & bekas untuk pergudangan di BSD, Pagedangan, dan sekitarnya. Kirim instan, harga murah.",
-  alternates: { canonical: "https://www.paletindo.id/pallet-plastik-bsd" }
+  alternates: { canonical: "https://paletindo.id/pallet-plastik-bsd" }
 };
 
 export default function BSDAreaPage() {

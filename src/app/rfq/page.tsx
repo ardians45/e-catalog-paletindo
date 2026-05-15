@@ -39,13 +39,13 @@ export default function RFQPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.paletindo.id"
+                "item": "https://paletindo.id"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Request For Quotation",
-                "item": "https://www.paletindo.id/rfq"
+                "item": "https://paletindo.id/rfq"
               }
             ]
           })

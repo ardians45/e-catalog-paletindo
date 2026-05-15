@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Insights & Berita Industri Palet Plastik - PT Paletindo Prakarsa Unggul",
   description: "Dapatkan berita terbaru seputar inovasi pergudangan, tips efisiensi rantai pasok logistik, dan wawasan teknis seputar produk plastik industri.",
   alternates: {
-    canonical: "https://www.paletindo.id/blog",
+    canonical: "https://paletindo.id/blog",
   }
 };
 
@@ -119,13 +119,13 @@ export default async function BlogPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.paletindo.id"
+                "item": "https://paletindo.id"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Journal",
-                "item": "https://www.paletindo.id/blog"
+                "item": "https://paletindo.id/blog"
               }
             ]
           })

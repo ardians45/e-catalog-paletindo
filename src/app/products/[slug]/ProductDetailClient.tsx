@@ -54,7 +54,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             },
             "offers": {
               "@type": "Offer",
-              "url": `https://www.paletindo.id/products/${product.slug}`,
+              "url": `https://paletindo.id/products/${product.slug}`,
               "priceCurrency": "IDR",
               "price": "0", // Contact for price
               "availability": "https://schema.org/InStock",
@@ -79,19 +79,19 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.paletindo.id"
+                "item": "https://paletindo.id"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": product.category,
-                "item": `https://www.paletindo.id/products?category=${encodeURIComponent(product.category)}`
+                "item": `https://paletindo.id/products?category=${encodeURIComponent(product.category)}`
               },
               {
                 "@type": "ListItem",
                 "position": 3,
                 "name": product.name,
-                "item": `https://www.paletindo.id/products/${product.slug}`
+                "item": `https://paletindo.id/products/${product.slug}`
               }
             ]
           })

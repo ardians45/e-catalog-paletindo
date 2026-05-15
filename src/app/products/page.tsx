@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Katalog Palet Plastik Tangerang Selatan - PT Paletindo Prakarsa Unggul",
   description: "Jelajahi katalog lengkap palet plastik, container industri, dan safety equipment. Produk berkualitas tinggi untuk kebutuhan logistik dan pergudangan di Tangerang Selatan.",
   alternates: {
-    canonical: "https://www.paletindo.id/products",
+    canonical: "https://paletindo.id/products",
   }
 };
 
@@ -67,13 +67,13 @@ export default async function ProductsPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.paletindo.id"
+                "item": "https://paletindo.id"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Katalog Produk",
-                "item": "https://www.paletindo.id/products"
+                "item": "https://paletindo.id/products"
               }
             ]
           })

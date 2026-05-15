@@ -4,7 +4,7 @@ export const metadata = {
   title: "Hubungi Kami - PT Paletindo Prakarsa Unggul",
   description: "Dapatkan penawaran harga terbaik untuk supply palet plastik industri. Kami melayani pengiriman logistik sekala nasional.",
   alternates: {
-    canonical: "https://www.paletindo.id/contact",
+    canonical: "https://paletindo.id/contact",
   }
 };
 
@@ -23,13 +23,13 @@ export default function ContactPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.paletindo.id"
+                "item": "https://paletindo.id"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Hubungi Kami",
-                "item": "https://www.paletindo.id/contact"
+                "item": "https://paletindo.id/contact"
               }
             ]
           })

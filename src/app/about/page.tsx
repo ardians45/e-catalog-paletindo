@@ -5,7 +5,7 @@ export const metadata = {
   title: "Palet Plastik Tangerang Selatan - Tentang Kami PT Paletindo",
   description: "Cari Palet Plastik Tangerang Selatan? PT Paletindo Prakarsa Unggul adalah mitra tepercaya kebutuhan palet plastik industri dan container logistik di Tangerang Selatan.",
   alternates: {
-    canonical: "https://www.paletindo.id/about",
+    canonical: "https://paletindo.id/about",
   }
 };
 
@@ -24,13 +24,13 @@ export default function AboutPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.paletindo.id"
+                "item": "https://paletindo.id"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Tentang Kami",
-                "item": "https://www.paletindo.id/about"
+                "item": "https://paletindo.id/about"
               }
             ]
           })

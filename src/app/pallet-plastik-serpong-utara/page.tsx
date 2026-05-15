@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   title: "Pallet Plastik Serpong Utara - Supplier Terdekat | PT Paletindo Prakarsa Unggul",
   description: "Jual pallet plastik Serpong Utara berkualitas tinggi. PT Paletindo berlokasi di Jelupang, Serpong Utara. Tersedia heavy duty, food grade, all size. Hubungi kami!",
   alternates: {
-    canonical: "https://www.paletindo.id/pallet-plastik-serpong-utara",
+    canonical: "https://paletindo.id/pallet-plastik-serpong-utara",
   }
 };
 
@@ -94,19 +94,19 @@ export default function SerpongUtaraPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.paletindo.id"
+                "item": "https://paletindo.id"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Palet Plastik Tangerang Selatan",
-                "item": "https://www.paletindo.id/palet-plastik-tangerang-selatan"
+                "item": "https://paletindo.id/palet-plastik-tangerang-selatan"
               },
               {
                 "@type": "ListItem",
                 "position": 3,
                 "name": "Serpong Utara",
-                "item": "https://www.paletindo.id/pallet-plastik-serpong-utara"
+                "item": "https://paletindo.id/pallet-plastik-serpong-utara"
               }
             ]
           })

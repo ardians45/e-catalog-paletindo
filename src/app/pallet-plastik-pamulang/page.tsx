@@ -5,7 +5,7 @@ import { MapPin, ShieldCheck, Truck, MessageCircle, Box, Star, ChevronRight } fr
 export const metadata: Metadata = {
   title: "Palet Plastik Pamulang - Supplier & Distributor Terdekat | Paletindo",
   description: "Cari palet plastik Pamulang? PT Paletindo Prakarsa Unggul sedia pallet industrial baru & bekas untuk area Pamulang, Benda Baru, Pondok Cabe. Harga murah.",
-  alternates: { canonical: "https://www.paletindo.id/pallet-plastik-pamulang" }
+  alternates: { canonical: "https://paletindo.id/pallet-plastik-pamulang" }
 };
 
 export default function PamulangAreaPage() {

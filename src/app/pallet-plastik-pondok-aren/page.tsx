@@ -5,7 +5,7 @@ import { MapPin, ShieldCheck, Truck, MessageCircle, Box, Star, ChevronRight } fr
 export const metadata: Metadata = {
   title: "Palet Plastik Pondok Aren - Supplier Bintaro & Sekitarnya | Paletindo",
   description: "Cari palet plastik Pondok Aren? PT Paletindo Prakarsa Unggul sedia pallet industrial untuk area Bintaro, Pondok Aren, Jurangmangu. Stok ready, kirim instan.",
-  alternates: { canonical: "https://www.paletindo.id/pallet-plastik-pondok-aren" }
+  alternates: { canonical: "https://paletindo.id/pallet-plastik-pondok-aren" }
 };
 
 export default function PondokArenAreaPage() {

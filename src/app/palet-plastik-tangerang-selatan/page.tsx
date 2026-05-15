@@ -43,7 +43,7 @@ export default function TangerangSelatanPage() {
             "@type": "LocalBusiness",
             "name": "PT Paletindo Prakarsa Unggul - Palet Plastik Tangerang Selatan",
             "description": "Distributor dan supplier palet plastik terpercaya di Tangerang Selatan. Menyediakan palet industrial, food grade, dan custom packaging.",
-            "url": "https://www.paletindo.id/palet-plastik-tangerang-selatan",
+            "url": "https://paletindo.id/palet-plastik-tangerang-selatan",
             "telephone": "+62-21-5374295",
             "address": {
               "@type": "PostalAddress",
@@ -74,13 +74,13 @@ export default function TangerangSelatanPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.paletindo.id"
+                "item": "https://paletindo.id"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Palet Plastik Tangerang Selatan",
-                "item": "https://www.paletindo.id/palet-plastik-tangerang-selatan"
+                "item": "https://paletindo.id/palet-plastik-tangerang-selatan"
               }
             ]
           })

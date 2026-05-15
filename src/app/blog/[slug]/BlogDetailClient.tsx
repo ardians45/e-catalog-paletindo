@@ -107,19 +107,19 @@ export default function BlogDetailClient({ article, recentPosts, categories }: B
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.paletindo.id"
+                "item": "https://paletindo.id"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Journal",
-                "item": "https://www.paletindo.id/blog"
+                "item": "https://paletindo.id/blog"
               },
               {
                 "@type": "ListItem",
                 "position": 3,
                 "name": article.title,
-                "item": `https://www.paletindo.id/blog/${article.slug}`
+                "item": `https://paletindo.id/blog/${article.slug}`
               }
             ]
           })

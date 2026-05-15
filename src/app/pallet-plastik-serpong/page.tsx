@@ -5,7 +5,7 @@ import { MapPin, ShieldCheck, Truck, MessageCircle, Box, Star, ChevronRight } fr
 export const metadata: Metadata = {
   title: "Palet Plastik Serpong - Supplier Terdekat | Paletindo",
   description: "Cari palet plastik Serpong? PT Paletindo Prakarsa Unggul sedia palet baru & bekas berkualitas untuk area Serpong, Cilenggang, dan sekitarnya. Harga murah, stok ready.",
-  alternates: { canonical: "https://www.paletindo.id/pallet-plastik-serpong" }
+  alternates: { canonical: "https://paletindo.id/pallet-plastik-serpong" }
 };
 
 export default function SerpongAreaPage() {
