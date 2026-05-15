@@ -13,12 +13,22 @@ export const metadata: Metadata = {
   verification: {
     google: "JKGzBIgPZIL0-JDnVrFfHhlupAZwI_Gqkt355ECK718",
   },
-  alternates: {
-    canonical: "https://paletindo.id",
-  },
   robots: {
     index: true,
     follow: true,
+  },
+  icons: {
+    icon: [
+      { url: '/icon.png' },
+      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  alternates: {
+    canonical: "https://paletindo.id",
   },
   openGraph: {
     type: "website",
