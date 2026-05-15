@@ -136,7 +136,7 @@ export default async function BlogDetailPage({ params }: Props) {
           '@context': 'https://schema.org',
           '@type': 'BlogPosting',
           headline: data.article.title,
-          description: article.content?.substring(0, 160).replace(/<[^>]+>/g, '') || "",
+          description: data.article.content?.substring(0, 160).replace(/<[^>]+>/g, '') || "",
           image: data.article.thumbnail_url,
           author: {
             '@type': 'Organization',
