@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight, ArrowLeft, Download, ShoppingCart, MessageCircle, FileText, CheckCircle2, ShieldCheck, Box, Zap, Award, Info, Package } from "lucide-react";
+import { MapPin, ChevronRight, ArrowLeft, Download, ShoppingCart, MessageCircle, FileText, CheckCircle2, ShieldCheck, Box, Zap, Award, Info, Package } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRFQ } from "@/components/providers/RFQProvider";
 
