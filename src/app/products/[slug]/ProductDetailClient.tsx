@@ -132,7 +132,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 src={product.images[0]} 
                 alt={`${product.name} - PT Paletindo Tangerang Selatan`}
                 loading="eager"
-                priority="high"
                 layoutId={`product-image-${product.id}`}
                 className="w-full h-full object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.12)]"
               />
