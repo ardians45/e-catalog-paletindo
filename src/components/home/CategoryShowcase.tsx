@@ -7,24 +7,24 @@ import { ArrowRight } from "lucide-react";
 const CATEGORIES = [
   { 
     num: "01", 
-    title: "Palet Industri", 
-    desc: "Palet plastik high-density for heavy duty load. Anti corrosion, wash resistant, export ready.", 
+    title: "Palet Industri Heavy Duty", 
+    desc: "Sedia palet plastik heavy duty berkualitas tinggi untuk kapasitas beban berat di gudang industri. Tahan benturan, anti rayap, dan ideal untuk penggunaan jangka panjang di berbagai lini logistik.", 
     stat: "15+", 
     statLabel: "Varian Tersedia",
-    href: "/products?category=palet"
+    href: "/products?category=Palet%20Plastik"
   },
   { 
     num: "02", 
-    title: "Kontainer & Box", 
-    desc: "Food grade to heavy-duty. Available solid, perforated, and foldable for space efficiency.", 
+    title: "Container & Box Plastik", 
+    desc: "Solusi penyimpanan industrial dengan container plastik berbagai ukuran. Tersedia tipe solid, perforated, dan food grade untuk industri makanan maupun manufaktur umum dengan standar kualitas ekspor.", 
     stat: "150+", 
     statLabel: "Model Produk",
-    href: "/products?category=container"
+    href: "/products?category=Container%20Industri"
   },
   { 
     num: "03", 
     title: "Solusi Kustom B2B", 
-    desc: "Specific need consultation. Custom branding, color, and dimensions according to your operations.", 
+    desc: "Layanan konsultasi spesifik untuk kebutuhan palet dan box kustom. Kami melayani branding logo, warna khusus, dan dimensi spesifik sesuai dengan alur operasional unik perusahaan Anda di Tangerang Selatan.", 
     stat: "50+", 
     statLabel: "Klien Korporat",
     href: "/contact"

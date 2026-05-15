@@ -6,7 +6,7 @@ export const dynamic = 'force-static'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
-  const baseUrl = 'https://www.paletindo.id'
+  const baseUrl = 'https://paletindo.id'
 
   // Static routes
   const staticRoutes = [
@@ -16,13 +16,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/blog',
     '/contact',
     '/rfq',
-    '/requests',
-    '/compare',
+    '/palet-plastik-tangerang-selatan',
+    '/pallet-plastik-serpong-utara',
+    '/pallet-plastik-serpong',
+    '/pallet-plastik-bsd',
+    '/pallet-plastik-ciputat',
+    '/pallet-plastik-pondok-aren',
+    '/pallet-plastik-pamulang',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
     changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
+    priority: route === '' ? 1.0 : 0.8,
   }))
 
   // Dynamic products
@@ -45,14 +50,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let articleRoutes: MetadataRoute.Sitemap = []
   try {
     const articles = await getArticles('published')
-    if (articles && articles.length > 0) {
-      articleRoutes = articles.map((article) => ({
-        url: `${baseUrl}/blog/${article.slug}`,
-        lastModified: article.updated_at ? new Date(article.updated_at).toISOString() : new Date().toISOString(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.5,
-      }))
-    }
+    const supabasePosts = (articles || []).map((article) => ({
+      url: `${baseUrl}/blog/${article.slug}`,
+      lastModified: article.updated_at ? new Date(article.updated_at).toISOString() : new Date().toISOString(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    }))
+
+    // Add local articles
+    const { LOCAL_ARTICLES } = await import("@/lib/blog-data")
+    const localPosts = LOCAL_ARTICLES.map((article) => ({
+      url: `${baseUrl}/blog/${article.slug}`,
+      lastModified: new Date(article.published_at).toISOString(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    }))
+
+    // Merge and filter duplicates
+    const supabaseSlugs = new Set((articles || []).map(p => p.slug));
+    const filteredLocal = localPosts.filter(p => !supabaseSlugs.has(p.url.split('/').pop() || ''));
+    
+    articleRoutes = [...filteredLocal, ...supabasePosts]
   } catch (error) {
     console.error('Error fetching articles for sitemap:', error)
   }

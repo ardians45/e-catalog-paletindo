@@ -95,6 +95,37 @@ export default function BlogDetailClient({ article, recentPosts, categories }: B
 
   return (
     <div className="w-full bg-[#fcfcfd] min-h-screen pt-28 pb-32">
+      {/* Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.paletindo.id"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Journal",
+                "item": "https://www.paletindo.id/blog"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": article.title,
+                "item": `https://www.paletindo.id/blog/${article.slug}`
+              }
+            ]
+          })
+        }}
+      />
+
       {/* Dynamic Background Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-[-10%] right-[-5%] w-[50%] h-[50%] bg-[#D4A373]/3 blur-[140px] rounded-full"></div>
@@ -167,14 +198,15 @@ export default function BlogDetailClient({ article, recentPosts, categories }: B
         >
           <div className="relative rounded-[3rem] overflow-hidden bg-zinc-100 border border-zinc-200/50 group shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)]">
             <div className="absolute inset-0 blur-3xl opacity-20 scale-110 pointer-events-none">
-              <img src={article.thumbnail_url || ""} alt="" className="w-full h-full object-cover" />
+              <img src={article.thumbnail_url || ""} alt="" loading="lazy" className="w-full h-full object-cover" aria-hidden="true" />
             </div>
             
             <div className="relative z-10 w-full flex items-center justify-center p-4 md:p-8 bg-white/40 backdrop-blur-sm min-h-[400px] md:min-h-[600px]">
               {article.thumbnail_url ? (
                 <img 
                   src={article.thumbnail_url} 
-                  alt={article.title} 
+                  alt={`${article.title} - PT Paletindo Tangerang Selatan`} 
+                  loading="eager"
                   className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl"
                 />
               ) : (
@@ -201,6 +233,23 @@ export default function BlogDetailClient({ article, recentPosts, categories }: B
                 dangerouslySetInnerHTML={{ __html: formattedContent }}
               />
             </article>
+
+            {/* Post-Article CTA */}
+            <div className="mt-20 p-10 bg-zinc-900 rounded-[3rem] relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-1/2 h-full bg-[#D4A373]/5 blur-[80px] translate-x-1/3 rounded-full"></div>
+              <div className="relative z-10">
+                <h3 className="text-2xl md:text-3xl font-black text-white mb-6 tracking-tight">Butuh Solusi Palet untuk Bisnis Anda?</h3>
+                <p className="text-zinc-400 font-light mb-10 max-w-xl leading-relaxed">PT Paletindo Prakarsa Unggul menyediakan berbagai pilihan palet plastik industrial dengan pengiriman cepat ke seluruh wilayah Tangerang Selatan.</p>
+                <div className="flex flex-wrap gap-4">
+                  <Link href="/palet-plastik-tangerang-selatan" className="px-8 py-4 bg-[#D4A373] text-zinc-900 rounded-2xl font-bold text-sm hover:bg-[#C19263] transition-all flex items-center gap-2">
+                    Cek Area Tangsel <ChevronRight className="w-4 h-4" />
+                  </Link>
+                  <Link href="/products" className="px-8 py-4 bg-white/5 border border-white/10 text-white rounded-2xl font-bold text-sm hover:bg-white/10 transition-all">
+                    Lihat Katalog Produk
+                  </Link>
+                </div>
+              </div>
+            </div>
 
             <div className="mt-24 pt-12 border-t border-zinc-100 flex flex-col md:flex-row md:items-center justify-between gap-8">
                <div className="flex items-center gap-4">
@@ -240,7 +289,7 @@ export default function BlogDetailClient({ article, recentPosts, categories }: B
                     className="group flex gap-5 items-center p-3 -m-3 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-zinc-200/50 transition-all border border-transparent hover:border-zinc-100"
                   >
                     <div className="w-20 h-20 rounded-xl bg-zinc-100 shrink-0 overflow-hidden border border-zinc-100">
-                      <img src={post.thumbnail_url || ""} alt={post.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                      <img src={post.thumbnail_url || ""} alt={`${post.title} - Paletindo News`} loading="lazy" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
                     </div>
                     <div className="flex flex-col gap-1.5 overflow-hidden">
                       <span className="text-[9px] font-bold text-[#D4A373] uppercase tracking-widest">{post.category}</span>

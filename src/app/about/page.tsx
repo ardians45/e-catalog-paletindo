@@ -12,6 +12,30 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <div className="w-full bg-zinc-50 font-sans selection:bg-amber-400 selection:text-blue-950">
+      {/* Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.paletindo.id"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Tentang Kami",
+                "item": "https://www.paletindo.id/about"
+              }
+            ]
+          })
+        }}
+      />
       
       {/* 1. Avant-Garde Hero Section */}
       <section className="relative min-h-[80vh] flex flex-col justify-end pb-24 pt-32 overflow-hidden bg-zinc-900 border-b border-zinc-800/50">

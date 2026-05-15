@@ -38,9 +38,9 @@ export default function LatestProductShowcase({ latestProduct }: { latestProduct
               </span>
             </div>
 
-            <h2 className="text-5xl md:text-7xl font-black text-zinc-900 leading-[0.95] tracking-tighter mb-10">
-              DI ATAS <br />
-              <span className="italic text-[#D4A373]">EKSPEKTASI.</span>
+            <h2 className="text-5xl md:text-7xl font-black text-zinc-900 leading-[0.95] tracking-tighter mb-10 uppercase">
+              Produk Unggulan <br />
+              <span className="italic text-[#D4A373]">Palet Plastik.</span>
             </h2>
 
             <p className="text-zinc-500 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-xl">
@@ -83,7 +83,7 @@ export default function LatestProductShowcase({ latestProduct }: { latestProduct
               <div className="aspect-square relative flex items-center justify-center p-8 md:p-12">
                 <Image
                   src={latestProduct.image_url || "/images/placeholder-product.png"}
-                  alt={latestProduct.name}
+                  alt={`${latestProduct.name} - PT Paletindo Tangerang Selatan`}
                   width={600}
                   height={600}
                   priority

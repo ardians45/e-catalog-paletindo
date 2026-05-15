@@ -11,6 +11,30 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <div className="w-full min-h-screen bg-white pt-24 pb-0 flex flex-col">
+      {/* Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.paletindo.id"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Hubungi Kami",
+                "item": "https://www.paletindo.id/contact"
+              }
+            ]
+          })
+        }}
+      />
       <div className="flex-1 flex flex-col lg:flex-row">
         
         {/* Left Side: Solid Corporate Info */}

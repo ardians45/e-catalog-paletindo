@@ -27,6 +27,30 @@ export default function RFQPage() {
 
   return (
     <div className="w-full bg-[#f8f9fa] min-h-[90vh] pt-32 pb-24">
+      {/* Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.paletindo.id"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Request For Quotation",
+                "item": "https://www.paletindo.id/rfq"
+              }
+            ]
+          })
+        }}
+      />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="max-w-4xl mx-auto">
@@ -53,7 +77,7 @@ export default function RFQPage() {
                   <div key={item.id} className="bg-white p-6 rounded-3xl border border-zinc-200/60 shadow-xl shadow-zinc-200/40 flex flex-col sm:flex-row items-center gap-6 group hover:border-[#D4A373]/30 transition-colors">
                     <div className="w-full sm:w-32 h-32 bg-zinc-50 rounded-2xl border border-zinc-100 p-2 overflow-hidden shrink-0 relative flex items-center justify-center">
                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                       <img src={item.image} alt={item.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 p-2" />
+                       <img src={item.image} alt={item.name} loading="lazy" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 p-2" />
                     </div>
                     
                     <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between w-full h-full gap-4">

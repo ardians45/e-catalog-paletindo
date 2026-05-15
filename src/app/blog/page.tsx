@@ -37,7 +37,26 @@ const MOCK_POSTS = [
   }
 ];
 
+import { LOCAL_ARTICLES } from "@/lib/blog-data";
+
 async function getArticles() {
+  let posts = [];
+  
+  // Start with local articles
+  const localPosts = LOCAL_ARTICLES.map((a) => ({
+    title: a.title,
+    slug: a.slug,
+    category: a.category,
+    date: new Date(a.published_at).toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }),
+    author: a.author,
+    img: a.thumbnail_url,
+    excerpt: a.excerpt,
+  }));
+
   if (isSupabaseConfigured()) {
     try {
       const { data, error } = await supabase
@@ -47,7 +66,7 @@ async function getArticles() {
         .order("published_at", { ascending: false });
 
       if (!error && data && data.length > 0) {
-        return (data as Article[]).map((a) => ({
+        const supabasePosts = (data as Article[]).map((a) => ({
           title: a.title,
           slug: a.slug,
           category: a.category,
@@ -66,17 +85,53 @@ async function getArticles() {
           img: a.thumbnail_url || "https://images.unsplash.com/photo-1542289658-002d295f707f?q=80&w=800&auto=format&fit=crop",
           excerpt: a.excerpt || undefined,
         }));
+        
+        // Filter out duplicates if any
+        const supabaseSlugs = new Set(supabasePosts.map(p => p.slug));
+        const filteredLocal = localPosts.filter(p => !supabaseSlugs.has(p.slug));
+        
+        return [...filteredLocal, ...supabasePosts];
       }
     } catch (err) {
       console.error("Supabase fetch error:", err);
     }
   }
 
-  return MOCK_POSTS;
+  // Fallback to local + mock
+  const mockSlugs = new Set(MOCK_POSTS.map(p => p.slug));
+  const filteredLocalFallback = localPosts.filter(p => !mockSlugs.has(p.slug));
+  return [...filteredLocalFallback, ...MOCK_POSTS];
 }
 
 export default async function BlogPage() {
   const posts = await getArticles();
 
-  return <BlogClient initialPosts={posts} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.paletindo.id"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Journal",
+                "item": "https://www.paletindo.id/blog"
+              }
+            ]
+          })
+        }}
+      />
+      <BlogClient initialPosts={posts} />
+    </>
+  );
 }

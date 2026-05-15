@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { supabase, type Product, isSupabaseConfigured } from "@/lib/supabase";
 import ProductDetailClient from "./ProductDetailClient";
+import JsonLd from "@/components/seo/JsonLd";
 import productsDataFallback from "../../../../dummy_data.json";
 
 interface Props {
@@ -117,7 +118,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: product.images,
     },
     alternates: {
-      canonical: `https://www.paletindo.id/products/${slug}`,
+      canonical: `https://paletindo.id/products/${slug}`,
     }
   };
 }
@@ -130,5 +131,26 @@ export default async function ProductDetailPage({ params }: Props) {
     notFound();
   }
 
-  return <ProductDetailClient product={product} />;
+  return (
+    <>
+      <JsonLd 
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          name: product.name,
+          description: product.description,
+          image: product.images[0],
+          brand: { '@type': 'Brand', name: 'Paletindo' },
+          offers: {
+            '@type': 'Offer',
+            priceCurrency: 'IDR',
+            availability: 'https://schema.org/InStock',
+            url: `https://paletindo.id/products/${slug}`,
+            seller: { '@type': 'Organization', name: 'PT Paletindo Prakarsa Unggul' },
+          },
+        }}
+      />
+      <ProductDetailClient product={product} />
+    </>
+  );
 }

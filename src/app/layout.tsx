@@ -6,7 +6,7 @@ import LayoutWrapper from "@/components/layout/LayoutWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.paletindo.id"),
+  metadataBase: new URL("https://paletindo.id"),
   title: "Palet Plastik Tangerang Selatan - PT Paletindo Prakarsa Unggul",
   description: "Jual Palet Plastik Tangerang Selatan berkualitas tinggi. PT Paletindo Prakarsa Unggul menyediakan Palet Plastik, Container Industrial, dan Custom Packaging terbaik.",
   keywords: ["Palet Plastik Tangerang Selatan", "Jual Palet Plastik", "Palet Plastik Murah", "Palet Plastik Industri", "Paletindo", "Palet Plastik Banten"],
@@ -14,8 +14,34 @@ export const metadata: Metadata = {
     google: "JKGzBIgPZIL0-JDnVrFfHhlupAZwI_Gqkt355ECK718",
   },
   alternates: {
-    canonical: "https://www.paletindo.id",
-  }
+    canonical: "https://paletindo.id",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: "website",
+    siteName: "PT Paletindo Prakarsa Unggul",
+    locale: "id_ID",
+    url: "https://paletindo.id",
+    title: "Palet Plastik Tangerang Selatan - PT Paletindo Prakarsa Unggul",
+    description: "Jual Palet Plastik Tangerang Selatan berkualitas tinggi. PT Paletindo Prakarsa Unggul menyediakan Palet Plastik, Container Industrial, dan Custom Packaging terbaik.",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "PT Paletindo Prakarsa Unggul Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Palet Plastik Tangerang Selatan - PT Paletindo Prakarsa Unggul",
+    description: "Jual Palet Plastik Tangerang Selatan berkualitas tinggi. PT Paletindo Prakarsa Unggul menyediakan Palet Plastik, Container Industrial, dan Custom Packaging terbaik.",
+    images: ["/logo.png"],
+  },
 };
 
 export default function RootLayout({
@@ -35,41 +61,46 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              "name": "PT Paletindo Prakarsa Unggul - Palet Plastik Tangerang Selatan",
-              "image": "https://www.paletindo.id/logo.png",
-              "@id": "https://www.paletindo.id",
-              "url": "https://www.paletindo.id",
-              "telephone": "+62215374295",
+              "name": "PT Paletindo Prakarsa Unggul",
+              "description": "Supplier dan distributor palet plastik, container plastik industrial di Tangerang Selatan. Melayani area Serpong Utara, BSD, Ciputat, Pondok Aren.",
+              "image": "https://paletindo.id/logo.png",
+              "url": "https://paletindo.id",
+              "telephone": "+62-21-5374295",
+              "email": "marketing@paletindo.id",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "Jelupang, Serpong Utara",
-                "addressLocality": "Tangerang Selatan",
-                "addressRegion": "Banten",
+                "streetAddress": "Jelupang",
+                "addressLocality": "Serpong Utara",
+                "addressRegion": "Tangerang Selatan",
                 "postalCode": "15323",
                 "addressCountry": "ID"
               },
               "geo": {
                 "@type": "GeoCoordinates",
-                "latitude": -6.2625,
-                "longitude": 106.6719
+                "latitude": -6.2465,
+                "longitude": 106.6630
               },
-              "description": "Pusat jual Palet Plastik Tangerang Selatan. Menyediakan palet plastik berkualitas, container industri, dan solusi packaging untuk kebutuhan logistik B2B.",
-              "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday"
-                ],
-                "opens": "08:00",
-                "closes": "17:00"
-              },
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                  "opens": "08:00",
+                  "closes": "17:00"
+                },
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": "Saturday",
+                  "opens": "08:00",
+                  "closes": "13:00"
+                }
+              ],
+              "priceRange": "Rp",
+              "areaServed": ["Tangerang Selatan", "Serpong Utara", "BSD", "Ciputat", "Pondok Aren", "Pamulang", "Jakarta Selatan"],
               "sameAs": [
                 "https://www.facebook.com/paletindo",
-                "https://www.instagram.com/paletindo"
+                "https://www.instagram.com/paletindo",
+                "https://www.tokopedia.com/paletindo",
+                "https://www.blibli.com/merchant/paletindo"
               ]
             })
           }}

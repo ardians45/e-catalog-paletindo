@@ -55,15 +55,40 @@ export default async function ProductsPage() {
   const products = await getProducts();
 
   return (
-    <Suspense fallback={
-      <div className="w-full bg-[#f8f9fa] min-h-screen flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-zinc-300 border-t-[#D4A373] rounded-full animate-spin"></div>
-          <p className="text-zinc-400 text-sm">Memuat katalog...</p>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.paletindo.id"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Katalog Produk",
+                "item": "https://www.paletindo.id/products"
+              }
+            ]
+          })
+        }}
+      />
+      <Suspense fallback={
+        <div className="w-full bg-[#f8f9fa] min-h-screen flex items-center justify-center">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-8 h-8 border-2 border-zinc-300 border-t-[#D4A373] rounded-full animate-spin"></div>
+            <p className="text-zinc-400 text-sm">Memuat katalog...</p>
+          </div>
         </div>
-      </div>
-    }>
-      <ProductsClient initialProducts={products} />
-    </Suspense>
+      }>
+        <ProductsClient initialProducts={products} />
+      </Suspense>
+    </>
   );
 }

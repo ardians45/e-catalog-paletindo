@@ -5,8 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "tqqlnlscdhrwyaqkbiaq.supabase.co",
-        port: "",
+        hostname: "*.supabase.co",
         pathname: "/storage/v1/object/public/**",
       },
     ],
@@ -14,6 +13,16 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   output: 'export',
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'index, follow' },
+        ],
+      },
+    ]
+  },
 };
 
 

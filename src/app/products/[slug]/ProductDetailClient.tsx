@@ -38,6 +38,66 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
   return (
     <div className="w-full bg-[#fcfcfd] min-h-screen pt-28 pb-32 selection:bg-[#D4A373] selection:text-white">
+      {/* Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": product.name,
+            "description": product.description,
+            "image": product.images[0],
+            "brand": {
+              "@type": "Brand",
+              "name": "Paletindo"
+            },
+            "offers": {
+              "@type": "Offer",
+              "url": `https://www.paletindo.id/products/${product.slug}`,
+              "priceCurrency": "IDR",
+              "price": "0", // Contact for price
+              "availability": "https://schema.org/InStock",
+              "seller": {
+                "@type": "Organization",
+                "name": "PT Paletindo Prakarsa Unggul"
+              }
+            },
+            "sku": product.id,
+            "mpn": product.id
+          })
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.paletindo.id"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": product.category,
+                "item": `https://www.paletindo.id/products?category=${encodeURIComponent(product.category)}`
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": product.name,
+                "item": `https://www.paletindo.id/products/${product.slug}`
+              }
+            ]
+          })
+        }}
+      />
+
       {/* Decorative background elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#D4A373]/3 blur-[120px] rounded-full"></div>
@@ -70,7 +130,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               
               <motion.img 
                 src={product.images[0]} 
-                alt={product.name}
+                alt={`${product.name} - PT Paletindo Tangerang Selatan`}
+                loading="eager"
+                priority="high"
                 layoutId={`product-image-${product.id}`}
                 className="w-full h-full object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.12)]"
               />
@@ -91,7 +153,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   key={i} 
                   className={`w-28 h-28 rounded-3xl bg-white border overflow-hidden transition-all duration-500 ${i === 0 ? 'border-[#D4A373] ring-4 ring-[#D4A373]/5' : 'border-zinc-100 hover:border-zinc-300'}`}
                 >
-                  <img src={img} alt={`Thumb ${i}`} className="w-full h-full object-contain p-4" />
+                  <img src={img} alt={`${product.name} thumbnail ${i+1} - Paletindo`} loading="lazy" className="w-full h-full object-contain p-4" />
                 </motion.button>
               ))}
             </div>
@@ -272,6 +334,28 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </Link>
           </div>
         </motion.div>
+
+        {/* Additional SEO/UX Links */}
+        <div className="mt-12 pt-12 border-t border-zinc-100 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="p-10 bg-zinc-50 rounded-[2.5rem] border border-zinc-100 group hover:border-[#D4A373]/30 transition-all">
+            <h4 className="text-xl font-bold text-zinc-900 mb-4 flex items-center gap-3">
+              <MapPin className="w-6 h-6 text-[#D4A373]" /> Butuh di Area Tertentu?
+            </h4>
+            <p className="text-sm text-zinc-500 mb-8 leading-relaxed font-light">Kami melayani pengiriman kilat untuk wilayah Tangerang Selatan (BSD, Serpong, Ciputat, Pamulang) dan sekitarnya.</p>
+            <Link href="/palet-plastik-tangerang-selatan" className="text-xs font-black text-[#D4A373] flex items-center gap-2 group-hover:gap-4 transition-all uppercase tracking-[0.2em]">
+              Cek Area Layanan <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+          <div className="p-10 bg-zinc-50 rounded-[2.5rem] border border-zinc-100 group hover:border-[#D4A373]/30 transition-all">
+            <h4 className="text-xl font-bold text-zinc-900 mb-4 flex items-center gap-3">
+              <FileText className="w-6 h-6 text-[#D4A373]" /> Tips & Panduan Industri
+            </h4>
+            <p className="text-sm text-zinc-500 mb-8 leading-relaxed font-light">Dapatkan wawasan terbaru seputar optimasi pergudangan, logistik, dan tips memilih palet plastik terbaik di blog kami.</p>
+            <Link href="/blog" className="text-xs font-black text-[#D4A373] flex items-center gap-2 group-hover:gap-4 transition-all uppercase tracking-[0.2em]">
+              Kunjungi Blog <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -76,6 +76,30 @@ export default function ComparePage() {
 
   return (
     <div className="w-full bg-[#fcfcfd] min-h-screen selection:bg-[#D4A373] selection:text-white">
+      {/* Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.paletindo.id"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Perbandingan Produk",
+                "item": "https://www.paletindo.id/compare"
+              }
+            ]
+          })
+        }}
+      />
 
       {/* Hero Header */}
       <div className="bg-zinc-900 pt-32 pb-20 relative overflow-hidden">
@@ -198,7 +222,7 @@ export default function ComparePage() {
                         <th key={p.id} className="text-left px-6 py-6">
                           <div className="flex items-center gap-4">
                             <div className="w-12 h-12 rounded-xl bg-zinc-800 border border-zinc-700 overflow-hidden shrink-0">
-                              <img src={p.image} alt={p.name} className="w-full h-full object-contain p-1" />
+                              <img src={p.image} alt={p.name} loading="lazy" className="w-full h-full object-contain p-1" />
                             </div>
                             <span className="text-white font-bold text-sm line-clamp-2">{p.name}</span>
                           </div>
@@ -310,7 +334,7 @@ export default function ComparePage() {
                         className="w-full flex items-center gap-5 p-4 rounded-2xl hover:bg-zinc-50 transition-colors text-left group"
                       >
                         <div className="w-16 h-16 bg-zinc-50 rounded-2xl border border-zinc-100 overflow-hidden shrink-0">
-                          <img src={product.image} alt={product.name} className="w-full h-full object-contain p-2" />
+                          <img src={product.image} alt={product.name} loading="lazy" className="w-full h-full object-contain p-2" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <h4 className="font-bold text-zinc-900 text-sm line-clamp-1 group-hover:text-[#D4A373] transition-colors">{product.name}</h4>

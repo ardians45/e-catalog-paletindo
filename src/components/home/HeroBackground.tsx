@@ -13,11 +13,12 @@ export default function HeroBackground() {
       className="absolute inset-x-0 -top-[60px] bottom-0 h-[calc(100%+60px)] z-0 overflow-hidden"
     >
       <Image
-        src="/images/homepage/hero-model.png"
-        alt="PT Paletindo Premium Logistics"
+        src="/images/homepage/palet-plastik-heavy-duty-tangerang-selatan.png"
+        alt="Palet plastik heavy duty Tangerang Selatan - PT Paletindo"
         fill
         priority
         fetchPriority="high"
+        loading="eager"
         sizes="100vw"
         className="object-cover object-center opacity-70 grayscale-[0.3] brightness-[0.6]"
       />

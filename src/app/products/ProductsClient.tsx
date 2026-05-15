@@ -214,7 +214,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
                         {product.image_url ? (
                           <Image 
                             src={product.image_url} 
-                            alt={product.name}
+                            alt={`${product.name} - Paletindo Tangerang Selatan`}
                             fill
                             className="object-contain transform group-hover:scale-105 transition-transform duration-700 ease-out p-4"
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
