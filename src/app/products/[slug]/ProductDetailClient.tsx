@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { MapPin, ChevronRight, ArrowLeft, Download, ShoppingCart, MessageCircle, FileText, CheckCircle2, ShieldCheck, Box, Zap, Award, Info, Package } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -25,6 +26,7 @@ interface ProductDetailClientProps {
 
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
   const { addItem } = useRFQ();
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
@@ -128,13 +130,19 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             <div className="aspect-[4/5] md:aspect-square bg-white rounded-[3rem] border border-zinc-100 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.05)] flex items-center justify-center relative overflow-hidden group p-12">
               <div className="absolute inset-0 bg-gradient-to-br from-zinc-50/50 to-white pointer-events-none"></div>
               
-              <motion.img 
-                src={product.images[0]} 
-                alt={`${product.name} - PT Paletindo Tangerang Selatan`}
-                loading="eager"
-                layoutId={`product-image-${product.id}`}
-                className="w-full h-full object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.12)]"
-              />
+              <AnimatePresence mode="wait">
+                <motion.img 
+                  key={activeImageIndex}
+                  src={product.images[activeImageIndex]} 
+                  alt={`${product.name} - PT Paletindo Tangerang Selatan`}
+                  loading="eager"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full h-full object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(0,0,0,0.12)]"
+                />
+              </AnimatePresence>
               
               <div className="absolute top-10 left-10 z-20">
                 <div className="bg-zinc-900 text-white px-4 py-2 rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 shadow-2xl">
@@ -144,18 +152,25 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </div>
             </div>
 
-            <div className="flex gap-4 mt-8 px-2">
-              {product.images.map((img, i) => (
-                <motion.button 
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  key={i} 
-                  className={`w-28 h-28 rounded-3xl bg-white border overflow-hidden transition-all duration-500 ${i === 0 ? 'border-[#D4A373] ring-4 ring-[#D4A373]/5' : 'border-zinc-100 hover:border-zinc-300'}`}
-                >
-                  <img src={img} alt={`${product.name} thumbnail ${i+1} - Paletindo`} loading="lazy" className="w-full h-full object-contain p-4" />
-                </motion.button>
-              ))}
-            </div>
+            {product.images.length > 1 && (
+              <div className="flex flex-wrap gap-4 mt-8 px-2">
+                {product.images.map((img, i) => (
+                  <motion.button 
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    key={i} 
+                    onClick={() => setActiveImageIndex(i)}
+                    className={`w-28 h-28 rounded-3xl bg-white border overflow-hidden transition-all duration-500 ${
+                      i === activeImageIndex 
+                        ? 'border-[#D4A373] ring-4 ring-[#D4A373]/5' 
+                        : 'border-zinc-100 hover:border-zinc-300'
+                    }`}
+                  >
+                    <img src={img} alt={`${product.name} thumbnail ${i+1} - Paletindo`} loading="lazy" className="w-full h-full object-contain p-4" />
+                  </motion.button>
+                ))}
+              </div>
+            )}
           </motion.div>
 
           {/* Right: Info */}

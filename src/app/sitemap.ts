@@ -50,27 +50,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let articleRoutes: MetadataRoute.Sitemap = []
   try {
     const articles = await getArticles('published')
-    const supabasePosts = (articles || []).map((article) => ({
+    articleRoutes = (articles || []).map((article) => ({
       url: `${baseUrl}/blog/${article.slug}`,
       lastModified: article.updated_at ? new Date(article.updated_at).toISOString() : new Date().toISOString(),
       changeFrequency: 'monthly' as const,
       priority: 0.5,
     }))
-
-    // Add local articles
-    const { LOCAL_ARTICLES } = await import("@/lib/blog-data")
-    const localPosts = LOCAL_ARTICLES.map((article) => ({
-      url: `${baseUrl}/blog/${article.slug}`,
-      lastModified: new Date(article.published_at).toISOString(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    }))
-
-    // Merge and filter duplicates
-    const supabaseSlugs = new Set((articles || []).map(p => p.slug));
-    const filteredLocal = localPosts.filter(p => !supabaseSlugs.has(p.url.split('/').pop() || ''));
-    
-    articleRoutes = [...filteredLocal, ...supabasePosts]
   } catch (error) {
     console.error('Error fetching articles for sitemap:', error)
   }

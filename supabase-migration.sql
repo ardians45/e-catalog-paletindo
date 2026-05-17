@@ -64,8 +64,9 @@ CREATE TABLE IF NOT EXISTS public.products (
   category TEXT NOT NULL DEFAULT 'Container Industri',
   applications TEXT[] DEFAULT ARRAY['Industri', 'Pergudangan', 'Distribusi'],
 
-  -- Image
+  -- Images
   image_url TEXT,
+  image_urls TEXT[],
 
   -- Timestamps
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -325,6 +326,13 @@ CREATE POLICY "Admins can delete article images"
 --
 -- Anda bisa menemukan UUID Anda di:
 -- Supabase Dashboard > Authentication > Users
+
+-- ==========================================
+-- 8. ADD MULTIPLE IMAGES SUPPORT TO PRODUCTS
+-- ==========================================
+-- Jalankan query ini jika tabel products sudah ada sebelumnya
+-- untuk menambahkan kolom image_urls (array of text):
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS image_urls TEXT[];
 
 -- ==========================================
 -- DONE! Script berhasil dijalankan.

@@ -218,8 +218,8 @@ export default function BlogDetailClient({ article, recentPosts, categories }: B
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 xl:gap-32 items-start">
-          <div className="lg:col-span-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-16 items-start">
+          <div className="lg:col-span-8 min-w-0">
             <article className="prose prose-lg prose-zinc max-w-none 
               prose-p:text-lg prose-p:text-zinc-600 prose-p:leading-relaxed prose-p:font-light
               prose-headings:text-zinc-900 prose-headings:font-black prose-headings:tracking-tight
@@ -272,7 +272,7 @@ export default function BlogDetailClient({ article, recentPosts, categories }: B
             </div>
           </div>
 
-          <aside className="lg:col-span-4 space-y-16 sticky top-32">
+          <aside className="lg:col-span-4 space-y-12 lg:sticky lg:top-32 lg:self-start lg:max-h-[calc(100vh-10rem)] lg:overflow-y-auto hide-scrollbar">
             <div>
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-8 h-8 rounded-xl bg-zinc-900 flex items-center justify-center">

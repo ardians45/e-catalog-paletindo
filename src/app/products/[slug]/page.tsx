@@ -47,7 +47,15 @@ async function getProduct(slug: string) {
           slug: p.slug,
           category: p.category,
           description: (p.description || "Produk industri berkualitas tinggi dari PT Paletindo.").replace(/<[^>]+>/g, ' ').trim(),
-          images: [p.image_url || "/images/products/placeholder.png"],
+          images: (() => {
+            const list = p.image_urls && p.image_urls.length > 0 ? [...p.image_urls] : [];
+            const main = p.image_url;
+            if (main) {
+              const filtered = list.filter(url => url !== main);
+              return [main, ...filtered];
+            }
+            return list.length > 0 ? list : ["/images/products/placeholder.png"];
+          })(),
           specs: {
             dimension: p.length_outer > 0 ? `${p.length_outer} x ${p.width_outer} x ${p.height_outer} cm` : "Hubungi Sales",
             material: p.material || "Plastik PP/HDPE",

@@ -8,15 +8,9 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-import { LOCAL_ARTICLES } from "@/lib/blog-data";
-
 export async function generateStaticParams() {
-  const localParams = LOCAL_ARTICLES.map((article) => ({
-    slug: article.slug,
-  }));
-
   if (!isSupabaseConfigured()) {
-    return localParams;
+    return [];
   }
 
   try {
@@ -25,37 +19,29 @@ export async function generateStaticParams() {
       .select("slug")
       .eq("status", "published");
 
-    const supabaseParams = (articles || []).map((article) => ({
+    return (articles || []).map((article) => ({
       slug: article.slug,
     }));
-
-    return [...localParams, ...supabaseParams];
   } catch (err) {
     console.error("Error generating static params for articles:", err);
-    return localParams;
+    return [];
   }
 }
 
 
 async function getArticleData(slug: string) {
-  // Check local articles first
-  const localArticle = LOCAL_ARTICLES.find(a => a.slug === slug);
-  
-  let article: Article | null = localArticle ? localArticle as unknown as Article : null;
+  let article: Article | null = null;
   let recentPosts: Article[] = [];
   let categories: string[] = [];
 
-  // If found locally, we still want to try fetching other data for sidebar
   if (isSupabaseConfigured()) {
     try {
-      if (!article) {
-        const { data: art, error: artError } = await supabase
-          .from("articles")
-          .select("*")
-          .eq("slug", slug)
-          .single();
-        if (!artError && art) article = art as Article;
-      }
+      const { data: art, error: artError } = await supabase
+        .from("articles")
+        .select("*")
+        .eq("slug", slug)
+        .single();
+      if (!artError && art) article = art as Article;
 
       const { data: recent } = await supabase
         .from("articles")
@@ -74,14 +60,6 @@ async function getArticleData(slug: string) {
     } catch (err) {
       console.error("Error fetching supplemental data:", err);
     }
-  }
-
-  // Fallback sidebar data if Supabase fails/not configured
-  if (recentPosts.length === 0) {
-    recentPosts = LOCAL_ARTICLES.filter(a => a.slug !== slug).slice(0, 5) as unknown as Article[];
-  }
-  if (categories.length === 0) {
-    categories = Array.from(new Set(LOCAL_ARTICLES.map(a => a.category)));
   }
 
   if (!article) return null;

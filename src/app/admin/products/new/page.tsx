@@ -12,6 +12,10 @@ import {
   Info,
   Sparkles,
   Package,
+  Plus,
+  Trash2,
+  Star,
+  Upload,
 } from "lucide-react";
 import { supabase, uploadImage } from "@/lib/supabase";
 
@@ -33,9 +37,16 @@ export default function NewProductPage() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
   const [error, setError] = useState("");
+
+  interface ProductImage {
+    id: string; // temp ID for new images
+    file: File;
+    preview: string;
+  }
+
+  const [images, setImages] = useState<ProductImage[]>([]);
+  const [mainImageId, setMainImageId] = useState<string | null>(null);
 
   const [form, setForm] = useState({
     name: "",
@@ -61,13 +72,45 @@ export default function NewProductPage() {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result as string);
-      reader.readAsDataURL(file);
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const newImgs: ProductImage[] = [];
+      Array.from(files).forEach((file) => {
+        const tempId = `new-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+        const previewUrl = URL.createObjectURL(file);
+        newImgs.push({
+          id: tempId,
+          file,
+          preview: previewUrl,
+        });
+      });
+
+      setImages((prev) => {
+        const updated = [...prev, ...newImgs];
+        if (!mainImageId && updated.length > 0) {
+          setMainImageId(updated[0].id);
+        }
+        return updated;
+      });
     }
+  };
+
+  const handleDeleteImage = (idToDelete: string) => {
+    setImages((prev) => {
+      const filtered = prev.filter((img) => img.id !== idToDelete);
+      if (mainImageId === idToDelete) {
+        if (filtered.length > 0) {
+          setMainImageId(filtered[0].id);
+        } else {
+          setMainImageId(null);
+        }
+      }
+      return filtered;
+    });
+  };
+
+  const handleSetMain = (id: string) => {
+    setMainImageId(id);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -76,12 +119,22 @@ export default function NewProductPage() {
     setIsSubmitting(true);
 
     try {
-      let imageUrl = null;
+      const uploadedUrls: string[] = [];
+      let finalMainImageUrl: string | null = null;
 
-      if (imageFile) {
-        const ext = imageFile.name.split(".").pop();
-        const path = `${form.slug}-${Date.now()}.${ext}`;
-        imageUrl = await uploadImage("product-images", imageFile, path);
+      for (const img of images) {
+        const ext = img.file.name.split(".").pop();
+        const path = `${form.slug}-${Date.now()}-${Math.random().toString(36).substring(2, 7)}.${ext}`;
+        const uploadedUrl = await uploadImage("product-images", img.file, path);
+        
+        uploadedUrls.push(uploadedUrl);
+        if (img.id === mainImageId) {
+          finalMainImageUrl = uploadedUrl;
+        }
+      }
+
+      if (!finalMainImageUrl && uploadedUrls.length > 0) {
+        finalMainImageUrl = uploadedUrls[0];
       }
 
       if (form.is_featured) {
@@ -93,7 +146,8 @@ export default function NewProductPage() {
 
       const { error: insertError } = await supabase.from("products").insert({
         ...form,
-        image_url: imageUrl,
+        image_url: finalMainImageUrl,
+        image_urls: uploadedUrls,
       });
 
       if (insertError) throw insertError;
@@ -309,51 +363,113 @@ export default function NewProductPage() {
         <div className="space-y-8">
           {/* Image Manager */}
           <section className="bg-white border border-zinc-200 rounded-[2.5rem] p-8 shadow-sm space-y-6">
-            <h3 className="text-lg font-bold text-zinc-900 tracking-tight">Media & Visual</h3>
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              className="relative aspect-square border-2 border-dashed border-zinc-100 rounded-[2rem] flex flex-col items-center justify-center cursor-pointer hover:bg-zinc-50 transition-all group overflow-hidden"
-            >
-              {imagePreview ? (
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-zinc-900 tracking-tight">Galeri & Media</h3>
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="inline-flex items-center gap-1 text-xs font-bold text-[#D4A373] hover:text-[#b08254] transition-colors"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                Tambah Gambar
+              </button>
+            </div>
+
+            {/* Active Main Visual Preview Box */}
+            <div className="relative aspect-square border border-zinc-100 rounded-[2rem] flex flex-col items-center justify-center bg-zinc-50/50 overflow-hidden group">
+              {images.find((img) => img.id === mainImageId) ? (
                 <>
                   <img
-                    src={imagePreview}
-                    alt="Preview"
-                    className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                    src={images.find((img) => img.id === mainImageId)?.preview}
+                    alt="Main Visual"
+                    className="w-full h-full object-contain p-6 transition-transform duration-500 group-hover:scale-102"
                   />
-                  <div className="absolute inset-0 bg-zinc-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setImagePreview(null);
-                        setImageFile(null);
-                      }}
-                      className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-red-500 shadow-xl"
-                    >
-                      <X className="w-6 h-6" />
-                    </button>
+                  <div className="absolute top-4 left-4 bg-zinc-900/90 text-white px-3 py-1.5 rounded-full text-[9px] font-bold tracking-widest uppercase flex items-center gap-1.5 shadow-md">
+                    <Star className="w-3 h-3 text-[#D4A373] fill-current" />
+                    Main Visual
                   </div>
                 </>
               ) : (
-                <div className="flex flex-col items-center gap-4 p-8 text-center">
-                  <div className="w-16 h-16 rounded-2xl bg-zinc-50 flex items-center justify-center group-hover:bg-white group-hover:shadow-lg transition-all">
+                <div 
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex flex-col items-center gap-4 text-center p-8 cursor-pointer w-full h-full justify-center group-hover:bg-zinc-50 transition-colors"
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-zinc-50 flex items-center justify-center group-hover:bg-white group-hover:shadow-md transition-all">
                     <ImageIcon className="w-8 h-8 text-zinc-300 group-hover:text-[#D4A373]" />
                   </div>
                   <div className="space-y-1">
-                    <p className="text-zinc-900 font-bold text-sm">Upload Image</p>
-                    <p className="text-zinc-400 text-xs font-medium">PNG, JPG, WebP <br/> (max. 5MB)</p>
+                    <p className="text-zinc-900 font-bold text-sm">Upload Gambar</p>
+                    <p className="text-zinc-400 text-xs font-medium">Click to select files</p>
                   </div>
                 </div>
               )}
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="hidden"
-              />
             </div>
+
+            {/* Thumbnails Grid */}
+            {images.length > 0 && (
+              <div className="space-y-3">
+                <label className="text-[9px] font-black text-zinc-400 uppercase tracking-widest px-1 block">
+                  Semua Gambar ({images.length})
+                </label>
+                <div className="grid grid-cols-3 gap-3">
+                  {images.map((img) => {
+                    const isMain = img.id === mainImageId;
+                    return (
+                      <div
+                        key={img.id}
+                        className={`relative aspect-square rounded-2xl border bg-white overflow-hidden group/thumb transition-all duration-300 ${
+                          isMain ? "border-[#D4A373] ring-2 ring-[#D4A373]/10" : "border-zinc-100 hover:border-zinc-300"
+                        }`}
+                      >
+                        <img
+                          src={img.preview}
+                          alt="Thumbnail"
+                          className="w-full h-full object-contain p-2"
+                        />
+                        
+                        {/* Overlay Controls */}
+                        <div className="absolute inset-0 bg-zinc-950/40 opacity-0 group-hover/thumb:opacity-100 transition-opacity flex items-center justify-center gap-1.5 p-1">
+                          {!isMain && (
+                            <button
+                              type="button"
+                              onClick={() => handleSetMain(img.id)}
+                              title="Jadikan Gambar Utama"
+                              className="w-8 h-8 rounded-xl bg-white hover:bg-zinc-100 flex items-center justify-center text-zinc-600 hover:text-[#D4A373] shadow-lg active:scale-90 transition-all"
+                            >
+                              <Star className="w-4 h-4" />
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteImage(img.id)}
+                            title="Hapus Gambar"
+                            className="w-8 h-8 rounded-xl bg-white hover:bg-red-50 flex items-center justify-center text-red-500 hover:text-red-600 shadow-lg active:scale-90 transition-all"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                        {/* Star Indicator if Main Visual */}
+                        {isMain && (
+                          <div className="absolute top-1 right-1 bg-[#D4A373] text-white p-1 rounded-lg shadow-sm">
+                            <Star className="w-2.5 h-2.5 fill-current" />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageChange}
+              className="hidden"
+            />
           </section>
 
           {/* Visibility & Logic */}

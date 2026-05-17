@@ -1,29 +1,24 @@
-export interface ArticleData {
-  id: string;
-  title: string;
-  slug: string;
-  category: string;
-  content: string;
-  author: string;
-  published_at: string;
-  created_at: string;
-  thumbnail_url: string;
-  excerpt: string;
-  status: string;
-}
+/**
+ * GENERATE SQL INSERT UNTUK ARTIKEL BLOG KE SUPABASE
+ * 
+ * Cara pakai:
+ *   node generate-blog-sql.js
+ * 
+ * Script ini akan membuat file `insert-blog-data.sql` yang bisa langsung di-copas
+ * dan dijalankan di Supabase SQL Editor.
+ */
 
-export const LOCAL_ARTICLES: ArticleData[] = [
+import { writeFileSync } from 'fs';
+
+const ARTICLES = [
   {
-    id: "local-1",
     title: "Harga Pallet Plastik Tangerang Selatan 2025 — Update Terbaru",
     slug: "harga-pallet-plastik-tangerang-selatan-2025",
     category: "Market Insight",
     author: "Tim Sales Paletindo",
     published_at: "2025-05-15T10:00:00Z",
-    created_at: "2025-05-15T10:00:00Z",
     thumbnail_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop",
     excerpt: "Daftar harga pallet plastik Tangerang Selatan terbaru tahun 2025. Temukan tips hemat budget dan faktor yang mempengaruhi harga pallet industrial.",
-    status: "published",
     content: `
       <h2>Tren Harga Pallet Plastik Tangerang Selatan di Tahun 2025</h2>
       <p>Memasuki tahun 2025, permintaan akan infrastruktur logistik di wilayah Tangerang Selatan terus meningkat pesat. Bagi pelaku industri di BSD, Serpong, dan sekitarnya, mengetahui <strong>harga pallet plastik Tangerang Selatan</strong> yang terbaru adalah kunci efisiensi operasional. Harga pallet plastik dipengaruhi oleh fluktuasi biaya bahan baku polimer (HDPE/PP) serta biaya distribusi logistik lokal.</p>
@@ -96,16 +91,13 @@ export const LOCAL_ARTICLES: ArticleData[] = [
     `
   },
   {
-    id: "local-2",
     title: "Perbedaan Pallet Plastik Heavy Duty vs Medium Duty — Mana yang Tepat?",
     slug: "perbedaan-pallet-plastik-heavy-duty-medium-duty",
     category: "Technical Guide",
     author: "Engineer Paletindo",
     published_at: "2025-05-15T11:00:00Z",
-    created_at: "2025-05-15T11:00:00Z",
-    thumbnail_url: "https://images.unsplash.com/photo-1542289658-002d295f707f?q=80&w=1200&auto=format&fit=crop",
+    thumbnail_url: "https://images.unsplash.com/photo-1689942010216-dc412bb1e7a9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     excerpt: "Analisis mendalam perbedaan pallet plastik heavy duty dan medium duty. Pilih spesifikasi yang tepat untuk kebutuhan racking atau lantai gudang Anda.",
-    status: "published",
     content: `
       <h2>Memahami Klasifikasi Pallet Plastik Industrial</h2>
       <p>Salah satu kesalahan fatal dalam manajemen gudang adalah salah memilih spesifikasi pallet. Menggunakan tipe medium untuk beban berat bisa menyebabkan kecelakaan kerja, sementara menggunakan <strong>pallet plastik heavy duty</strong> untuk beban ringan adalah pemborosan anggaran. Mari kita bedah perbedaannya.</p>
@@ -174,16 +166,13 @@ export const LOCAL_ARTICLES: ArticleData[] = [
     `
   },
   {
-    id: "local-3",
     title: "5 Hal yang Perlu Dicek Saat Memilih Supplier Pallet Plastik di Serpong Utara",
     slug: "supplier-pallet-plastik-serpong-utara",
     category: "Buying Guide",
     author: "Marketing Paletindo",
     published_at: "2025-05-15T12:00:00Z",
-    created_at: "2025-05-15T12:00:00Z",
     thumbnail_url: "https://images.unsplash.com/photo-1553413077-190dd305871c?q=80&w=1200&auto=format&fit=crop",
     excerpt: "Panduan memilih supplier pallet plastik di Serpong Utara. Pastikan lokasi gudang, ketersediaan stok, dan jaminan kualitas material sebelum bertransaksi.",
-    status: "published",
     content: `
       <h2>Mencari Supplier Pallet Terdekat di Serpong Utara</h2>
       <p>Bagi bisnis di kawasan Jelupang, Alam Sutera, atau BSD, memiliki <strong>supplier pallet plastik Serpong Utara</strong> yang dekat adalah keuntungan logistik yang besar. Namun, kedekatan lokasi bukan satu-satunya faktor yang menjamin kelancaran supply chain Anda.</p>
@@ -253,16 +242,13 @@ export const LOCAL_ARTICLES: ArticleData[] = [
     `
   },
   {
-    id: "local-4",
     title: "Pallet Plastik Food Grade untuk Industri Makanan — Panduan Lengkap",
     slug: "pallet-plastik-food-grade-industri-makanan",
     category: "Safety & Standards",
     author: "Tim Quality Control",
     published_at: "2025-05-15T13:00:00Z",
-    created_at: "2025-05-15T13:00:00Z",
-    thumbnail_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop",
+    thumbnail_url: "https://images.unsplash.com/photo-1684695749267-233af13276d0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     excerpt: "Kenali standar pallet plastik food grade untuk industri makanan dan farmasi. Hindari kontaminasi bakteri dengan pemilihan material yang tepat.",
-    status: "published",
     content: `
       <h2>Standar Higienitas dalam Rantai Pasok Makanan</h2>
       <p>Dalam industri makanan dan minuman, kebersihan bukan sekadar pilihan, melainkan regulasi yang ketat (HACCP/ISO 22000). Penggunaan <strong>pallet plastik food grade</strong> menjadi wajib karena pallet kayu rentan menjadi tempat bersarangnya jamur, serangga, dan bakteri berbahaya.</p>
@@ -303,7 +289,7 @@ export const LOCAL_ARTICLES: ArticleData[] = [
       </div>
 
       <h2>Ciri Khas Pallet Plastik Food Grade yang Asli</h2>
-      <p><strong>Pallet plastik food grade</strong> yang berkualitas biasanya terbuat dari 100% Virgin HDPE. Ciri fisiknya adalah warna yang cerah dan solid (tidak bintik-bintik), serta tidak memiliki bau menyengat khas plastik daur ulang. Desainnya biasanya 'flat' atau memiliki lubang yang mudah dibersihkan tanpa ada sudut-sudut mati yang bisa menyimpan debu atau sisa makanan.</p>
+      <p><strong>Pallet plastik food grade</strong> yang berkualitas biasanya terbuat dari 100% Virgin HDPE. Ciri fisiknya adalah warna yang cerah and solid (tidak bintik-bintik), serta tidak memiliki bau menyengat khas plastik daur ulang. Desainnya biasanya 'flat' atau memiliki lubang yang mudah dibersihkan tanpa ada sudut-sudut mati yang bisa menyimpan debu atau sisa makanan.</p>
       
       <h3>Mengapa Virgin HDPE Begitu Penting?</h3>
       <p>Material virgin (murni) memastikan tidak ada zat kimia berbahaya yang bermigrasi dari pallet ke produk makanan Anda. Selain itu, material murni memiliki struktur molekul yang lebih kuat sehingga tidak mudah getas atau pecah saat digunakan di suhu dingin ekstrem (cold storage) yang sering dibutuhkan industri daging, susu, dan frozen food.</p>
@@ -331,16 +317,13 @@ export const LOCAL_ARTICLES: ArticleData[] = [
     `
   },
   {
-    id: "local-5",
     title: "Ukuran Standar Pallet Plastik di Indonesia — Tabel Lengkap",
     slug: "ukuran-standar-pallet-plastik-indonesia",
     category: "Standardization",
     author: "Tim Logistik Paletindo",
     published_at: "2025-05-15T14:00:00Z",
-    created_at: "2025-05-15T14:00:00Z",
-    thumbnail_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop",
+    thumbnail_url: "https://images.unsplash.com/photo-1689942010216-dc412bb1e7a9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     excerpt: "Ketahui berbagai ukuran pallet plastik yang standar digunakan di industri Indonesia. Tabel lengkap ukuran ISO, standar logistik, dan tips memilih dimensi.",
-    status: "published",
     content: `
       <h2>Standarisasi Dimensi untuk Efisiensi Logistik</h2>
       <p>Memilih <strong>ukuran pallet plastik</strong> yang salah bisa berakibat fatal: pallet tidak muat di kontainer, tidak pas di sistem racking, atau tidak bisa diangkat oleh forklift yang ada. Di Indonesia, standarisasi ukuran mengikuti beberapa norma internasional yang telah diadaptasi.</p>
@@ -409,3 +392,56 @@ export const LOCAL_ARTICLES: ArticleData[] = [
     `
   }
 ];
+
+function escapeSQL(str) {
+  if (!str) return 'NULL';
+  // Escape single quotes for PostgreSQL
+  return `'${str.replace(/'/g, "''")}'`;
+}
+
+function main() {
+  console.log('⚡ Generating SQL queries for blog migration...');
+
+  const sqlLines = [
+    '-- ========================================================',
+    '-- SQL MIGRATION: IMPORT LOCAL ARTICLES TO SUPABASE',
+    '-- Run this script in the Supabase Dashboard -> SQL Editor',
+    '-- ========================================================',
+    '',
+    'BEGIN;',
+    ''
+  ];
+
+  for (const article of ARTICLES) {
+    const title = escapeSQL(article.title);
+    const slug = escapeSQL(article.slug);
+    const category = escapeSQL(article.category);
+    const author = escapeSQL(article.author);
+    const publishedAt = escapeSQL(article.published_at);
+    const thumbnailUrl = escapeSQL(article.thumbnail_url);
+    const excerpt = escapeSQL(article.excerpt);
+    const content = escapeSQL(article.content.trim());
+    const status = "'published'";
+
+    sqlLines.push(`-- 📝 Article: ${article.title}`);
+    sqlLines.push(`INSERT INTO public.articles (title, slug, category, author, status, published_at, thumbnail_url, excerpt, content)`);
+    sqlLines.push(`VALUES (${title}, ${slug}, ${category}, ${author}, ${status}, ${publishedAt}, ${thumbnailUrl}, ${excerpt}, ${content})`);
+    sqlLines.push(`ON CONFLICT (slug) DO NOTHING;`);
+    sqlLines.push('');
+  }
+
+  sqlLines.push('COMMIT;');
+  sqlLines.push('');
+  sqlLines.push('-- ✅ Done! 5 local articles successfully migrated to Supabase.');
+
+  const sqlContent = sqlLines.join('\n');
+  writeFileSync('./insert-blog-data.sql', sqlContent, 'utf-8');
+
+  console.log('✅ File SQL generated successfully: insert-blog-data.sql');
+  console.log('👉 Next Steps:');
+  console.log('   1. Run `node generate-blog-sql.js` in terminal');
+  console.log('   2. Open insert-blog-data.sql and copy the SQL statements');
+  console.log('   3. Run it in Supabase SQL Editor!');
+}
+
+main();
