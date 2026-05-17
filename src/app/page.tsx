@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { 
   ArrowRight, 
-  Award,
   ShieldCheck,
   Truck,
   BarChart3,
@@ -95,19 +94,7 @@ export default async function Home() {
               <p className="text-zinc-400 text-lg font-bold mb-8 uppercase tracking-[0.3em]">PT Paletindo Prakarsa Unggul</p>
               <span className="sr-only">Palet Plastik Tangerang Selatan — PT Paletindo Prakarsa Unggul</span>
               
-              <div className="lg:absolute lg:top-0 lg:right-[-100%] mt-12 lg:mt-0 max-w-xs z-30">
-                <div className="bg-zinc-900/40 backdrop-blur-2xl border border-white/10 p-6 rounded-3xl shadow-2xl">
-                  <p className="text-zinc-200 text-sm font-light leading-relaxed mb-4 italic">
-                    "Standar industri bagi mereka yang menghargai nilai kualitas sejati. Melayani manufaktur kelas atas sejak 2012."
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <Award className="w-4 h-4 text-[#D4A373]" />
-                    <span className="text-[10px] uppercase font-bold text-white tracking-widest leading-none">
-                      Penyedia Terverifikasi
-                    </span>
-                  </div>
-                </div>
-              </div>
+
             </div>
 
             {/* Subtext and Action */}

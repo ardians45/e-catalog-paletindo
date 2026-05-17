@@ -30,15 +30,9 @@ export default function Navbar() {
       name: "Produk", 
       href: "/products",
       submenu: [
-        { name: "Palet Plastik", href: "/products?category=Palet%20Plastik", 
-          child: [
-            { name: "Heavy Duty", href: "/products?category=Heavy%20Duty" },
-            { name: "Food Grade", href: "/products?category=Food%20Grade" },
-            { name: "Medium Duty", href: "/products?category=Medium%20Duty" },
-          ]
-        },
-        { name: "Container Plastik", href: "/products?category=Container%20Industri" },
-        { name: "Crat Plastik", href: "/products?category=Crat%20Plastik" },
+        { name: "Palet Plastik", href: "/products?category=Palet%20Plastik" },
+        { name: "Container Industri", href: "/products?category=Container%20Industri" },
+    
       ]
     },
     { 
@@ -47,15 +41,7 @@ export default function Navbar() {
       submenu: [
         { 
           name: "Tangerang Selatan", 
-          href: "/palet-plastik-tangerang-selatan",
-          child: [
-            { name: "Serpong Utara", href: "/pallet-plastik-serpong-utara" },
-            { name: "Serpong", href: "/pallet-plastik-serpong" },
-            { name: "BSD City", href: "/pallet-plastik-bsd" },
-            { name: "Ciputat", href: "/pallet-plastik-ciputat" },
-            { name: "Pondok Aren", href: "/pallet-plastik-pondok-aren" },
-            { name: "Pamulang", href: "/pallet-plastik-pamulang" },
-          ]
+          href: "/palet-plastik-tangerang-selatan"
         }
       ]
     },
@@ -215,7 +201,7 @@ export default function Navbar() {
               <Link
                 href={link.href}
                 className="block text-sm font-black uppercase tracking-widest text-zinc-900"
-                onClick={() => !link.submenu && setIsOpen(false)}
+                onClick={() => link.href !== "#" && setIsOpen(false)}
               >
                 {link.name}
               </Link>
@@ -226,7 +212,7 @@ export default function Navbar() {
                       <Link
                         href={sub.href}
                         className="block text-[11px] font-bold uppercase tracking-widest text-zinc-500 hover:text-[#D4A373]"
-                        onClick={() => !sub.child && setIsOpen(false)}
+                        onClick={() => sub.href !== "#" && setIsOpen(false)}
                       >
                         {sub.name}
                       </Link>

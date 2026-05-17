@@ -13,8 +13,8 @@ export default function HeroBackground() {
       className="absolute inset-x-0 -top-[60px] bottom-0 h-[calc(100%+60px)] z-0 overflow-hidden"
     >
       <Image
-        src="/images/homepage/palet-plastik-heavy-duty-tangerang-selatan.png"
-        alt="Palet plastik heavy duty Tangerang Selatan - PT Paletindo"
+        src="/images/homepage/Karyawan_gudang_memegang_clipboa…_202605171846.jpeg"
+        alt="Karyawan gudang memegang clipboard - PT Paletindo"
         fill
         priority
         fetchPriority="high"
