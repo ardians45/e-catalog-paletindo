@@ -8,6 +8,23 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { useRFQ } from "@/components/providers/RFQProvider";
 
+interface NavChildLink {
+  name: string;
+  href: string;
+}
+
+interface NavSubLink {
+  name: string;
+  href: string;
+  child?: NavChildLink[];
+}
+
+interface NavLink {
+  name: string;
+  href: string;
+  submenu?: NavSubLink[];
+}
+
 export default function Navbar() {
   const { items } = useRFQ();
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +41,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
+  const navLinks: NavLink[] = [
     { name: "Beranda", href: "/" },
     { 
       name: "Produk", 
