@@ -47,9 +47,9 @@ export default function Navbar() {
       name: "Produk", 
       href: "/products",
       submenu: [
-        { name: "Palet Plastik", href: "/products?category=Palet%20Plastik" },
-        { name: "Container Industri", href: "/products?category=Container%20Industri" },
-    
+        { name: "Palet Plastik", href: "/products?category=Palet%20plastik" },
+        { name: "Container Solid", href: "/products?category=Container%20Solid" },
+        { name: "Container Berlubang", href: "/products?category=Container%20Berlubang" },
       ]
     },
     { 

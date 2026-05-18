@@ -3,18 +3,43 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Search, Filter, Package, Box, ShieldCheck, ChevronRight, ChevronLeft } from "lucide-react";
+import {
+  Search,
+  Filter,
+  Package,
+  Box,
+  ShieldCheck,
+  ChevronRight,
+  ChevronLeft,
+  Grid,
+  Utensils,
+  ShoppingBag,
+  Inbox,
+  GlassWater,
+  Disc,
+  CircleDot,
+  Truck,
+  Snowflake
+} from "lucide-react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { type Product } from "@/lib/supabase";
 
 const CATEGORY_MAP: Record<string, { name: string; icon: any }> = {
   all: { name: "Semua Produk", icon: Box },
-  "Palet Plastik": { name: "Palet Plastik", icon: Package },
-  "Box Food Grade": { name: "Box Food Grade", icon: ShieldCheck },
-  "Container Industri": { name: "Container Industri", icon: Box },
-  "Safety Equipment": { name: "Safety Equipment", icon: ShieldCheck },
-  "Lainnya": { name: "Lainnya", icon: Box },
+  "Container Solid": { name: "Container Solid", icon: Box },
+  "Container Berlubang": { name: "Container Berlubang", icon: Grid },
+  "Lunch Box": { name: "Lunch Box", icon: Utensils },
+  "Palet plastik": { name: "Palet Plastik", icon: Package },
+  "Keranjang Buah": { name: "Keranjang Buah", icon: ShoppingBag },
+  "Container Bakery": { name: "Container Bakery", icon: Box },
+  "Part Case - Jolly Boy": { name: "Part Case - Jolly Boy", icon: Inbox },
+  "Krat Botol": { name: "Krat Botol", icon: GlassWater },
+  "Krat piring": { name: "Krat Piring", icon: Disc },
+  "Krat Telur": { name: "Krat Telur", icon: CircleDot },
+  "Krat Gelas": { name: "Krat Gelas", icon: GlassWater },
+  "Container Logistik": { name: "Container Logistik", icon: Truck },
+  "Palet untuk Truck Box Pendingin": { name: "Palet Truck Pendingin", icon: Snowflake },
 };
 
 const ITEMS_PER_PAGE = 12;
@@ -46,8 +71,32 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
     setCurrentPage(1);
   }, [activeCategory, searchQuery]);
 
+  // Desired order for the 13 new categories
+  const PREDEFINED_ORDER = [
+    "Container Solid",
+    "Container Berlubang",
+    "Lunch Box",
+    "Palet plastik",
+    "Keranjang Buah",
+    "Container Bakery",
+    "Part Case - Jolly Boy",
+    "Krat Botol",
+    "Krat piring",
+    "Krat Telur",
+    "Krat Gelas",
+    "Container Logistik",
+    "Palet untuk Truck Box Pendingin"
+  ];
+
   // Get unique categories from products
-  const categories = ["all", ...Array.from(new Set(initialProducts.map(p => p.category)))];
+  const dbCategories = Array.from(new Set(initialProducts.map(p => p.category)));
+
+  // Sort according to PREDEFINED_ORDER, putting any custom added categories at the end
+  const categories = [
+    "all",
+    ...PREDEFINED_ORDER.filter(cat => dbCategories.includes(cat)),
+    ...dbCategories.filter(cat => !PREDEFINED_ORDER.includes(cat))
+  ];
 
   const PRODUCT_CATEGORIES = categories.map(id => ({
     id,

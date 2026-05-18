@@ -15,23 +15,18 @@ export default function Footer() {
             </h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/products?category=Palet%20Plastik" className="text-sm font-medium hover:text-[#D4A373] transition-colors">
+                <Link href="/products?category=Palet%20plastik" className="text-sm font-medium hover:text-[#D4A373] transition-colors">
                   Palet Plastik
                 </Link>
-                <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
-                  <Link href="/products?category=Heavy%20Duty" className="text-[10px] text-zinc-500 hover:text-white">Heavy Duty</Link>
-                  <Link href="/products?category=Food%20Grade" className="text-[10px] text-zinc-500 hover:text-white">Food Grade</Link>
-                  <Link href="/products?category=Medium%20Duty" className="text-[10px] text-zinc-500 hover:text-white">Medium Duty</Link>
-                </div>
               </li>
               <li>
-                <Link href="/products?category=Container%20Industri" className="text-sm font-medium hover:text-[#D4A373] transition-colors">
-                  Container Plastik
+                <Link href="/products?category=Container%20Solid" className="text-sm font-medium hover:text-[#D4A373] transition-colors">
+                  Container Solid
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=Crat%20Plastik" className="text-sm font-medium hover:text-[#D4A373] transition-colors">
-                  Crat Plastik
+                <Link href="/products?category=Container%20Berlubang" className="text-sm font-medium hover:text-[#D4A373] transition-colors">
+                  Container Berlubang
                 </Link>
               </li>
               <li>

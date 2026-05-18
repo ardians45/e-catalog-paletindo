@@ -20,12 +20,20 @@ import {
 import { supabase, uploadImage, type Product } from "@/lib/supabase";
 
 
-const CATEGORIES = [
-  "Container Industri",
-  "Palet Plastik",
-  "Box Food Grade",
-  "Safety Equipment",
-  "Lainnya",
+const DEFAULT_CATEGORIES = [
+  "Container Solid",
+  "Container Berlubang",
+  "Lunch Box",
+  "Palet plastik",
+  "Keranjang Buah",
+  "Container Bakery",
+  "Part Case - Jolly Boy",
+  "Krat Botol",
+  "Krat piring",
+  "Krat Telur",
+  "Krat Gelas",
+  "Container Logistik",
+  "Palet untuk Truck Box Pendingin"
 ];
 
 export default function EditProductPage({
@@ -51,6 +59,32 @@ export default function EditProductPage({
   const [images, setImages] = useState<ProductImage[]>([]);
   const [mainImageId, setMainImageId] = useState<string | null>(null);
 
+  const [categoriesList, setCategoriesList] = useState<string[]>([]);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [showAddNewCategory, setShowAddNewCategory] = useState(false);
+
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .select("category");
+        
+        if (!error && data) {
+          const dbCategories = Array.from(new Set(data.map(p => p.category))).filter(Boolean);
+          const merged = Array.from(new Set([...DEFAULT_CATEGORIES, ...dbCategories]));
+          setCategoriesList(merged);
+        } else {
+          setCategoriesList(DEFAULT_CATEGORIES);
+        }
+      } catch (err) {
+        console.error("Failed to load categories:", err);
+        setCategoriesList(DEFAULT_CATEGORIES);
+      }
+    }
+    loadCategories();
+  }, []);
+
   const [form, setForm] = useState({
     name: "",
     slug: "",
@@ -62,7 +96,7 @@ export default function EditProductPage({
     length_outer: 0,
     width_outer: 0,
     height_outer: 0,
-    category: "Container Industri",
+    category: "Container Solid",
     applications: ["Industri", "Pergudangan", "Distribusi"],
     image_url: null as string | null,
   });
@@ -353,17 +387,66 @@ export default function EditProductPage({
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">Kategori</label>
-                <select
-                  value={form.category}
-                  onChange={(e) => setForm((prev) => ({ ...prev, category: e.target.value }))}
-                  className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 text-sm font-semibold focus:outline-none focus:border-[#D4A373]/30 appearance-none transition-all"
-                >
-                  {CATEGORIES.map((cat) => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
-                </select>
+              <div className="space-y-2 relative">
+                <div className="flex justify-between items-center px-1">
+                  <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                    Kategori
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setShowAddNewCategory(!showAddNewCategory)}
+                    className="text-[10px] font-bold text-[#D4A373] hover:text-[#b08254] transition-colors flex items-center gap-1 focus:outline-none"
+                  >
+                    <Plus className="w-3 h-3" />
+                    {showAddNewCategory ? "Pilih dari List" : "Tambah Kategori Baru"}
+                  </button>
+                </div>
+                
+                {!showAddNewCategory ? (
+                  <select
+                    value={form.category}
+                    onChange={(e) => {
+                      if (e.target.value === "ADD_NEW_TRIGGER") {
+                        setShowAddNewCategory(true);
+                      } else {
+                        setForm((prev) => ({ ...prev, category: e.target.value }));
+                      }
+                    }}
+                    className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 text-sm font-semibold focus:outline-none focus:border-[#D4A373]/30 transition-all appearance-none"
+                  >
+                    {categoriesList.map((cat) => (
+                      <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                    <option value="ADD_NEW_TRIGGER" className="text-[#D4A373] font-bold">+ Tambah Kategori Baru...</option>
+                  </select>
+                ) : (
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Ketik kategori baru..."
+                      value={newCategoryName}
+                      onChange={(e) => setNewCategoryName(e.target.value)}
+                      className="flex-1 px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 text-sm font-semibold focus:outline-none focus:border-[#D4A373]/30 transition-all"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const trimmed = newCategoryName.trim();
+                        if (trimmed) {
+                          if (!categoriesList.includes(trimmed)) {
+                            setCategoriesList(prev => [...prev, trimmed]);
+                          }
+                          setForm((prev) => ({ ...prev, category: trimmed }));
+                          setNewCategoryName("");
+                          setShowAddNewCategory(false);
+                        }
+                      }}
+                      className="px-6 py-4 bg-zinc-900 hover:bg-zinc-800 text-white font-bold rounded-2xl transition-all text-xs active:scale-95 whitespace-nowrap"
+                    >
+                      Tambah
+                    </button>
+                  </div>
+                )}
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">Material</label>

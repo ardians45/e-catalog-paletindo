@@ -11,7 +11,7 @@ const CATEGORIES = [
     desc: "Sedia palet plastik heavy duty berkualitas tinggi untuk kapasitas beban berat di gudang industri. Tahan benturan, anti rayap, dan ideal untuk penggunaan jangka panjang di berbagai lini logistik.", 
     stat: "15+", 
     statLabel: "Varian Tersedia",
-    href: "/products?category=Palet%20Plastik"
+    href: "/products?category=Palet%20plastik"
   },
   { 
     num: "02", 
@@ -19,7 +19,7 @@ const CATEGORIES = [
     desc: "Solusi penyimpanan industrial dengan container plastik berbagai ukuran. Tersedia tipe solid, perforated, dan food grade untuk industri makanan maupun manufaktur umum dengan standar kualitas ekspor.", 
     stat: "150+", 
     statLabel: "Model Produk",
-    href: "/products?category=Container%20Industri"
+    href: "/products?category=Container%20Solid"
   },
   { 
     num: "03", 
