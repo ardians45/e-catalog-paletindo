@@ -47,9 +47,19 @@ export default function Navbar() {
       name: "Produk", 
       href: "/products",
       submenu: [
+        { name: "Semua Produk", href: "/products" },
         { name: "Palet Plastik", href: "/products?category=Palet%20plastik" },
         { name: "Container Solid", href: "/products?category=Container%20Solid" },
         { name: "Container Berlubang", href: "/products?category=Container%20Berlubang" },
+        { name: "Lunch Box", href: "/products?category=Lunch%20Box" },
+        { name: "Keranjang Buah", href: "/products?category=Keranjang%20Buah" },
+        { name: "Container Bakery", href: "/products?category=Container%20Bakery" },
+        { name: "Part Case - Jolly Boy", href: "/products?category=Part%20Case%20-%20Jolly%20Boy" },
+        { name: "Krat Botol", href: "/products?category=Krat%20Botol" },
+        { name: "Krat Piring", href: "/products?category=Krat%20piring" },
+        { name: "Krat Telur", href: "/products?category=Krat%20Telur" },
+        { name: "Krat Gelas", href: "/products?category=Krat%20Gelas" },
+        { name: "Container Logistik", href: "/products?category=Container%20Logistik" },
       ]
     },
     { 

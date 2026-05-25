@@ -198,17 +198,17 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
                     <button
                       key={cat.id}
                       onClick={() => setActiveCategory(cat.id)}
-                      className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all font-medium ${
+                      className={`w-full flex items-start sm:items-center justify-between px-4 py-3 rounded-xl transition-all font-medium ${
                         isActive 
                           ? "bg-zinc-900 text-white shadow-md shadow-zinc-900/10" 
                           : "bg-transparent text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900"
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <cat.icon className={`w-5 h-5 ${isActive ? "text-[#D4A373]" : "text-zinc-400"}`} />
-                        <span>{cat.name}</span>
+                      <div className="flex items-center gap-3 flex-1 min-w-0 pr-3">
+                        <cat.icon className={`w-5 h-5 shrink-0 ${isActive ? "text-[#D4A373]" : "text-zinc-400"}`} />
+                        <span className="text-left text-sm leading-snug">{cat.name}</span>
                       </div>
-                      <span className={`text-xs px-2 py-1 rounded-full ${isActive ? "bg-white/10" : "bg-zinc-200"}`}>
+                      <span className={`text-xs px-2 py-1 rounded-full shrink-0 ${isActive ? "bg-white/10" : "bg-zinc-200"}`}>
                         {cat.count}
                       </span>
                     </button>
