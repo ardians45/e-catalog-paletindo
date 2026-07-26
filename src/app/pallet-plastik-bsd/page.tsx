@@ -3,8 +3,8 @@ import Link from "next/link";
 import { MapPin, ShieldCheck, Truck, MessageCircle, Box, Star, ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Palet Plastik BSD City - Supplier & Distributor Terpercaya | Paletindo",
-  description: "Cari palet plastik BSD City? PT Paletindo Prakarsa Unggul sedia pallet baru & bekas untuk pergudangan di BSD, Pagedangan, dan sekitarnya. Kirim instan, harga murah.",
+  title: "Pallet Plastik & Container Box BSD City — Supplier Industri | PT Paletindo",
+  description: "Supplier pallet plastik heavy duty & container box industri terdekat di BSD City & Serpong. Pengiriman cepat, ready stock & garansi kualitas pabrik.",
   alternates: { canonical: "https://paletindo.id/pallet-plastik-bsd" }
 };
 

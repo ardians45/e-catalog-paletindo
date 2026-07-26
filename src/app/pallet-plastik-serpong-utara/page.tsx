@@ -18,8 +18,8 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Pallet Plastik Serpong Utara - Supplier Terdekat | PT Paletindo Prakarsa Unggul",
-  description: "Jual pallet plastik Serpong Utara berkualitas tinggi. PT Paletindo berlokasi di Jelupang, Serpong Utara. Tersedia heavy duty, food grade, all size. Hubungi kami!",
+  title: "Pallet Plastik & Container Box Serpong Utara — Supplier Terdekat | PT Paletindo",
+  description: "Jual pallet plastik & container box industri di Serpong Utara & Jelupang. Gudang utama lokasi lokal, pengiriman instan 15-30 menit, harga grosir pabrik.",
   alternates: {
     canonical: "https://paletindo.id/pallet-plastik-serpong-utara",
   }

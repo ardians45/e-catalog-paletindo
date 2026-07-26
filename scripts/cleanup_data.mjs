@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const DATA_FILE = path.join(process.cwd(), 'dummy_data.json');
+const DATA_FILE = path.join(process.cwd(), 'src', 'data', 'dummy_data.json');
 
 if (fs.existsSync(DATA_FILE)) {
     const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));

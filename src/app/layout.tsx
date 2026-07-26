@@ -7,9 +7,19 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://paletindo.id"),
-  title: "Palet Plastik Tangerang Selatan - PT Paletindo Prakarsa Unggul",
-  description: "Jual Palet Plastik Tangerang Selatan berkualitas tinggi. PT Paletindo Prakarsa Unggul menyediakan Palet Plastik, Container Industrial, dan Custom Packaging terbaik.",
-  keywords: ["Palet Plastik Tangerang Selatan", "Jual Palet Plastik", "Palet Plastik Murah", "Palet Plastik Industri", "Paletindo", "Palet Plastik Banten"],
+  title: "Jual Pallet Plastik & Container Box Industri — Ready Stock Jabodetabek | PT Paletindo",
+  description: "Pabrik & Supplier Pallet Plastik Heavy Duty, Food Grade, serta Container Box Industri / Keranjang Plastik. Harga Grosir Direct Pabrik & Kirim Hari Ini!",
+  keywords: [
+    "Jual Pallet Plastik",
+    "Container Box Industri",
+    "Box Container Plastik",
+    "Jual Container Box Terdekat",
+    "Pallet Plastik Tangerang Selatan",
+    "Supplier Pallet Plastik Industri",
+    "Pabrik Palet Plastik",
+    "Keranjang Plastik Industri",
+    "PT Paletindo Prakarsa Unggul"
+  ],
   verification: {
     google: "JKGzBIgPZIL0-JDnVrFfHhlupAZwI_Gqkt355ECK718",
   },
@@ -35,8 +45,8 @@ export const metadata: Metadata = {
     siteName: "PT Paletindo Prakarsa Unggul",
     locale: "id_ID",
     url: "https://paletindo.id",
-    title: "Palet Plastik Tangerang Selatan - PT Paletindo Prakarsa Unggul",
-    description: "Jual Palet Plastik Tangerang Selatan berkualitas tinggi. PT Paletindo Prakarsa Unggul menyediakan Palet Plastik, Container Industrial, dan Custom Packaging terbaik.",
+    title: "Jual Pallet Plastik & Container Box Industri — Ready Stock Jabodetabek | PT Paletindo",
+    description: "Pabrik & Supplier Pallet Plastik Heavy Duty, Food Grade, serta Container Box Industri / Keranjang Plastik. Harga Grosir Direct Pabrik & Kirim Hari Ini!",
     images: [
       {
         url: "/logo.png",
@@ -48,8 +58,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Palet Plastik Tangerang Selatan - PT Paletindo Prakarsa Unggul",
-    description: "Jual Palet Plastik Tangerang Selatan berkualitas tinggi. PT Paletindo Prakarsa Unggul menyediakan Palet Plastik, Container Industrial, dan Custom Packaging terbaik.",
+    title: "Jual Pallet Plastik & Container Box Industri — Ready Stock Jabodetabek | PT Paletindo",
+    description: "Pabrik & Supplier Pallet Plastik Heavy Duty, Food Grade, serta Container Box Industri / Keranjang Plastik. Harga Grosir Direct Pabrik & Kirim Hari Ini!",
     images: ["/logo.png"],
   },
 };
@@ -70,18 +80,19 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "LocalBusiness",
+              "@type": ["LocalBusiness", "Organization"],
               "name": "PT Paletindo Prakarsa Unggul",
-              "description": "Supplier dan distributor palet plastik, container plastik industrial di Tangerang Selatan. Melayani area Serpong Utara, BSD, Ciputat, Pondok Aren.",
+              "legalName": "PT Paletindo Prakarsa Unggul",
+              "description": "Supplier utama & pabrik distributor pallet plastik industri, container box solid & berlubang, dan custom packaging berkualitas tinggi di Jabodetabek.",
               "image": "https://paletindo.id/logo.png",
               "url": "https://paletindo.id",
-              "telephone": "+62-21-5374295",
+              "telephone": "+62-878-7766-2097",
               "email": "marketing@paletindo.id",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "Jelupang",
-                "addressLocality": "Serpong Utara",
-                "addressRegion": "Tangerang Selatan",
+                "streetAddress": "Jelupang, Kec. Serpong Utara",
+                "addressLocality": "Tangerang Selatan",
+                "addressRegion": "Banten",
                 "postalCode": "15323",
                 "addressCountry": "ID"
               },
@@ -104,8 +115,30 @@ export default function RootLayout({
                   "closes": "13:00"
                 }
               ],
-              "priceRange": "Rp",
-              "areaServed": ["Tangerang Selatan", "Serpong Utara", "BSD", "Ciputat", "Pondok Aren", "Pamulang", "Jakarta Selatan"],
+              "priceRange": "$$",
+              "areaServed": [
+                "Tangerang Selatan",
+                "Serpong Utara",
+                "BSD City",
+                "Ciputat",
+                "Pondok Aren",
+                "Pamulang",
+                "Serpong",
+                "Jakarta",
+                "Tangerang",
+                "Bekasi",
+                "Bogor",
+                "Depok",
+                "Karawang"
+              ],
+              "knowsAbout": [
+                "Pallet Plastik Heavy Duty",
+                "Pallet Plastik Food Grade",
+                "Container Box Industri",
+                "Container Solid",
+                "Container Berlubang",
+                "Custom Packaging Industri"
+              ],
               "sameAs": [
                 "https://www.facebook.com/paletindo",
                 "https://www.instagram.com/paletindo",

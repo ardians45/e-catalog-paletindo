@@ -3,8 +3,8 @@ import Link from "next/link";
 import { MapPin, ShieldCheck, Truck, MessageCircle, Box, Star, ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Palet Plastik Pondok Aren - Supplier Bintaro & Sekitarnya | Paletindo",
-  description: "Cari palet plastik Pondok Aren? PT Paletindo Prakarsa Unggul sedia pallet industrial untuk area Bintaro, Pondok Aren, Jurangmangu. Stok ready, kirim instan.",
+  title: "Pallet Plastik & Container Box Pondok Aren — Supplier Terdekat | PT Paletindo",
+  description: "Jual pallet plastik & container box industri terdekat di Pondok Aren & Bintaro. Solusi pergudangan & logistik pabrik, kirim cepat dari Serpong Utara.",
   alternates: { canonical: "https://paletindo.id/pallet-plastik-pondok-aren" }
 };
 

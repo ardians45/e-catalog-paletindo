@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Search, X, Plus, ArrowRight, Package, ChevronRight, GitCompareArrows, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import productsData from "../../../dummy_data.json";
+import productsData from "@/data/dummy_data.json";
 
 const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 

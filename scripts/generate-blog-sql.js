@@ -435,9 +435,9 @@ function main() {
   sqlLines.push('-- ✅ Done! 5 local articles successfully migrated to Supabase.');
 
   const sqlContent = sqlLines.join('\n');
-  writeFileSync('./insert-blog-data.sql', sqlContent, 'utf-8');
+  writeFileSync('./database/insert-blog-data.sql', sqlContent, 'utf-8');
 
-  console.log('✅ File SQL generated successfully: insert-blog-data.sql');
+  console.log('✅ File SQL generated successfully: database/insert-blog-data.sql');
   console.log('👉 Next Steps:');
   console.log('   1. Run `node generate-blog-sql.js` in terminal');
   console.log('   2. Open insert-blog-data.sql and copy the SQL statements');

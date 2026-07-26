@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { supabase, type Product, isSupabaseConfigured } from "@/lib/supabase";
 import ProductDetailClient from "./ProductDetailClient";
 import JsonLd from "@/components/seo/JsonLd";
-import productsDataFallback from "../../../../dummy_data.json";
+import productsDataFallback from "@/data/dummy_data.json";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -117,12 +117,35 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  const categoryLower = (product.category || "").toLowerCase();
+  const nameLower = (product.name || "").toLowerCase();
+  
+  let titlePrefix = "Jual Pallet Plastik";
+  if (categoryLower.includes("container") || nameLower.includes("container") || categoryLower.includes("box") || nameLower.includes("box")) {
+    titlePrefix = "Jual Container Box Industri";
+  } else if (categoryLower.includes("keranjang") || nameLower.includes("keranjang")) {
+    titlePrefix = "Jual Keranjang Plastik Pabrik";
+  }
+
+  const title = `${titlePrefix} ${product.name} — Direct Pabrik | PT Paletindo`;
+  const cleanDesc = product.description.replace(/\s+/g, ' ').trim();
+  const description = `${cleanDesc.substring(0, 110)}... Ready stock Jabodetabek, harga grosir pabrik & kirim cepat. Hubungi WA PT Paletindo!`;
+
   return {
-    title: `${product.name} - Jual Palet Plastik Tangerang Selatan`,
-    description: product.description.substring(0, 160),
+    title,
+    description,
+    keywords: [
+      product.name,
+      titlePrefix,
+      "Container Box Industri",
+      "Box Container Plastik",
+      "Supplier Pallet Plastik",
+      "Pabrik Container Plastik",
+      "Paletindo Jabodetabek"
+    ],
     openGraph: {
-      title: product.name,
-      description: product.description.substring(0, 160),
+      title,
+      description,
       images: product.images,
     },
     alternates: {
@@ -147,7 +170,8 @@ export default async function ProductDetailPage({ params }: Props) {
           '@type': 'Product',
           name: product.name,
           description: product.description,
-          image: product.images[0],
+          image: product.images.map(img => img.startsWith('http') ? img : `https://paletindo.id${img.startsWith('/') ? '' : '/'}${img}`),
+          category: product.category,
           brand: { '@type': 'Brand', name: 'Paletindo' },
           offers: {
             '@type': 'Offer',

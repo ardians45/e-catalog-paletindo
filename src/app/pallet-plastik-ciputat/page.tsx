@@ -3,8 +3,8 @@ import Link from "next/link";
 import { MapPin, ShieldCheck, Truck, MessageCircle, Box, Star, ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Palet Plastik Ciputat - Distributor Palet Termurah | Paletindo",
-  description: "Cari palet plastik Ciputat? PT Paletindo Prakarsa Unggul sedia palet plastik industrial baru & bekas untuk area Ciputat, Ciputat Timur, dan sekitarnya. Harga grosir.",
+  title: "Pallet Plastik & Container Box Ciputat — Supplier Terdekat | PT Paletindo",
+  description: "Supplier pallet plastik & container box industri terpercaya di Ciputat & Ciputat Timur. Ready stock industri, pengiriman hari ini & respon WA cepat.",
   alternates: { canonical: "https://paletindo.id/pallet-plastik-ciputat" }
 };
 

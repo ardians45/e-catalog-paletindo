@@ -23,8 +23,8 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Palet Plastik Tangerang Selatan - Supplier Terlengkap | Paletindo",
-  description: "Cari palet plastik Tangerang Selatan? PT Paletindo Prakarsa Unggul sedia palet baru & bekas berkualitas tinggi. Harga murah, stok ready, kirim instan ke seluruh Tangsel.",
+  title: "Pallet Plastik & Container Box Tangerang Selatan — Supplier Pabrik | PT Paletindo",
+  description: "Jual pallet plastik & container box industri terdekat di Tangerang Selatan. Siap kirim instan dari gudang Serpong Utara, ready stock & harga grosir pabrik.",
   alternates: {
     canonical: "https://paletindo.id/palet-plastik-tangerang-selatan",
   }

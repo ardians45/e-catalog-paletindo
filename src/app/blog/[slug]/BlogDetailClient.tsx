@@ -11,7 +11,8 @@ import {
   Tag, 
   ChevronRight,
   Newspaper,
-  LayoutGrid
+  LayoutGrid,
+  MapPin
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Article } from "@/lib/supabase";
@@ -297,6 +298,46 @@ export default function BlogDetailClient({ article, recentPosts, categories }: B
                     </div>
                   </Link>
                 ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-xl bg-zinc-900 flex items-center justify-center">
+                  <MapPin className="w-4 h-4 text-[#D4A373]" />
+                </div>
+                <h3 className="text-xl font-black text-zinc-900 tracking-tight">Area Layanan Terdekat</h3>
+              </div>
+              
+              <div className="flex flex-col gap-2">
+                <Link href="/pallet-plastik-serpong-utara" className="text-xs font-bold text-zinc-600 hover:text-[#D4A373] p-2.5 rounded-xl bg-white border border-zinc-100 flex items-center justify-between transition-colors">
+                  <span>Pallet Plastik Serpong Utara</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
+                </Link>
+                <Link href="/pallet-plastik-bsd" className="text-xs font-bold text-zinc-600 hover:text-[#D4A373] p-2.5 rounded-xl bg-white border border-zinc-100 flex items-center justify-between transition-colors">
+                  <span>Pallet Plastik BSD City</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
+                </Link>
+                <Link href="/pallet-plastik-pamulang" className="text-xs font-bold text-zinc-600 hover:text-[#D4A373] p-2.5 rounded-xl bg-white border border-zinc-100 flex items-center justify-between transition-colors">
+                  <span>Pallet Plastik Pamulang</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
+                </Link>
+                <Link href="/pallet-plastik-ciputat" className="text-xs font-bold text-zinc-600 hover:text-[#D4A373] p-2.5 rounded-xl bg-white border border-zinc-100 flex items-center justify-between transition-colors">
+                  <span>Pallet Plastik Ciputat</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
+                </Link>
+                <Link href="/pallet-plastik-pondok-aren" className="text-xs font-bold text-zinc-600 hover:text-[#D4A373] p-2.5 rounded-xl bg-white border border-zinc-100 flex items-center justify-between transition-colors">
+                  <span>Pallet Plastik Pondok Aren</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
+                </Link>
+                <Link href="/pallet-plastik-serpong" className="text-xs font-bold text-zinc-600 hover:text-[#D4A373] p-2.5 rounded-xl bg-white border border-zinc-100 flex items-center justify-between transition-colors">
+                  <span>Pallet Plastik Serpong</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
+                </Link>
+                <Link href="/palet-plastik-tangerang-selatan" className="text-xs font-bold text-[#D4A373] hover:underline p-2.5 rounded-xl bg-[#D4A373]/5 border border-[#D4A373]/20 flex items-center justify-between transition-colors">
+                  <span>Tangerang Selatan (Induk)</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-[#D4A373]" />
+                </Link>
               </div>
             </div>
 

@@ -3,8 +3,8 @@ import Link from "next/link";
 import { MapPin, ShieldCheck, Truck, MessageCircle, Box, Star, ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Palet Plastik Pamulang - Supplier & Distributor Terdekat | Paletindo",
-  description: "Cari palet plastik Pamulang? PT Paletindo Prakarsa Unggul sedia pallet industrial baru & bekas untuk area Pamulang, Benda Baru, Pondok Cabe. Harga murah.",
+  title: "Pallet Plastik & Container Box Pamulang — Supplier Terdekat | PT Paletindo",
+  description: "Jual pallet plastik industri & container box terdekat di Pamulang, Tangerang Selatan. Pengiriman langsung dari gudang utama, harga grosir pabrik!",
   alternates: { canonical: "https://paletindo.id/pallet-plastik-pamulang" }
 };
 

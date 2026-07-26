@@ -2,11 +2,19 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import { supabase, type Product, isSupabaseConfigured } from "@/lib/supabase";
 import ProductsClient from "./ProductsClient";
-import productsDataFallback from "../../../dummy_data.json";
+import productsDataFallback from "@/data/dummy_data.json";
 
 export const metadata: Metadata = {
-  title: "Katalog Palet Plastik Tangerang Selatan - PT Paletindo Prakarsa Unggul",
-  description: "Jelajahi katalog lengkap palet plastik, container industri, dan safety equipment. Produk berkualitas tinggi untuk kebutuhan logistik dan pergudangan di Tangerang Selatan.",
+  title: "Katalog Pallet Plastik & Container Box Industri — Direct Pabrik | PT Paletindo",
+  description: "Pusat katalog pallet plastik heavy duty, food grade, container box solid & berlubang industri. Ready stock Jabodetabek, harga grosir pabrik & kirim cepat!",
+  keywords: [
+    "Katalog Pallet Plastik",
+    "Container Box Industri",
+    "Box Container Plastik",
+    "Keranjang Plastik Industri",
+    "Supplier Pallet Plastik",
+    "Pabrik Palet Plastik Jabodetabek"
+  ],
   alternates: {
     canonical: "https://paletindo.id/products",
   }

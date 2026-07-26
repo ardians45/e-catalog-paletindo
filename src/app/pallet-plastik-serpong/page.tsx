@@ -3,8 +3,8 @@ import Link from "next/link";
 import { MapPin, ShieldCheck, Truck, MessageCircle, Box, Star, ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Palet Plastik Serpong - Supplier Terdekat | Paletindo",
-  description: "Cari palet plastik Serpong? PT Paletindo Prakarsa Unggul sedia palet baru & bekas berkualitas untuk area Serpong, Cilenggang, dan sekitarnya. Harga murah, stok ready.",
+  title: "Pallet Plastik & Container Box Serpong — Supplier Terdekat | PT Paletindo",
+  description: "Jual pallet plastik & container box industri terdekat di Serpong. Material HDPE/PP standar industri, stok besar & pengiriman langsung dari gudang.",
   alternates: { canonical: "https://paletindo.id/pallet-plastik-serpong" }
 };
 
