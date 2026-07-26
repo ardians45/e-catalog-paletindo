@@ -81,10 +81,16 @@ export default function Footer() {
             <ul className="space-y-6">
               <li className="flex gap-4">
                 <MapPin className="h-5 w-5 text-[#D4A373] shrink-0" />
-                <p className="text-sm leading-relaxed">
+                <a 
+                  href="https://maps.app.goo.gl/CeegmniGUNGempC7A" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-sm leading-relaxed hover:text-[#D4A373] transition-colors"
+                >
                   Jelupang, Kec. Serpong Utara<br />
                   Tangerang Selatan, Banten 15323
-                </p>
+                  <span className="block text-[10px] font-bold text-[#D4A373] mt-1 uppercase tracking-widest">Buka di Google Maps &rarr;</span>
+                </a>
               </li>
               <li className="flex gap-4">
                 <Phone className="h-5 w-5 text-[#D4A373] shrink-0" />

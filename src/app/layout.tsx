@@ -86,6 +86,7 @@ export default function RootLayout({
               "description": "Supplier utama & pabrik distributor pallet plastik industri, container box solid & berlubang, dan custom packaging berkualitas tinggi di Jabodetabek.",
               "image": "https://paletindo.id/logo.png",
               "url": "https://paletindo.id",
+              "hasMap": "https://maps.app.goo.gl/CeegmniGUNGempC7A",
               "telephone": "+62-878-7766-2097",
               "email": "marketing@paletindo.id",
               "address": {
